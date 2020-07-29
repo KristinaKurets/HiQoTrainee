@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Repository.UnitOfWork
 {
-    public class UnitOfWork : IDisposable, IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private HqrbContext db;
         public UnitOfWork() : this(new HqrbContext()) { }
