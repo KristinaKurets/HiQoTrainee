@@ -8,23 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\carmi\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Work\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
+      "projectUniqueName": "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
       "projectName": "HiQo Remote Booking",
-      "projectPath": "C:\\Work\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
-      "packagesPath": "C:\\Users\\carmi\\.nuget\\packages\\",
-      "outputPath": "C:\\Work\\HQRB\\HiQo Remote Booking\\obj\\",
+      "projectPath": "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "D:\\HQRB\\HiQo Remote Booking\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\carmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Work\\HQRB\\Common\\Common.csproj": {}
+    "D:\\HQRB\\Common\\Common.csproj": {}
   },
   "projects": {
-    "C:\\Work\\HQRB\\Common\\Common.csproj": {
+    "D:\\HQRB\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\HQRB\\Common\\Common.csproj",
+        "projectUniqueName": "D:\\HQRB\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "C:\\Work\\HQRB\\Common\\Common.csproj",
-        "packagesPath": "C:\\Users\\carmi\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\HQRB\\Common\\obj\\",
+        "projectPath": "D:\\HQRB\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\HQRB\\Common\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\carmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
