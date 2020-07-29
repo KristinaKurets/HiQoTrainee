@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HQRB\\DB\\DB.csproj": {}
+    "C:\\Users\\Kris\\Documents\\HQRB\\DB\\DB.csproj": {}
   },
   "projects": {
-    "D:\\HQRB\\DB\\DB.csproj": {
+    "C:\\Users\\Kris\\Documents\\HQRB\\DB\\DB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HQRB\\DB\\DB.csproj",
+        "projectUniqueName": "C:\\Users\\Kris\\Documents\\HQRB\\DB\\DB.csproj",
         "projectName": "DB",
-        "projectPath": "D:\\HQRB\\DB\\DB.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\HQRB\\DB\\obj\\",
+        "projectPath": "C:\\Users\\Kris\\Documents\\HQRB\\DB\\DB.csproj",
+        "packagesPath": "C:\\Users\\Kris\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Kris\\Documents\\HQRB\\DB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kris\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

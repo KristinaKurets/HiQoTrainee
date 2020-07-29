@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj": {}
+    "C:\\Users\\Kris\\Documents\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj": {}
   },
   "projects": {
-    "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj": {
+    "C:\\Users\\Kris\\Documents\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
+        "projectUniqueName": "C:\\Users\\Kris\\Documents\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
         "projectName": "HiQo Remote Booking",
-        "projectPath": "D:\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\HQRB\\HiQo Remote Booking\\obj\\",
+        "projectPath": "C:\\Users\\Kris\\Documents\\HQRB\\HiQo Remote Booking\\HiQo Remote Booking.csproj",
+        "packagesPath": "C:\\Users\\Kris\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Kris\\Documents\\HQRB\\HiQo Remote Booking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kris\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

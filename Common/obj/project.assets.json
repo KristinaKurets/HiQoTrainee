@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\Kris\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HQRB\\Common\\Common.csproj",
+      "projectUniqueName": "C:\\Users\\Kris\\Documents\\HQRB\\Common\\Common.csproj",
       "projectName": "Common",
-      "projectPath": "D:\\HQRB\\Common\\Common.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\HQRB\\Common\\obj\\",
+      "projectPath": "C:\\Users\\Kris\\Documents\\HQRB\\Common\\Common.csproj",
+      "packagesPath": "C:\\Users\\Kris\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Kris\\Documents\\HQRB\\Common\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Kris\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
