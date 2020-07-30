@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB.EnttityStatus;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ namespace DB.Entity
     [Table("Users")]
     public class User
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("user_id")]
         public int ID { get; set; }
 
@@ -39,6 +40,8 @@ namespace DB.Entity
         [ForeignKey("desk_id")]
         public Desk Desk { get; set; }
 
+        [Column("date_of_change_plan")]
+        public DateTime? PlanChangeDate { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }

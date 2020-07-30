@@ -1,18 +1,19 @@
-﻿using System;
+﻿using DB.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace DB.Entity
+namespace DB.LookupTable
 {
 
     [Table("Roles")]
-    public class UserRole
+    public class UserRoleLoockup
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("roles_id")]
-        public int ID { get; set; }
+        public short ID { get; set; }
 
         [Required]
         [Column("role_type")]
