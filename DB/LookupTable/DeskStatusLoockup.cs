@@ -12,7 +12,7 @@ namespace DB.LookupTable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("desks_status_id")]
-        public int ID { get; set; }
+        public short ID { get; set; }
 
         [Required]
         [Column("status")]

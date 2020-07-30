@@ -29,7 +29,7 @@ namespace DB.Entity
         public byte MaxOfficeDay { get; set; }
 
         [Column("priority")]
-        public short Priority { get; set; }
+        public short? Priority { get; set; }
 
         [Column("guaranteed_desk")]
         public bool DeskGuaranteed { get; set; }

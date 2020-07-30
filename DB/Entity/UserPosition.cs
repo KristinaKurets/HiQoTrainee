@@ -11,7 +11,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("position_id")]
-        public int ID { get; set; }
+        public short ID { get; set; }
 
         [Required]
         [Column("position_type")]

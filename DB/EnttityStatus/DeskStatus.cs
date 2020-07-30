@@ -8,7 +8,7 @@ using System.Text;
 namespace DB.EnttityStatus
 {
 
-    public enum DeskStatus
+    public enum DeskStatus :short
     {
         Fixed = 1,
         Available = 2,

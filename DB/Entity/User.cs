@@ -41,7 +41,7 @@ namespace DB.Entity
         public Desk Desk { get; set; }
 
         [Column("date_of_change_plan")]
-        public DateTime PlanChangeDate { get; set; }
+        public DateTime? PlanChangeDate { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }
