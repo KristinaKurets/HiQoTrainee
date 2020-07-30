@@ -50,7 +50,7 @@ namespace DB
             modelBuilder
                 .Entity<DeskStatusLoockup>().HasData(
                     Enum.GetValues(typeof(DeskStatus))
-                        .Cast<BookingStatus>()
+                        .Cast<DeskStatus>()
                         .Select(e => new DeskStatusLoockup()
                         {
                             ID = (short)e,
@@ -65,7 +65,7 @@ namespace DB
             modelBuilder
                 .Entity<UserRoleLoockup>().HasData(
                     Enum.GetValues(typeof(UserRole))
-                        .Cast<BookingStatus>()
+                        .Cast<UserRole>()
                         .Select(e => new UserRoleLoockup()
                         {
                             ID = (short)e,
