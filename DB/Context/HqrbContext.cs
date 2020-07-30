@@ -1,24 +1,14 @@
-<<<<<<< HEAD
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace DB.Context
-{
-    public class HqrbContext : DbContext
-    {
-
-=======
-﻿using Common.Extension;
+using Common.Extension;
 using DB.Entity;
 using DB.EnttityStatus;
 using DB.LookupTable;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace DB
+namespace DB.Context
 {
+   
     public class HqrbContext:DbContext
     {
 
@@ -85,6 +75,6 @@ namespace DB
 
         }
 
->>>>>>> HQRB-31
+
     }
 }
