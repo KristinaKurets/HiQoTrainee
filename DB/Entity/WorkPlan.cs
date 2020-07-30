@@ -10,7 +10,7 @@ namespace DB.Entity
     [Table("WorkPlans")]
     public class WorkPlan
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("workplan_id")]
         public int ID { get; set; }
 
@@ -23,10 +23,10 @@ namespace DB.Entity
         public string PlanDescription { get; set; }
 
         [Column("min_days_per_month")]
-        public short MinOfficeDay { get; set; }
+        public byte MinOfficeDay { get; set; }
 
-        [Column("min_days_per_month")]
-        public short MaxOfficeDay { get; set; }
+        [Column("max_days_per_month")]
+        public byte MaxOfficeDay { get; set; }
 
         [Column("priority")]
         public short Priority { get; set; }

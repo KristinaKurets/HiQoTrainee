@@ -1,15 +1,16 @@
-﻿using System;
+﻿using DB.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace DB.Entity
+namespace DB.LookupTable
 {
     [Table("Desks_status")]
-    public class DeskStatus
+    public class DeskStatusLoockup
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("desks_status_id")]
         public int ID { get; set; }
 

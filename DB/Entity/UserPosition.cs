@@ -9,7 +9,7 @@ namespace DB.Entity
     [Table("Positions")]
     public class UserPosition
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("position_id")]
         public int ID { get; set; }
 

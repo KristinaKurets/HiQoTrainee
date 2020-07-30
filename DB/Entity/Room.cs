@@ -9,7 +9,7 @@ namespace DB.Entity
     [Table("Rooms")]
     public class Room
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("room_id")]
         public int ID { get; set; }
 
@@ -25,5 +25,7 @@ namespace DB.Entity
 
         public virtual ICollection<Desk> Desks { get; set; }
         public virtual ICollection<User> Users { get; set; }
+    
+        public virtual ICollection<BookingCalendar> BookingCalendars { get; set; }
     }
 }

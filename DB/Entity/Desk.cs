@@ -1,16 +1,17 @@
-﻿using System;
+﻿using DB.EnttityStatus;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace HQRBDBModel.Entity
+namespace DB.Entity
 {
 
     [Table("Desks")]
     public class Desk
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("desk_id")]
         public int ID { get; set; }
 
