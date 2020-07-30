@@ -1,12 +1,23 @@
-using Common.Extension;
+<<<<<<< HEAD
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DB.Context
+{
+    public class HqrbContext : DbContext
+    {
+
+=======
+﻿using Common.Extension;
 using DB.Entity;
 using DB.EnttityStatus;
 using DB.LookupTable;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace DB.Context
+namespace DB
 {
    
     public class HqrbContext:DbContext
@@ -75,6 +86,10 @@ namespace DB.Context
 
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> HQRB-31
+>>>>>>> parent of 5a799dd... add DsfaulConncetion string, context
     }
 }

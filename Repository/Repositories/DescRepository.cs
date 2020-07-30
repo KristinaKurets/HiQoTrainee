@@ -1,5 +1,5 @@
 ﻿using DB.Context;
-using DB.Entity;
+using HQRBDBModel.Entity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using System;

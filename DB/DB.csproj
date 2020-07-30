@@ -6,10 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+<<<<<<< HEAD
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+=======
+>>>>>>> parent of 5a799dd... add DsfaulConncetion string, context
   </ItemGroup>
 
 </Project>
