@@ -21,6 +21,7 @@ namespace DB.Context
         public DbSet<BookingStatusLoockup> BookingStatusLoockups { get; set; }
         public DbSet<UserRoleLoockup> UserRoleLoockups { get; set; }
         public DbSet<DeskStatusLoockup> DeskStatusLoockups { get; set; }
+        public DbSet<WorkingDaysCalendar> Calendar { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,10 +72,12 @@ namespace DB.Context
                             Role = e.GetDescription()
                         })
                 );
-
-
         }
-
+        public HqrbContext(DbContextOptions<HqrbContext> options)
+            :base(options)
+        {
+            Database.EnsureCreated();
+        }
 
     }
 }
