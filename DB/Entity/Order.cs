@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB.EnttityStatus;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ namespace DB.Entity
     [Table("Orders")]
     public class Order
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("order_id")]
         public long ID { get; set; }
 
@@ -24,5 +25,8 @@ namespace DB.Entity
         [Required]
         [ForeignKey("user_id")]
         public User User { get; set; }
+
+        [Column("date")]
+        public DateTime DateTime { get; set; }
     }
 }

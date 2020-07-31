@@ -1,15 +1,16 @@
-﻿using System;
+﻿using DB.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace HQRBDBModel.Entity
+namespace DB.LookupTable
 {
     [Table("Booking_status")]
-    public class BookingStatus
+    public class BookingStatusLoockup
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("booking_status_id")]
         public short ID { get; set; }
 
