@@ -9,7 +9,7 @@ namespace Repository.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private HqrbContext db;
-        public UnitOfWork() : this(new HqrbContext()) { }
+        //public UnitOfWork() : this(new HqrbContext()) { }
 
         public UnitOfWork(HqrbContext dbContext)
         {
