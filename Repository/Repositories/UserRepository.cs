@@ -14,7 +14,7 @@ namespace Repository.Repositories
 
         public override DbSet<User> GetDbSet()
         {
-            throw new NotImplementedException();
+            return context.Users;
         }
     }
 }

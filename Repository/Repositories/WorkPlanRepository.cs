@@ -14,7 +14,7 @@ namespace Repository.Repositories
 
         public override DbSet<WorkPlan> GetDbSet()
         {
-            throw new NotImplementedException();
+            return context.WorkPlans;
         }
     }
 }
