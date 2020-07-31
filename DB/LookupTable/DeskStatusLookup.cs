@@ -8,7 +8,7 @@ using System.Text;
 namespace DB.LookupTable
 {
     [Table("Desks_status")]
-    public class DeskStatusLoockup
+    public class DeskStatusLookup
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("desks_status_id")]
