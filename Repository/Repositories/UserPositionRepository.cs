@@ -14,7 +14,7 @@ namespace Repository.Repositories
 
         public override DbSet<UserPosition> GetDbSet()
         {
-            throw new NotImplementedException();
+            return context.userPositions;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Repository.Repositories
 
         public override DbSet<DeskStatusLoockup> GetDbSet()
         {
-            throw new NotImplementedException();
+            return context.DeskStatusLoockups;
         }
     }
 }

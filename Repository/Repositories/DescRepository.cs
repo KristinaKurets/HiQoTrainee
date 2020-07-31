@@ -14,7 +14,7 @@ namespace Repository.Repositories
 
         public override DbSet<Desk> GetDbSet()
         {
-            throw new NotImplementedException();
+            return context.Desks;
         }
     }
 }
