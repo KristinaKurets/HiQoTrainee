@@ -8,13 +8,13 @@ using System;
 
 namespace Repository.Repositories
 {
-    public class DeskStatusRepository : AbstractRepository<DeskStatusLoockup>
+    public class DeskStatusRepository : AbstractRepository<DeskStatusLookup>
     {
         public DeskStatusRepository(HqrbContext context) : base(context)
         {
         }
 
-        public override DbSet<DeskStatusLoockup> GetDbSet()
+        public override DbSet<DeskStatusLookup> GetDbSet()
         {
             throw new NotImplementedException();
         }

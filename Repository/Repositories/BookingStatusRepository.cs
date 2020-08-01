@@ -6,14 +6,14 @@ using System;
 
 namespace Repository.Repositories
 {
-    public class BookingStatusRepository : AbstractRepository<DeskStatusLoockup>
+    public class BookingStatusRepository : AbstractRepository<DeskStatusLookup>
     {
         public BookingStatusRepository(HqrbContext context) : base(context)
         {
 
         }
 
-        public override DbSet<DeskStatusLoockup> GetDbSet()
+        public override DbSet<DeskStatusLookup> GetDbSet()
         {
             throw new NotImplementedException();
         }

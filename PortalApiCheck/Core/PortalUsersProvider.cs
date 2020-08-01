@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
 using System.Text;
+using DB.Entity;
 using PortalApiCheck.Entity;
 using PortalApiCheck.Extensions;
 using PortalApiCheck.Interfaces;
@@ -22,21 +23,21 @@ namespace PortalApiCheck.Core
             _portalApiClient = new PortalApiClient(baseUrl, encryptedLogin, encryptedPassword);
         }
 
-        public IEnumerable<UserInfo> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             IEnumerable<PortalTeamUserInfo> users = _portalApiClient.GetPortalTeam();
             if (users == null)
                 return null;
 
             //PortalTeamUserInfo have no birthday
-            IEnumerable<UserInfo> adUsers = users
-                .Select(user => new UserInfo($"{PREFIX}{user.Id}", user.Email, user.FirstName, user.LastName, string.Empty, user.Category?.Name, user.Level, user.Status))
+            IEnumerable<User> adUsers = users
+                .Select(user => new User(user.Id, user.FirstName, user.LastName))
                 .ToArray();
 
             return adUsers;
         }
 
-        public UserInfo GetUserByCredentials(string email, string password)
+        public User GetUserByCredentials(string email, string password)
         {
             var oneTimeClient = new PortalApiClient(_baseUrl, email.EncodeToBase64(), password.EncodeToBase64());
 
@@ -57,26 +58,26 @@ namespace PortalApiCheck.Core
             if (userProfile == null)
                 return null;
 
-            UserInfo adUser = GetUserInfo(userProfile);
+            User adUser = GetUserInfo(userProfile);
 
             return adUser;
         }
 
-        public UserInfo GetUserByGuid(string guid)
+        public User GetUserByID(string guid)
         {
             if (!int.TryParse(guid.Substring(PREFIX.Length), out int id))
                 return null;
 
             PortalProfile userProfile = _portalApiClient.GetUserInfoById(id);
 
-            UserInfo adUser = GetUserInfo(userProfile);
+            User adUser = GetUserInfo(userProfile);
 
             return adUser;
         }
 
-        private UserInfo GetUserInfo(PortalProfile profile)
+        private User GetUserInfo(PortalProfile profile)
         {
-            UserInfo adUser = new UserInfo($"{PREFIX}{profile.UserId}", profile.Email, profile.FirstName, profile.LastName, profile.Birthday, profile.Category, profile.Level, profile.Status);
+            User adUser = new User(profile.UserId, profile.FirstName, profile.LastName, profile.Position);
             return adUser;
         }
     }

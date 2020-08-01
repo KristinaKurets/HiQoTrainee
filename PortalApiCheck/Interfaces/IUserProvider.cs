@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DB.Entity;
 using PortalApiCheck.Entity;
 
 namespace PortalApiCheck.Interfaces
@@ -8,10 +9,10 @@ namespace PortalApiCheck.Interfaces
     public interface IUserProvider
     {
 
-        public IEnumerable<UserInfo> GetAllUsers();
+        public IEnumerable<User> GetAllUsers();
 
-        public UserInfo GetUserByCredentials(string email, string password);
+        public User GetUserByCredentials(string email, string password);
 
-        public UserInfo GetUserByGuid(string guid);
+        public User GetUserByID(string guide);
     }
 }
