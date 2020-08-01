@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortalApiCheck", "PortalApiCheck\PortalApiCheck.csproj", "{02B7862B-6921-4C56-AF5E-28813E41A47C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbScheduler", "DbScheduler\DbScheduler.csproj", "{B7FAF358-E4FC-4C15-81A6-70D21EC76D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{02B7862B-6921-4C56-AF5E-28813E41A47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02B7862B-6921-4C56-AF5E-28813E41A47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02B7862B-6921-4C56-AF5E-28813E41A47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FAF358-E4FC-4C15-81A6-70D21EC76D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FAF358-E4FC-4C15-81A6-70D21EC76D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FAF358-E4FC-4C15-81A6-70D21EC76D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FAF358-E4FC-4C15-81A6-70D21EC76D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

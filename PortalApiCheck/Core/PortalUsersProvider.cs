@@ -9,14 +9,14 @@ using PortalApiCheck.Interfaces;
 
 namespace PortalApiCheck.Core
 {
-    public class PortalUserProviders : IUserProvider
+    public class PortalUsersProvider : IUserProvider
     {
         private const string PREFIX = "PORTAL_";
 
         private readonly string _baseUrl;
         private readonly PortalApiClient _portalApiClient;
 
-        public PortalUserProviders(string baseUrl, string encryptedLogin, string encryptedPassword)
+        public PortalUsersProvider(string baseUrl, string encryptedLogin, string encryptedPassword)
         {
             _baseUrl = baseUrl;
             _portalApiClient = new PortalApiClient(baseUrl, encryptedLogin, encryptedPassword);

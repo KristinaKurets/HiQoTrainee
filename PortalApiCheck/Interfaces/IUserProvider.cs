@@ -5,7 +5,7 @@ using PortalApiCheck.Entity;
 
 namespace PortalApiCheck.Interfaces
 {
-    internal interface IUserProvider
+    public interface IUserProvider
     {
 
         public IEnumerable<UserInfo> GetAllUsers();
