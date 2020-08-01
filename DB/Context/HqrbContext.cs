@@ -72,6 +72,9 @@ namespace DB.Context
                             Role = e.GetDescription()
                         })
                 );
+            modelBuilder
+                .Entity<User>().HasAlternateKey(
+                x => x.Email);
         }
         public HqrbContext(DbContextOptions<HqrbContext> options)
             :base(options)

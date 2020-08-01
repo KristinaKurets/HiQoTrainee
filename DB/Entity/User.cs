@@ -23,6 +23,10 @@ namespace DB.Entity
         public string LastName { get; set; }
 
         [Required]
+        [Column("user_email")]
+        public string Email { get; set; }
+
+        [Required]
         [ForeignKey("positions_id")]
         public UserPosition Position { get; set; }
 

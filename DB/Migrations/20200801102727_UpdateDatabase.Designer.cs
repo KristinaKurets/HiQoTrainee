@@ -4,14 +4,16 @@ using DB.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DB.Migrations
 {
     [DbContext(typeof(HqrbContext))]
-    partial class HqrbContextModelSnapshot : ModelSnapshot
+    [Migration("20200801102727_UpdateDatabase")]
+    partial class UpdateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,7 @@ namespace DB.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnName("user_email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -173,8 +175,6 @@ namespace DB.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasAlternateKey("Email");
 
                     b.HasIndex("UserRoleLoockupID");
 
