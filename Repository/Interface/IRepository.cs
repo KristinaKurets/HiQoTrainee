@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
 
 namespace Repository.Interface
 {
@@ -6,7 +7,9 @@ namespace Repository.Interface
     {
         TSource Read(int id);
         TSource Create(TSource item);
-        DbSet<TSource> GetDbSet();
-
+        bool Delete(TSource item);
+        IQueryable<TSource> ReadAll(Func<TSource, bool> predicate);
+        IQueryable<TSource> ReadAll();
+        bool DeleteAll();
     }
 }

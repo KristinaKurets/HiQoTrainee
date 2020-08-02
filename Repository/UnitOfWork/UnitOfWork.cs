@@ -1,17 +1,15 @@
-﻿using DB.Context;
-using Repository.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Repository.Interface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private HqrbContext db;
+        private DbContext db;
         //public UnitOfWork() : this(new HqrbContext()) { }
 
-        public UnitOfWork(HqrbContext dbContext)
+        public UnitOfWork(DbContext dbContext)
         {
             db = dbContext;
         }
@@ -41,14 +39,10 @@ namespace Repository.UnitOfWork
             GC.SuppressFinalize(this);
         }
 
-        public TSource GetRepository<TSource>() where TSource : class
+        public IRepository<TSource> GetRepository<TSource>() where TSource : class
         {
-            var result = (TSource)Activator.CreateInstance(typeof(TSource), db);
-            if (result != null)
-            {
-                return result;
-            }
-            return null;
+            return (IRepository<TSource>)Activator.CreateInstance(typeof(IRepository<TSource>), db);
         }
+
     }
 }
