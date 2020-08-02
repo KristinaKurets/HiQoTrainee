@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
+using Repository.Repositories;
 using System;
 
 namespace Repository.UnitOfWork
@@ -41,7 +42,7 @@ namespace Repository.UnitOfWork
 
         public IRepository<TSource> GetRepository<TSource>() where TSource : class
         {
-            return (IRepository<TSource>)Activator.CreateInstance(typeof(IRepository<TSource>), db);
+            return (IRepository<TSource>)Activator.CreateInstance(typeof(Repository<TSource>), db);
         }
 
     }
