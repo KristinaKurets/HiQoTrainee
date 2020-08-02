@@ -1,10 +1,10 @@
 using Common.Extension;
 using DB.Entity;
-using DB.EnttityStatus;
 using DB.LookupTable;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using DB.EntityStatus;
 
 namespace DB.Context
 {
@@ -17,24 +17,24 @@ namespace DB.Context
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Desk> Desks { get; set; }
         public DbSet<WorkPlan> WorkPlans { get; set; }
-        public DbSet<UserPosition> userPositions { get; set; }
-        public DbSet<BookingStatusLoockup> BookingStatusLoockups { get; set; }
-        public DbSet<UserRoleLoockup> UserRoleLoockups { get; set; }
-        public DbSet<DeskStatusLoockup> DeskStatusLoockups { get; set; }
+        public DbSet<UserPosition> UserPositions { get; set; }
+        public DbSet<BookingStatusLookup> BookingStatusLookups { get; set; }
+        public DbSet<UserRoleLookup> UserRoleLookups { get; set; }
+        public DbSet<DeskStatusLookup> DeskStatusLookups { get; set; }
         public DbSet<WorkingDaysCalendar> Calendar { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-             .Entity<BookingStatusLoockup>()
+             .Entity<BookingStatusLookup>()
              .Property(e => e.ID)
              .HasConversion<short>();
 
             modelBuilder
-                .Entity<BookingStatusLoockup>().HasData(
+                .Entity<BookingStatusLookup>().HasData(
                     Enum.GetValues(typeof(BookingStatus))
                         .Cast<BookingStatus>()
-                        .Select(e => new BookingStatusLoockup()
+                        .Select(e => new BookingStatusLookup()
                         {
                             ID = (short)e,
                             Description = e.GetDescription()
@@ -43,30 +43,30 @@ namespace DB.Context
 
 
             modelBuilder
-             .Entity<DeskStatusLoockup>()
+             .Entity<DeskStatusLookup>()
              .Property(e => e.ID)
              .HasConversion<short>();
 
             modelBuilder
-                .Entity<DeskStatusLoockup>().HasData(
+                .Entity<DeskStatusLookup>().HasData(
                     Enum.GetValues(typeof(DeskStatus))
                         .Cast<DeskStatus>()
-                        .Select(e => new DeskStatusLoockup()
+                        .Select(e => new DeskStatusLookup()
                         {
                             ID = (short)e,
                             Status = e.GetDescription()
                         })
                 );
             modelBuilder
-                .Entity<UserRoleLoockup>()
+                .Entity<UserRoleLookup>()
                 .Property(e => e.ID)
                 .HasConversion<short>();
 
             modelBuilder
-                .Entity<UserRoleLoockup>().HasData(
+                .Entity<UserRoleLookup>().HasData(
                     Enum.GetValues(typeof(UserRole))
                         .Cast<UserRole>()
-                        .Select(e => new UserRoleLoockup()
+                        .Select(e => new UserRoleLookup()
                         {
                             ID = (short)e,
                             Role = e.GetDescription()

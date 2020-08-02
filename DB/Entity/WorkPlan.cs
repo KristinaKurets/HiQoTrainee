@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DB.Entity
 {
@@ -11,11 +9,11 @@ namespace DB.Entity
     public class WorkPlan
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("workplan_id")]
-        public int ID { get; set; }
+        [Column("work-plan_id")]
+        public int Id { get; set; }
 
         [Required]
-        [Column("workplan_type")]
+        [Column("work-plan_type")]
         public string Plan { get; set; }
 
         [Required]

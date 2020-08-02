@@ -1,9 +1,8 @@
-﻿using DB.EnttityStatus;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DB.EntityStatus;
 
 namespace DB.Entity
 {
@@ -12,7 +11,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("user_id")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("first_name")]
@@ -35,7 +34,7 @@ namespace DB.Entity
         public UserRole Role { get; set; }
 
         
-        [ForeignKey("workplan_id")]
+        [ForeignKey("work-plan_id")]
         public WorkPlan WorkPlan { get; set; }
 
         [ForeignKey("room_id")]

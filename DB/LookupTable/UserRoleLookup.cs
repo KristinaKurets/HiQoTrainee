@@ -9,7 +9,7 @@ namespace DB.LookupTable
 {
 
     [Table("Roles")]
-    public class UserRoleLoockup
+    public class UserRoleLookup
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("roles_id")]
