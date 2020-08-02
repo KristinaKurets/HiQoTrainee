@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository.Repositories
@@ -22,17 +23,19 @@ namespace Repository.Repositories
             return item;
         }
 
-        public bool Delete(TSource item)
+        public void Create(IEnumerable<TSource> range)
         {
-            int startSize = set.Count();
-            set.Remove(item);
-            return startSize > set.Count();
+            set.AddRange(range);
         }
 
-        public bool DeleteAll()
+        public void Delete(TSource item)
+        {
+            set.Remove(item);
+        }
+
+        public void DeleteAll()
         {
             set.RemoveRange(ReadAll().ToList());
-            return !set.Any();
         }
 
         public TSource Read(int id)

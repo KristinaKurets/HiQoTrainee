@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository.Interface
@@ -7,9 +8,10 @@ namespace Repository.Interface
     {
         TSource Read(int id);
         TSource Create(TSource item);
-        bool Delete(TSource item);
+        void Create(IEnumerable<TSource> range);
+        void Delete(TSource item);
         IQueryable<TSource> ReadAll(Func<TSource, bool> predicate);
         IQueryable<TSource> ReadAll();
-        bool DeleteAll();
+        void DeleteAll();
     }
 }
