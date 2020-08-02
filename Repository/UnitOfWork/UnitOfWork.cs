@@ -7,7 +7,7 @@ namespace Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DbContext db;
+        private readonly DbContext db;
         //public UnitOfWork() : this(new HqrbContext()) { }
 
         public UnitOfWork(DbContext dbContext)

@@ -47,7 +47,7 @@ namespace Repository.Repositories
 
         public IQueryable<TSource> ReadAll()
         {
-            return set;
+            return set.AsQueryable();
         }
     }
 }
