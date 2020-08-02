@@ -7,7 +7,7 @@ using System.Text;
 namespace DB.Entity
 {
     [Table("Calendar")]
-    public class BookingCalendar
+    public class WorkingDaysCalendar
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("day_id")]

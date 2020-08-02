@@ -26,6 +26,6 @@ namespace DB.Entity
         public virtual ICollection<Desk> Desks { get; set; }
         public virtual ICollection<User> Users { get; set; }
     
-        public virtual ICollection<BookingCalendar> BookingCalendars { get; set; }
+        public virtual ICollection<WorkingDaysCalendar> BookingCalendars { get; set; }
     }
 }

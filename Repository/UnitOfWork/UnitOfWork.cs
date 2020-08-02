@@ -1,17 +1,16 @@
-﻿using DB.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Repository.Interface;
 using Repository.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private HqrbContext db;
-        public UnitOfWork() : this(new HqrbContext()) { }
+        private readonly DbContext db;
+        //public UnitOfWork() : this(new HqrbContext()) { }
 
-        public UnitOfWork(HqrbContext dbContext)
+        public UnitOfWork(DbContext dbContext)
         {
             db = dbContext;
         }
@@ -41,14 +40,10 @@ namespace Repository.UnitOfWork
             GC.SuppressFinalize(this);
         }
 
-        public TSource GetRepository<TSource>() where TSource : class
+        public IRepository<TSource> GetRepository<TSource>() where TSource : class
         {
-            var result = (TSource)Activator.CreateInstance(typeof(TSource), db);
-            if (result != null)
-            {
-                return result;
-            }
-            return null;
+            return (IRepository<TSource>)Activator.CreateInstance(typeof(Repository<TSource>), db);
         }
+
     }
 }
