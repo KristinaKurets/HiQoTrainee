@@ -23,7 +23,7 @@ namespace DbScheduler
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            
+            scheduler.Start();
         }
     }
 }

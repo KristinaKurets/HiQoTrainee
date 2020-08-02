@@ -78,6 +78,7 @@ namespace PortalApiCheck.Core
         private User GetUserInfo(PortalProfile profile)
         {
             User adUser = new User(profile.UserId, profile.FirstName, profile.LastName, profile.Position);
+            //User user = new User {Desk = };
             return adUser;
         }
     }

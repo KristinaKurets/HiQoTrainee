@@ -11,12 +11,12 @@ namespace DbScheduler
 {
     internal class Scheduler
     {
-        private readonly IUserProvider _userProvider;
+        private readonly IUserProvider userProvider;
         private IScheduler scheduler;
 
         public Scheduler(IUserProvider userProvider)
         {
-            this._userProvider = userProvider;
+            this.userProvider = userProvider;
         }
 
         public async void Start()
@@ -32,7 +32,7 @@ namespace DbScheduler
             jobDetail.JobDataMap["Action"] = new Action(() =>
             {
                 //Action for filling date in DB
-                var users = _userProvider.GetAllUsers();
+                var users = userProvider.GetAllUsers();
 
             });
             

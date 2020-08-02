@@ -1,5 +1,6 @@
 ﻿using DB.Context;
 using Microsoft.EntityFrameworkCore;
+using Repository.UnitOfWork;
 
 namespace Repository.Interface
 {
