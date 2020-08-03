@@ -21,10 +21,10 @@ namespace DB.Entity
         public string PlanDescription { get; set; }
 
         [Column("min_days_per_month")]
-        public byte MinOfficeDay { get; set; }
+        public byte? MinOfficeDay { get; set; }
 
         [Column("max_days_per_month")]
-        public byte MaxOfficeDay { get; set; }
+        public byte? MaxOfficeDay { get; set; }
 
         [Column("priority")]
         public short? Priority { get; set; }
