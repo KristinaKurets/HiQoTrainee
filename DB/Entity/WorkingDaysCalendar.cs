@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DB.Entity
 {
@@ -11,7 +9,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("day_id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
         
         [Column("date")]
         public DateTime Date { get; set; }

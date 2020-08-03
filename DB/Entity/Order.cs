@@ -1,9 +1,7 @@
-﻿using DB.EnttityStatus;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DB.EntityStatus;
 
 namespace DB.Entity
 {
@@ -12,7 +10,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("order_id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [ForeignKey("booking_status_id")]
