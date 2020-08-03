@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using AutoMapper;
 using DB.Entity;
+using DB.LookupTable;
 using Repository.Interface;
 using Repository.UnitOfWork;
 using Service.AdminService.DTO.Entities;
+using Service.AdminService.DTO.LookUps;
 using Service.AdminService.Interfaces;
 
 namespace Service.AdminService.Realization
@@ -22,6 +24,14 @@ namespace Service.AdminService.Realization
         {
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<Desk, DeskDto>()).CreateMapper();
             return mapper.Map<IQueryable<DeskDto>>(Repository.ReadAll());
+        }
+
+        protected IQueryable<DeskStatusLookUpDto> CreateDeskStatusesDto()
+        {
+            var repository = UnitOfWork.GetRepository<DeskStatusLookup>();
+            var mapper=new MapperConfiguration(cm=>cm.CreateMap<DeskStatusLookup, 
+                DeskStatusLookUpDto>()).CreateMapper();
+            return mapper.Map<IQueryable<DeskStatusLookUpDto>>(repository.ReadAll());
         }
 
         public IQueryable<DeskDto> ReadAll()
@@ -48,6 +58,11 @@ namespace Service.AdminService.Realization
             Repository.Delete((Desk)desk);
             UnitOfWork.Save();
             return CreateDto();
+        }
+
+        public IQueryable<DeskStatusLookUpDto> GetDesksStatuses()
+        {
+            return CreateDeskStatusesDto();
         }
     }
 }
