@@ -20,6 +20,22 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookingInfo",
+                columns: table => new
+                {
+                    bookinginfo_id = table.Column<int>(name: "booking-info_id", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    timeopenforbooking = table.Column<TimeSpan>(name: "time-open-for-booking", nullable: false),
+                    timecloseforbooking = table.Column<TimeSpan>(name: "time-close-for-booking", nullable: false),
+                    daysopenforbooking = table.Column<int>(name: "days-open-for-booking", nullable: false),
+                    dayscloseforbooking = table.Column<int>(name: "days-close-for-booking", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingInfo", x => x.bookinginfo_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Desks_status",
                 columns: table => new
                 {
@@ -57,6 +73,24 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkPlans",
+                columns: table => new
+                {
+                    workplan_id = table.Column<int>(name: "work-plan_id", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    workplan_type = table.Column<string>(name: "work-plan_type", nullable: false),
+                    description = table.Column<string>(nullable: false),
+                    min_days_per_month = table.Column<byte>(nullable: true),
+                    max_days_per_month = table.Column<byte>(nullable: true),
+                    priority = table.Column<short>(nullable: true),
+                    guaranteed_desk = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkPlans", x => x.workplan_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -64,29 +98,18 @@ namespace DB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     title = table.Column<string>(nullable: false),
                     max_employees = table.Column<short>(nullable: false),
-                    floor = table.Column<short>(nullable: false)
+                    floor = table.Column<short>(nullable: false),
+                    bookinginfo_id = table.Column<int>(name: "booking-info_id", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.room_id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WorkPlans",
-                columns: table => new
-                {
-                    workplan_id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    workplan_type = table.Column<string>(nullable: false),
-                    description = table.Column<string>(nullable: false),
-                    min_days_per_month = table.Column<byte>(nullable: false),
-                    max_days_per_month = table.Column<byte>(nullable: false),
-                    priority = table.Column<short>(nullable: true),
-                    guaranteed_desk = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkPlans", x => x.workplan_id);
+                    table.ForeignKey(
+                        name: "FK_Rooms_BookingInfo_booking-info_id",
+                        column: x => x.bookinginfo_id,
+                        principalTable: "BookingInfo",
+                        principalColumn: "booking-info_id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,14 +147,14 @@ namespace DB.Migrations
                     headset = table.Column<bool>(nullable: false),
                     room_id = table.Column<int>(nullable: false),
                     Status = table.Column<short>(nullable: false),
-                    DeskStatusLoockupID = table.Column<short>(nullable: true)
+                    DeskStatusLookupID = table.Column<short>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Desks", x => x.desk_id);
                     table.ForeignKey(
-                        name: "FK_Desks_Desks_status_DeskStatusLoockupID",
-                        column: x => x.DeskStatusLoockupID,
+                        name: "FK_Desks_Desks_status_DeskStatusLookupID",
+                        column: x => x.DeskStatusLookupID,
                         principalTable: "Desks_status",
                         principalColumn: "desks_status_id",
                         onDelete: ReferentialAction.Restrict);
@@ -151,20 +174,22 @@ namespace DB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     first_name = table.Column<string>(nullable: false),
                     last_name = table.Column<string>(nullable: false),
+                    user_email = table.Column<string>(nullable: false),
                     positions_id = table.Column<short>(nullable: false),
                     Role = table.Column<short>(nullable: false),
-                    workplan_id = table.Column<int>(nullable: true),
+                    workplan_id = table.Column<int>(name: "work-plan_id", nullable: true),
                     room_id = table.Column<int>(nullable: true),
                     desk_id = table.Column<int>(nullable: true),
                     date_of_change_plan = table.Column<DateTime>(nullable: true),
-                    UserRoleLoockupID = table.Column<short>(nullable: true)
+                    UserRoleLookupID = table.Column<short>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.user_id);
+                    table.UniqueConstraint("AK_Users_user_email", x => x.user_email);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_UserRoleLoockupID",
-                        column: x => x.UserRoleLoockupID,
+                        name: "FK_Users_Roles_UserRoleLookupID",
+                        column: x => x.UserRoleLookupID,
                         principalTable: "Roles",
                         principalColumn: "roles_id",
                         onDelete: ReferentialAction.Restrict);
@@ -187,10 +212,10 @@ namespace DB.Migrations
                         principalColumn: "room_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_WorkPlans_workplan_id",
+                        name: "FK_Users_WorkPlans_work-plan_id",
                         column: x => x.workplan_id,
                         principalTable: "WorkPlans",
-                        principalColumn: "workplan_id",
+                        principalColumn: "work-plan_id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -204,14 +229,14 @@ namespace DB.Migrations
                     desk_id = table.Column<int>(nullable: false),
                     user_id = table.Column<int>(nullable: false),
                     date = table.Column<DateTime>(nullable: false),
-                    BookingStatusLoockupID = table.Column<short>(nullable: true)
+                    BookingStatusLookupID = table.Column<short>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.order_id);
                     table.ForeignKey(
-                        name: "FK_Orders_Booking_status_BookingStatusLoockupID",
-                        column: x => x.BookingStatusLoockupID,
+                        name: "FK_Orders_Booking_status_BookingStatusLookupID",
+                        column: x => x.BookingStatusLookupID,
                         principalTable: "Booking_status",
                         principalColumn: "booking_status_id",
                         onDelete: ReferentialAction.Restrict);
@@ -267,9 +292,9 @@ namespace DB.Migrations
                 column: "room_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Desks_DeskStatusLoockupID",
+                name: "IX_Desks_DeskStatusLookupID",
                 table: "Desks",
-                column: "DeskStatusLoockupID");
+                column: "DeskStatusLookupID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Desks_room_id",
@@ -277,9 +302,9 @@ namespace DB.Migrations
                 column: "room_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_BookingStatusLoockupID",
+                name: "IX_Orders_BookingStatusLookupID",
                 table: "Orders",
-                column: "BookingStatusLoockupID");
+                column: "BookingStatusLookupID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_desk_id",
@@ -292,9 +317,16 @@ namespace DB.Migrations
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserRoleLoockupID",
+                name: "IX_Rooms_booking-info_id",
+                table: "Rooms",
+                column: "booking-info_id",
+                unique: true,
+                filter: "[booking-info_id] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserRoleLookupID",
                 table: "Users",
-                column: "UserRoleLoockupID");
+                column: "UserRoleLookupID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_desk_id",
@@ -312,9 +344,9 @@ namespace DB.Migrations
                 column: "room_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_workplan_id",
+                name: "IX_Users_work-plan_id",
                 table: "Users",
-                column: "workplan_id");
+                column: "work-plan_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -348,6 +380,9 @@ namespace DB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "BookingInfo");
         }
     }
 }

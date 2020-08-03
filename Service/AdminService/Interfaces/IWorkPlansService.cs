@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Service.AdminService.DTO;
+using Service.AdminService.DTO.Entities;
 
 namespace Service.AdminService.Interfaces
 {

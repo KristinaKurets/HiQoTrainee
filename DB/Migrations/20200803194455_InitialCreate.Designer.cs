@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB.Migrations
 {
     [DbContext(typeof(HqrbContext))]
-    [Migration("20200801102727_UpdateDatabase")]
-    partial class UpdateDatabase
+    [Migration("20200803194455_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,38 @@ namespace DB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DB.Entity.BookingInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("booking-info_id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DaysCloseForBooking")
+                        .HasColumnName("days-close-for-booking")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DaysOpenForBooking")
+                        .HasColumnName("days-open-for-booking")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeCloseForBooking")
+                        .HasColumnName("time-close-for-booking")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeOpenForBooking")
+                        .HasColumnName("time-open-for-booking")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookingInfo");
+                });
+
             modelBuilder.Entity("DB.Entity.Desk", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("desk_id")
                         .HasColumnType("int")
@@ -33,7 +62,7 @@ namespace DB.Migrations
                         .HasColumnName("camera")
                         .HasColumnType("bit");
 
-                    b.Property<short?>("DeskStatusLoockupID")
+                    b.Property<short?>("DeskStatusLookupID")
                         .HasColumnType("smallint");
 
                     b.Property<bool>("Headset")
@@ -56,9 +85,9 @@ namespace DB.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("DeskStatusLoockupID");
+                    b.HasIndex("DeskStatusLookupID");
 
                     b.HasIndex("room_id");
 
@@ -67,13 +96,13 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.Order", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("order_id")
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short?>("BookingStatusLoockupID")
+                    b.Property<short?>("BookingStatusLookupID")
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("DateTime")
@@ -91,9 +120,9 @@ namespace DB.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("BookingStatusLoockupID");
+                    b.HasIndex("BookingStatusLookupID");
 
                     b.HasIndex("desk_id");
 
@@ -104,7 +133,7 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.Room", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("room_id")
                         .HasColumnType("int")
@@ -123,14 +152,21 @@ namespace DB.Migrations
                         .HasColumnName("title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.Property<int?>("booking-info_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("booking-info_id")
+                        .IsUnique()
+                        .HasFilter("[booking-info_id] IS NOT NULL");
 
                     b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("DB.Entity.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("user_id")
                         .HasColumnType("int")
@@ -139,7 +175,7 @@ namespace DB.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnName("user_email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -158,7 +194,7 @@ namespace DB.Migrations
                     b.Property<short>("Role")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("UserRoleLoockupID")
+                    b.Property<short?>("UserRoleLookupID")
                         .HasColumnType("smallint");
 
                     b.Property<int?>("desk_id")
@@ -171,12 +207,14 @@ namespace DB.Migrations
                     b.Property<int?>("room_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("workplan_id")
+                    b.Property<int?>("work-plan_id")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserRoleLoockupID");
+                    b.HasAlternateKey("Email");
+
+                    b.HasIndex("UserRoleLookupID");
 
                     b.HasIndex("desk_id");
 
@@ -184,14 +222,14 @@ namespace DB.Migrations
 
                     b.HasIndex("room_id");
 
-                    b.HasIndex("workplan_id");
+                    b.HasIndex("work-plan_id");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DB.Entity.UserPosition", b =>
                 {
-                    b.Property<short>("ID")
+                    b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("position_id")
                         .HasColumnType("smallint")
@@ -202,16 +240,16 @@ namespace DB.Migrations
                         .HasColumnName("position_type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("DB.Entity.WorkPlan", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("workplan_id")
+                        .HasColumnName("work-plan_id")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -219,17 +257,17 @@ namespace DB.Migrations
                         .HasColumnName("guaranteed_desk")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("MaxOfficeDay")
+                    b.Property<byte?>("MaxOfficeDay")
                         .HasColumnName("max_days_per_month")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("MinOfficeDay")
+                    b.Property<byte?>("MinOfficeDay")
                         .HasColumnName("min_days_per_month")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Plan")
                         .IsRequired()
-                        .HasColumnName("workplan_type")
+                        .HasColumnName("work-plan_type")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlanDescription")
@@ -241,14 +279,14 @@ namespace DB.Migrations
                         .HasColumnName("priority")
                         .HasColumnType("smallint");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("WorkPlans");
                 });
 
             modelBuilder.Entity("DB.Entity.WorkingDaysCalendar", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("day_id")
                         .HasColumnType("bigint")
@@ -273,14 +311,14 @@ namespace DB.Migrations
                     b.Property<int?>("room_id")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("room_id");
 
                     b.ToTable("Calendar");
                 });
 
-            modelBuilder.Entity("DB.LookupTable.BookingStatusLoockup", b =>
+            modelBuilder.Entity("DB.LookupTable.BookingStatusLookup", b =>
                 {
                     b.Property<short>("ID")
                         .HasColumnName("booking_status_id")
@@ -361,7 +399,7 @@ namespace DB.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DB.LookupTable.UserRoleLoockup", b =>
+            modelBuilder.Entity("DB.LookupTable.UserRoleLookup", b =>
                 {
                     b.Property<short>("ID")
                         .HasColumnName("roles_id")
@@ -393,7 +431,7 @@ namespace DB.Migrations
                 {
                     b.HasOne("DB.LookupTable.DeskStatusLookup", null)
                         .WithMany("Desks")
-                        .HasForeignKey("DeskStatusLoockupID");
+                        .HasForeignKey("DeskStatusLookupID");
 
                     b.HasOne("DB.Entity.Room", "Room")
                         .WithMany("Desks")
@@ -404,9 +442,9 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.Order", b =>
                 {
-                    b.HasOne("DB.LookupTable.BookingStatusLoockup", null)
+                    b.HasOne("DB.LookupTable.BookingStatusLookup", null)
                         .WithMany("Orders")
-                        .HasForeignKey("BookingStatusLoockupID");
+                        .HasForeignKey("BookingStatusLookupID");
 
                     b.HasOne("DB.Entity.Desk", "Desk")
                         .WithMany("Orders")
@@ -421,11 +459,18 @@ namespace DB.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DB.Entity.Room", b =>
+                {
+                    b.HasOne("DB.Entity.BookingInfo", "BookingInfo")
+                        .WithOne("Room")
+                        .HasForeignKey("DB.Entity.Room", "booking-info_id");
+                });
+
             modelBuilder.Entity("DB.Entity.User", b =>
                 {
-                    b.HasOne("DB.LookupTable.UserRoleLoockup", null)
+                    b.HasOne("DB.LookupTable.UserRoleLookup", null)
                         .WithMany("Users")
-                        .HasForeignKey("UserRoleLoockupID");
+                        .HasForeignKey("UserRoleLookupID");
 
                     b.HasOne("DB.Entity.Desk", "Desk")
                         .WithMany("Users")
@@ -443,7 +488,7 @@ namespace DB.Migrations
 
                     b.HasOne("DB.Entity.WorkPlan", "WorkPlan")
                         .WithMany("Users")
-                        .HasForeignKey("workplan_id");
+                        .HasForeignKey("work-plan_id");
                 });
 
             modelBuilder.Entity("DB.Entity.WorkingDaysCalendar", b =>

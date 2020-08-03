@@ -1,46 +1,46 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using DB.Entity;
 using Repository.Interface;
 using Repository.UnitOfWork;
-using Service.AdminService.DTO;
+using Service.AdminService.DTO.Entities;
 using Service.AdminService.Interfaces;
-using Service.AdminService.Mappers;
-using Service.Base;
 
 namespace Service.AdminService.Realization
 {
-    public class WorkPlanService:BaseService, IWorkPlansService
+    public class WorkPlanService:IWorkPlansService
     {
         protected readonly IRepository<WorkPlan> Repository;
-        public WorkPlanService(IUnitOfWork unitOfWork, IRepository<WorkPlan> repository)
-            : base(unitOfWork)
+        protected readonly IUnitOfWork UnitOfWork;
+        public WorkPlanService(IUnitOfWork unitOfWork)
         {
-            Repository = repository;
+            UnitOfWork = unitOfWork;
+            Repository = unitOfWork.GetRepository<WorkPlan>();
         }
 
-        protected IQueryable<WorkPlanDto> CreateDto(IQueryable<WorkPlan> workPlans, DateTime date)
+        protected IQueryable<WorkPlanDto> CreateDto()
         {
-            var mapper = new WorkPlanToWorkPlanDtoDboMapper(date);
-            return mapper.Map(Repository.ReadAll());
+            var mapper=new MapperConfiguration(cm=>cm.CreateMap<WorkPlan, WorkPlanDto>()).CreateMapper();
+            return mapper.Map<IQueryable<WorkPlanDto>>(Repository.ReadAll());
         }
         public IQueryable<WorkPlanDto> ReadAll()
         {
-            return CreateDto(Repository.ReadAll(), DateTime.Today);
+            return CreateDto();
         }
 
         public IQueryable<WorkPlanDto> Update(WorkPlanDto workPlanDto)
         {
             Repository.Update((WorkPlan)workPlanDto);
-            _unitOfWork.Save();
-            return CreateDto(Repository.ReadAll(), DateTime.Today);
+            UnitOfWork.Save();
+            return CreateDto();
         }
 
         public IQueryable<WorkPlanDto> Delete(WorkPlanDto workPlanDto)
         {
             Repository.Delete((WorkPlan)workPlanDto);
-            _unitOfWork.Save();
-            return CreateDto(Repository.ReadAll(), DateTime.Today);
+            UnitOfWork.Save();
+            return CreateDto();
         }
     }
 }
