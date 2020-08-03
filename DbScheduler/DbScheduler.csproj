@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PortalApiCheck\PortalApiCheck.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 </Project>

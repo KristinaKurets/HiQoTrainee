@@ -1,8 +1,14 @@
+using DB.Context;
+using DB.Entity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PortalApiCheck.Core;
 using PortalApiCheck.Extensions;
 using PortalApiCheck.Interfaces;
+using Repository.Interface;
+using Repository.Repositories;
 
 namespace DbScheduler
 {
@@ -23,6 +29,9 @@ namespace DbScheduler
                 {
                     services.AddSingleton<IUserProvider, PortalUsersProvider>(x =>
                         new PortalUsersProvider(url, login, password));
+                    services.AddSingleton<DbContext, HqrbContext>();
+                    services.AddSingleton<IRepository<User>, UniqueUserRepository>(serviceProvider =>
+                        new UniqueUserRepository(new Repository<User>(serviceProvider.GetRequiredService<DbContext>())));
                     services.AddHostedService<Worker>();
                 });
     }

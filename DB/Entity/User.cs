@@ -9,7 +9,7 @@ using System.Text;
 namespace DB.Entity
 {
     [Table("Users")]
-    public class User : IUnitOfWork
+    public class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("user_id")]
