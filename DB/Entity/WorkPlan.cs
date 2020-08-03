@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DB.Entity
 {
@@ -10,12 +8,12 @@ namespace DB.Entity
     [Table("WorkPlans")]
     public class WorkPlan
     {
-        [Key]
-        [Column("workplan_id")]
-        public int ID { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("work-plan_id")]
+        public int Id { get; set; }
 
         [Required]
-        [Column("workplan_type")]
+        [Column("work-plan_type")]
         public string Plan { get; set; }
 
         [Required]
@@ -23,13 +21,13 @@ namespace DB.Entity
         public string PlanDescription { get; set; }
 
         [Column("min_days_per_month")]
-        public short MinOfficeDay { get; set; }
+        public byte MinOfficeDay { get; set; }
 
-        [Column("min_days_per_month")]
-        public short MaxOfficeDay { get; set; }
+        [Column("max_days_per_month")]
+        public byte MaxOfficeDay { get; set; }
 
         [Column("priority")]
-        public short Priority { get; set; }
+        public short? Priority { get; set; }
 
         [Column("guaranteed_desk")]
         public bool DeskGuaranteed { get; set; }

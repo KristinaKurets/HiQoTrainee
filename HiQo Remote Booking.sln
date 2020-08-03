@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DB", "DB\DB.csproj", "{C656A560-0E20-4536-90EF-82B730BD1CBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{EA5A3ECD-7372-4CD4-A8FF-63B98C437079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{EA5A3ECD-7372-4CD4-A8FF-63B98C437079}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

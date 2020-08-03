@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DB.EntityStatus;
 
 namespace DB.Entity
 {
     [Table("Orders")]
     public class Order
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("order_id")]
-        public long ID { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [ForeignKey("booking_status_id")]
@@ -24,5 +23,8 @@ namespace DB.Entity
         [Required]
         [ForeignKey("user_id")]
         public User User { get; set; }
+
+        [Column("date")]
+        public DateTime DateTime { get; set; }
     }
 }
