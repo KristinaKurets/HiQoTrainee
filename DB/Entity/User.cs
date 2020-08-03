@@ -49,19 +49,6 @@ namespace DB.Entity
         public DateTime? PlanChangeDate { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
-        
-        public User(int Id,  string firstName, string lastName, string position)
-        {
-            ID = Id;
-            FirstName = firstName;
-            LastName = lastName;
-            Role = (UserRole)Enum.Parse(typeof(UserRole), position);
-        }
-        public User(int Id, string firstName, string lastName)
-        {
-            ID = Id;
-            FirstName = firstName;
-            LastName = lastName;
-        }
+
     }
 }
