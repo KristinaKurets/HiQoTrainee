@@ -52,5 +52,10 @@ namespace Repository.Repositories
         {
             return set.AsQueryable();
         }
+
+        public void Update(TSource item)
+        {
+            context.Entry(item).State = EntityState.Modified;
+        }
     }
 }
