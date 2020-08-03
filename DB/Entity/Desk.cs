@@ -1,9 +1,7 @@
-﻿using DB.EnttityStatus;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using DB.EntityStatus;
 
 namespace DB.Entity
 {
@@ -13,7 +11,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("desk_id")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("title")]

@@ -325,7 +325,7 @@ namespace DB.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DB.LookupTable.DeskStatusLoockup", b =>
+            modelBuilder.Entity("DB.LookupTable.DeskStatusLookup", b =>
                 {
                     b.Property<short>("ID")
                         .HasColumnName("desks_status_id")
@@ -393,7 +393,7 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.Desk", b =>
                 {
-                    b.HasOne("DB.LookupTable.DeskStatusLoockup", null)
+                    b.HasOne("DB.LookupTable.DeskStatusLookup", null)
                         .WithMany("Desks")
                         .HasForeignKey("DeskStatusLoockupID");
 

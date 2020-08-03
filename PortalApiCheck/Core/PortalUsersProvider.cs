@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Text;
 using DB.Entity;
+using DB.EnttityStatus;
 using PortalApiCheck.Entity;
 using PortalApiCheck.Extensions;
 using PortalApiCheck.Interfaces;
@@ -31,7 +32,7 @@ namespace PortalApiCheck.Core
 
             //PortalTeamUserInfo have no birthday
             IEnumerable<User> adUsers = users
-                .Select(user => new User(user.Id, user.FirstName, user.LastName))
+                .Select(user => new User { ID = user.Id, FirstName = user.FirstName, LastName = user.LastName, Email = user.Email })
                 .ToArray();
 
             return adUsers;
@@ -77,8 +78,7 @@ namespace PortalApiCheck.Core
 
         private User GetUserInfo(PortalProfile profile)
         {
-            User adUser = new User(profile.UserId, profile.FirstName, profile.LastName, profile.Position);
-            //User user = new User {Desk = };
+            User adUser = new User { ID = profile.UserId, FirstName = profile.FirstName, LastName = profile.LastName, Email = profile.Email, Role = (UserRole)Enum.Parse(typeof(UserRole), profile.Position) };
             return adUser;
         }
     }
