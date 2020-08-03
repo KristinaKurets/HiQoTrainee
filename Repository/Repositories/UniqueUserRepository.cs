@@ -10,11 +10,11 @@ namespace Repository.Repositories
         {
             public static readonly Traits Instance = new Traits();
 
-            public int GetId(User item) => item.ID;
+            public int GetId(User item) => item.Id;
 
             public bool Equals(User item1, User item2)
             {
-                return item1.ID == item2.ID &&
+                return item1.Id == item2.Id &&
                        item1.FirstName == item2.FirstName &&
                        item1.LastName == item2.LastName &&
                        item1.Position.Type == item2.Position.Type;
@@ -22,7 +22,7 @@ namespace Repository.Repositories
 
             public void CopyTo(User from, User to)
             {
-                to.ID = from.ID;
+                to.Id = from.Id;
                 to.FirstName = from.FirstName;
                 to.LastName = from.LastName;
                 to.Position.Type = from.Position.Type;
