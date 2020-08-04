@@ -43,6 +43,7 @@ namespace Repository.Repositories
                 if (!traits.Equals(item, repositoryItem))
                 {
                     traits.CopyTo(item, repositoryItem);
+                    repository.Update(repositoryItem);
                 }
             }
             return item;
@@ -61,6 +62,8 @@ namespace Repository.Repositories
         public IQueryable<T> ReadAll(Func<T, bool> predicate) => repository.ReadAll(predicate);
 
         public IQueryable<T> ReadAll() => repository.ReadAll();
+
+        public void Update(T item) => repository.Update(item);
 
         public void DeleteAll() => repository.DeleteAll();
     }
