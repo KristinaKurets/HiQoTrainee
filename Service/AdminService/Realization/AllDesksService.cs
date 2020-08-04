@@ -14,6 +14,7 @@ namespace Service.AdminService.Realization
     {
         protected readonly IUnitOfWork UnitOfWork;
         protected readonly IRepository<Desk> Repository;
+
         public AllDesksService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
