@@ -2,7 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using DB.Context;
 using DB.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PortalApiCheck.Interfaces;
@@ -15,10 +17,10 @@ namespace DbScheduler
         private readonly ILogger<Worker> logger;
         private readonly Scheduler scheduler;
 
-        public Worker(ILogger<Worker> logger, IUserProvider userProvider, IRepository<User> usersRepository)
+        public Worker(ILogger<Worker> logger, IUserProvider userProvider, IRepository<User> usersRepository, DbContext dbContext)
         {
             this.logger = logger;
-            scheduler = new Scheduler(userProvider, usersRepository);
+            scheduler = new Scheduler(userProvider, usersRepository, dbContext);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

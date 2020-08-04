@@ -6,7 +6,7 @@ namespace DbScheduler.Job
 {
     public class GenericJob: IJob
     {
-        public Action Action;
+        public Action Action { get; set; }
 
         public async Task Execute(IJobExecutionContext context) =>
             await Task.Run(Action);
