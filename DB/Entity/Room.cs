@@ -23,7 +23,7 @@ namespace DB.Entity
         [ForeignKey("booking-info_id")]
         public BookingInfo BookingInfo { get; set; }
         public virtual ICollection<Desk> Desks { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public virtual User Users { get; set; }
         public virtual ICollection<WorkingDaysCalendar> BookingCalendars { get; set; }
     }
 }

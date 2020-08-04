@@ -12,4 +12,9 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BookingService\Interfaces\" />
+    <Folder Include="BookingService\Realization\" />
+  </ItemGroup>
+
 </Project>
