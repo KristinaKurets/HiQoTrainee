@@ -40,7 +40,7 @@ namespace Service.AdminService.DTO.Entities
                 Title = room.Title,
                 BookingCalendars = (ICollection<WorkingDaysCalendar>) room.BookingCalendars,
                 Desks = (ICollection<Desk>) room.Desks,
-                Users = (User) room.Users
+                Users = (ICollection<User>)room.Users
             };
         }
     }
