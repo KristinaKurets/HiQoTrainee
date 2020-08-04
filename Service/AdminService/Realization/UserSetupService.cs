@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using DB.Entity;
 using DB.LookupTable;
@@ -14,106 +14,111 @@ namespace Service.AdminService.Realization
     {
         protected readonly IUnitOfWork UnitOfWork;
         protected readonly IRepository<User> Repository;
-
         public UserSetupService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
             Repository = UnitOfWork.GetRepository<User>();
         }
 
-        protected IQueryable<UserDto> CreateUsersDto()
+        protected List<UserDto> CreateUsersDto()
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<User,
                 UserDto>()).CreateMapper();
-            return mapper.Map<IQueryable<UserDto>>(Repository.ReadAll());
+            return mapper.Map<List<UserDto>>(Repository.ReadAll());
         }
 
-        protected IQueryable<UserPositionDto> CreatePositionDto()
+        protected List<UserPositionDto> CreatePositionDto()
         {
             var repository = UnitOfWork.GetRepository<UserPosition>();
             var mapper = new MapperConfiguration(cm => cm.CreateMap<UserPosition,
                 UserPositionDto>()).CreateMapper();
-            return mapper.Map<IQueryable<UserPositionDto>>(repository.ReadAll());
+            return mapper.Map<List<UserPositionDto>>(repository.ReadAll());
         }
 
-        protected IQueryable<UserRoleLookUpDto> CreateRolesDto()
+        protected List<UserRoleLookUpDto> CreateRolesDto()
         {
             var repository = UnitOfWork.GetRepository<UserRoleLookup>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<UserRoleLookup, 
                 UserRoleLookUpDto>()).CreateMapper();
-            return mapper.Map<IQueryable<UserRoleLookUpDto>>(repository.ReadAll());
+            return mapper.Map<List<UserRoleLookUpDto>>(repository.ReadAll());
         }
 
-        protected IQueryable<WorkPlanDto> CreateWorkPlansDto()
+        protected List<WorkPlanDto> CreateWorkPlansDto()
         {
             var repository = UnitOfWork.GetRepository<WorkPlan>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<WorkPlan,
                 WorkPlanDto>()).CreateMapper();
-            return mapper.Map<IQueryable<WorkPlanDto>>(repository.ReadAll());
+            return mapper.Map<List<WorkPlanDto>>(repository.ReadAll());
         }
 
-        protected IQueryable<DeskDto> CreateDesksDto()
+        protected List<DeskDto> CreateDesksDto()
         {
             var repository = UnitOfWork.GetRepository<Desk>();
             var mapper = new MapperConfiguration(cm => cm.CreateMap<Desk, DeskDto>()).CreateMapper();
-            return mapper.Map<IQueryable<DeskDto>>(repository.ReadAll());
+            return mapper.Map<List<DeskDto>>(repository.ReadAll());
+        }
+        protected List<DeskDto> CreateDesksDto(RoomDto room)
+        {
+            var repository = UnitOfWork.GetRepository<Desk>();
+            var mapper = new MapperConfiguration(cm => cm.CreateMap<Desk, DeskDto>()).CreateMapper();
+            return mapper.Map<List<DeskDto>>(repository.ReadAll(u=>u.Room.Equals((Room)room)));
         }
 
-        protected IQueryable<RoomDto> CreateRoomsDto()
+        protected List<RoomDto> CreateRoomsDto()
         {
             var repository = UnitOfWork.GetRepository<Room>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<Room, RoomDto>()).CreateMapper();
-            return mapper.Map<IQueryable<RoomDto>>(repository.ReadAll());
+            return mapper.Map<List<RoomDto>>(repository.ReadAll());
         }
-        public IQueryable<UserDto> ReadAll()
+        public List<UserDto> ReadAll()
         {
             return CreateUsersDto();
         }
 
-        public IQueryable<UserDto> Create(UserDto user)
+        public List<UserDto> Create(UserDto user)
         {
             Repository.Create((User) user);
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
-        public IQueryable<UserDto> Update(UserDto user)
+        public List<UserDto> Update(UserDto user)
         {
-            Repository.Update((User)user);
+            Repository.Update(Repository.Read(user.Id));
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
-        public IQueryable<UserDto> Delete(UserDto user)
+        public List<UserDto> Delete(UserDto user)
         {
-            Repository.Delete((User)user);
+            Repository.Delete(Repository.Read(user.Id));
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
-        public IQueryable<UserPositionDto> GetPositions()
+        public List<UserPositionDto> GetPositions()
         {
             return CreatePositionDto();
         }
 
-        public IQueryable<UserRoleLookUpDto> GetRoles()
+        public List<UserRoleLookUpDto> GetRoles()
         {
             return CreateRolesDto();
         }
 
-        public IQueryable<WorkPlanDto> GetWorkPlans()
+        public List<WorkPlanDto> GetWorkPlans()
         {
             return CreateWorkPlansDto();
         }
 
-        public IQueryable<RoomDto> GetRooms()
+        public List<RoomDto> GetRooms()
         {
             return CreateRoomsDto();
         }
 
-        public IQueryable<DeskDto> GetDesks(RoomDto room)
+        public List<DeskDto> GetDesks(RoomDto room)
         {
-            return CreateDesksDto().Where(u => u.Room.Equals(room));
+            return CreateDesksDto(room);
         }
     }
 }

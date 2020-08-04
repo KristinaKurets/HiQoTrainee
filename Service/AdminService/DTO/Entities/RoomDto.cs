@@ -10,9 +10,6 @@ namespace Service.AdminService.DTO.Entities
         public short MaxEmployees { get; set; }
         public short Floor { get; set; }
         public BookingInfoDto BookingInfo { get; set; }
-        public virtual ICollection<DeskDto> Desks { get; set; }
-        public virtual ICollection<UserDto> Users { get; set; }
-        public virtual ICollection<WorkingDaysCalendarDto> BookingCalendars { get; set; }
 
         public static implicit operator RoomDto(Room room)
         {
@@ -22,10 +19,7 @@ namespace Service.AdminService.DTO.Entities
                 BookingInfo = room.BookingInfo,
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
-                Title = room.Title, 
-                BookingCalendars = (ICollection<WorkingDaysCalendarDto>)room.BookingCalendars,
-                Desks = (ICollection<DeskDto>)room.Desks,
-                Users=(ICollection<UserDto>)room.Users
+                Title = room.Title
             };
         }
 
@@ -37,10 +31,7 @@ namespace Service.AdminService.DTO.Entities
                 BookingInfo = (BookingInfo) room.BookingInfo,
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
-                Title = room.Title,
-                BookingCalendars = (ICollection<WorkingDaysCalendar>) room.BookingCalendars,
-                Desks = (ICollection<Desk>) room.Desks,
-                Users = (ICollection<User>) room.Users
+                Title = room.Title
             };
         }
     }

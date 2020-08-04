@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DB.Entity;
 using Repository.Interface;
@@ -19,37 +20,42 @@ namespace Service.AdminService.Realization
             Repository = UnitOfWork.GetRepository<BookingInfo>();
         }
 
-        protected IQueryable<BookingInfoDto> CreateDto()
+        protected List<BookingInfoDto> CreateDto()
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo, 
                 BookingInfoDto>()).CreateMapper();
-            return mapper.Map<IQueryable<BookingInfoDto>>(Repository.ReadAll());
+            return mapper.Map<List<BookingInfoDto>>(Repository.ReadAll());
         }
-
-        public IQueryable<BookingInfoDto> Create(BookingInfoDto booking)
+        protected BookingInfoDto CreateDto(RoomDto room)
+        {
+            var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo,
+                BookingInfoDto>()).CreateMapper();
+            return mapper.Map<BookingInfoDto>(Repository.ReadAll(u=>u.Room.Equals((Room)room)));
+        }
+        public List<BookingInfoDto> Create(BookingInfoDto booking)
         {
             Repository.Create((BookingInfo) booking);
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<BookingInfoDto> Update(BookingInfoDto booking)
+        public List<BookingInfoDto> Update(BookingInfoDto booking)
         {
-            Repository.Update((BookingInfo)booking);
+            Repository.Update(Repository.Read(booking.Id));
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<BookingInfoDto> Delete(BookingInfoDto booking)
+        public List<BookingInfoDto> Delete(BookingInfoDto booking)
         {
-            Repository.Delete((BookingInfo)booking);
+            Repository.Delete(Repository.Read(booking.Id));
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public BookingInfoDto Read(RoomDto room)
         {
-            return CreateDto().FirstOrDefault(u => u.Room.Equals(room));
+            return CreateDto(room);
         }
     }
 }
