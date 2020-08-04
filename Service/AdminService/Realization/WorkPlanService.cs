@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using DB.Entity;
 using Repository.Interface;
@@ -12,34 +11,33 @@ namespace Service.AdminService.Realization
     public class WorkPlanService:IWorkPlansService
     {
         protected readonly IUnitOfWork UnitOfWork;
+        protected readonly IRepository<WorkPlan> Repository;
         public WorkPlanService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
+            Repository = UnitOfWork.GetRepository<WorkPlan>();
         }
 
-        protected IQueryable<WorkPlanDto> CreateDto()
+        protected List<WorkPlanDto> CreateDto()
         {
-            var repository = UnitOfWork.GetRepository<WorkPlan>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<WorkPlan, WorkPlanDto>()).CreateMapper();
-            return mapper.Map<IQueryable<WorkPlanDto>>(repository.ReadAll());
+            return mapper.Map<List<WorkPlanDto>>(Repository.ReadAll());
         }
-        public IQueryable<WorkPlanDto> ReadAll()
+        public List<WorkPlanDto> ReadAll()
         {
             return CreateDto();
         }
 
-        public IQueryable<WorkPlanDto> Update(WorkPlanDto workPlanDto)
+        public List<WorkPlanDto> Update(WorkPlanDto workPlanDto)
         {
-            var repository = UnitOfWork.GetRepository<WorkPlan>();
-            repository.Update((WorkPlan)workPlanDto);
+            Repository.Update(Repository.Read(workPlanDto.Id));
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<WorkPlanDto> Delete(WorkPlanDto workPlanDto)
+        public List<WorkPlanDto> Delete(WorkPlanDto workPlanDto)
         {
-            var repository = UnitOfWork.GetRepository<WorkPlan>();
-            repository.Delete((WorkPlan)workPlanDto);
+            Repository.Delete(Repository.Read(workPlanDto.Id));
             UnitOfWork.Save();
             return CreateDto();
         }

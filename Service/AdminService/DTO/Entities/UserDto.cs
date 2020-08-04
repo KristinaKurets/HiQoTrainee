@@ -18,7 +18,6 @@ namespace Service.AdminService.DTO.Entities
         public RoomDto Room { get; set; }
         public DeskDto Desk { get; set; }
         public DateTime? PlanChangeDate { get; set; }
-        public virtual ICollection<OrderDto> Orders { get; set; }
 
         public static implicit operator UserDto(User user)
         {
@@ -29,7 +28,6 @@ namespace Service.AdminService.DTO.Entities
                 LastName = user.LastName,
                 Desk = user.Desk,
                 Email = user.Email,
-                Orders = (ICollection<OrderDto>) user.Orders,
                 PlanChangeDate = user.PlanChangeDate,
                 Position = user.Position,
                 Role = (UserRoleDto) user.Role,
@@ -47,7 +45,6 @@ namespace Service.AdminService.DTO.Entities
                 LastName = user.LastName,
                 Desk = (Desk) user.Desk,
                 Email = user.Email,
-                Orders = (ICollection<Order>) user.Orders,
                 PlanChangeDate = user.PlanChangeDate,
                 Position = (UserPosition) user.Position,
                 Role = (UserRole) user.Role,
