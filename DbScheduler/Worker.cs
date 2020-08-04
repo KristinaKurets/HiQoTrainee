@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PortalApiCheck.Interfaces;
 using Repository.Interface;
+using Repository.UnitOfWork;
 
 namespace DbScheduler
 {
@@ -17,10 +18,10 @@ namespace DbScheduler
         private readonly ILogger<Worker> logger;
         private readonly Scheduler scheduler;
 
-        public Worker(ILogger<Worker> logger, IUserProvider userProvider, IRepository<User> usersRepository, DbContext dbContext)
+        public Worker(ILogger<Worker> logger, IUserProvider userProvider, IUnitOfWork unitOfWork)
         {
             this.logger = logger;
-            scheduler = new Scheduler(userProvider, usersRepository, dbContext);
+            scheduler = new Scheduler(userProvider, unitOfWork);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

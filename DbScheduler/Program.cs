@@ -10,6 +10,7 @@ using PortalApiCheck.Extensions;
 using PortalApiCheck.Interfaces;
 using Repository.Interface;
 using Repository.Repositories;
+using Repository.UnitOfWork;
 
 namespace DbScheduler
 {
@@ -32,10 +33,8 @@ namespace DbScheduler
                 {
                     services.AddSingleton<IUserProvider, PortalUsersProvider>(x =>
                         new PortalUsersProvider(url, login, password));
-                    services.AddSingleton<DbContext, HqrbContext>(provider => new HqrbContext(
-                        new DbContextOptionsBuilder<HqrbContext>().UseSqlServer(connection).Options));
-                    services.AddSingleton<IRepository<User>, UniqueUserRepository>(serviceProvider =>
-                        new UniqueUserRepository(new Repository<User>(serviceProvider.GetRequiredService<DbContext>())));
+                    services.AddSingleton<IUnitOfWork, UnitOfWork>(provider => 
+                        new UnitOfWork(new HqrbContext(new DbContextOptionsBuilder<HqrbContext>().UseSqlServer(connection).Options)));
                     services.AddHostedService<Worker>();
                 })
                 .UseWindowsService();

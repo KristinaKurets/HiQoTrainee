@@ -10,6 +10,8 @@ using PortalApiCheck.Interfaces;
 using Quartz;
 using Quartz.Impl;
 using Repository.Interface;
+using Repository.Repositories;
+using Repository.UnitOfWork;
 
 namespace DbScheduler
 {
@@ -17,14 +19,13 @@ namespace DbScheduler
     {
         private readonly IUserProvider userProvider;
         private readonly IRepository<User> usersRepository;
-        private readonly DbContext dbContext;
+        private readonly IUnitOfWork unitOfWork;
         private IScheduler scheduler;
 
-        public Scheduler(IUserProvider userProvider, IRepository<User> usersRepository, DbContext dbContext)
+        public Scheduler(IUserProvider userProvider, IUnitOfWork unitOfWork)
         {
             this.userProvider = userProvider;
-            this.usersRepository = usersRepository;
-            this.dbContext = dbContext;
+            this.usersRepository = new UniqueUserRepository(unitOfWork.GetRepository<User>());
         }
 
         public async void Stop()
@@ -46,7 +47,7 @@ namespace DbScheduler
             {
                 IEnumerable<User> users = userProvider.GetAllUsers();
                 usersRepository.Create(users);
-                dbContext.SaveChanges();
+                unitOfWork.Save();
             });
 
             ITrigger jobTrigger = TriggerBuilder.Create()
