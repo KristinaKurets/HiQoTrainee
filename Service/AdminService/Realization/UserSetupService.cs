@@ -13,19 +13,18 @@ namespace Service.AdminService.Realization
     public class UserSetupService:IUserSetupService
     {
         protected readonly IUnitOfWork UnitOfWork;
-        protected readonly IRepository<User> Repository;
 
         public UserSetupService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Repository = UnitOfWork.GetRepository<User>();
         }
 
         protected IQueryable<UserDto> CreateUsersDto()
         {
+            var repository = UnitOfWork.GetRepository<User>();
             var mapper = new MapperConfiguration(cm => cm.CreateMap<User,
                 UserDto>()).CreateMapper();
-            return mapper.Map<IQueryable<UserDto>>(Repository.ReadAll());
+            return mapper.Map<IQueryable<UserDto>>(repository.ReadAll());
         }
 
         protected IQueryable<UserPositionDto> CreatePositionDto()
@@ -72,21 +71,24 @@ namespace Service.AdminService.Realization
 
         public IQueryable<UserDto> Create(UserDto user)
         {
-            Repository.Create((User) user);
+            var repository = UnitOfWork.GetRepository<User>();
+            repository.Create((User) user);
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
         public IQueryable<UserDto> Update(UserDto user)
         {
-            Repository.Update((User)user);
+            var repository = UnitOfWork.GetRepository<User>();
+            repository.Update((User)user);
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
         public IQueryable<UserDto> Delete(UserDto user)
         {
-            Repository.Delete((User)user);
+            var repository = UnitOfWork.GetRepository<User>();
+            repository.Delete((User)user);
             UnitOfWork.Save();
             return CreateUsersDto();
         }

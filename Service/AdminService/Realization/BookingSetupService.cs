@@ -11,37 +11,39 @@ namespace Service.AdminService.Realization
     public class BookingSetupService:IBookingSetupService
     {
         protected readonly IUnitOfWork UnitOfWork;
-        protected readonly IRepository<BookingInfo> Repository;
 
         public BookingSetupService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Repository = UnitOfWork.GetRepository<BookingInfo>();
         }
 
         protected IQueryable<BookingInfoDto> CreateDto()
         {
+            var repository= UnitOfWork.GetRepository<BookingInfo>();
             var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo, 
                 BookingInfoDto>()).CreateMapper();
-            return mapper.Map<IQueryable<BookingInfoDto>>(Repository.ReadAll());
+            return mapper.Map<IQueryable<BookingInfoDto>>(repository.ReadAll());
         }
         public IQueryable<BookingInfoDto> Create(BookingInfoDto booking)
         {
-            Repository.Create((BookingInfo) booking);
+            var repository = UnitOfWork.GetRepository<BookingInfo>();
+            repository.Create((BookingInfo) booking);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public IQueryable<BookingInfoDto> Update(BookingInfoDto booking)
         {
-            Repository.Update((BookingInfo)booking);
+            var repository = UnitOfWork.GetRepository<BookingInfo>();
+            repository.Update((BookingInfo)booking);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public IQueryable<BookingInfoDto> Delete(BookingInfoDto booking)
         {
-            Repository.Delete((BookingInfo)booking);
+            var repository = UnitOfWork.GetRepository<BookingInfo>();
+            repository.Delete((BookingInfo)booking);
             UnitOfWork.Save();
             return CreateDto();
         }

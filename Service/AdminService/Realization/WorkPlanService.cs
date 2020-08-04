@@ -11,18 +11,17 @@ namespace Service.AdminService.Realization
 {
     public class WorkPlanService:IWorkPlansService
     {
-        protected readonly IRepository<WorkPlan> Repository;
         protected readonly IUnitOfWork UnitOfWork;
         public WorkPlanService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Repository = unitOfWork.GetRepository<WorkPlan>();
         }
 
         protected IQueryable<WorkPlanDto> CreateDto()
         {
+            var repository = UnitOfWork.GetRepository<WorkPlan>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<WorkPlan, WorkPlanDto>()).CreateMapper();
-            return mapper.Map<IQueryable<WorkPlanDto>>(Repository.ReadAll());
+            return mapper.Map<IQueryable<WorkPlanDto>>(repository.ReadAll());
         }
         public IQueryable<WorkPlanDto> ReadAll()
         {
@@ -31,14 +30,16 @@ namespace Service.AdminService.Realization
 
         public IQueryable<WorkPlanDto> Update(WorkPlanDto workPlanDto)
         {
-            Repository.Update((WorkPlan)workPlanDto);
+            var repository = UnitOfWork.GetRepository<WorkPlan>();
+            repository.Update((WorkPlan)workPlanDto);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public IQueryable<WorkPlanDto> Delete(WorkPlanDto workPlanDto)
         {
-            Repository.Delete((WorkPlan)workPlanDto);
+            var repository = UnitOfWork.GetRepository<WorkPlan>();
+            repository.Delete((WorkPlan)workPlanDto);
             UnitOfWork.Save();
             return CreateDto();
         }
