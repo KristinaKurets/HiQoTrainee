@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Service.BookingService.Base
 {
-    class BookingBaseService
+    public class BookingBaseService
     {
         protected readonly IUnitOfWork UnitOfWork;
 

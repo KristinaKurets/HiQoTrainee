@@ -1,11 +1,12 @@
-﻿using Service.BookingService.DTO.Status;
+﻿using DB.Entity;
+using Service.BookingService.DTO.Status;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Service.BookingService.DTO
 {
-    class BookingDeskDTO
+    public class BookingDeskDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,5 +18,24 @@ namespace Service.BookingService.DTO
 
         public BookingOrderDTO Order { get; set; }
         public BookingUserDTO User { get; set; }
+
+
+        public static implicit operator BookingDeskDTO(Desk desk)
+        {
+            return new BookingDeskDTO
+            {
+                Id = desk.Id,
+                Title = desk.Title,
+                MacBook = desk.MacBook,
+                Camera = desk.Camera,
+                Headset = desk.Headset,
+                Room = (BookingRoomDTO)desk.Room,
+                Status = (DeskStatusDTO)desk.Status,
+                Order = null,
+                User = (BookingUserDTO)desk.Users
+               
+
+            };
+        }
     }
 }

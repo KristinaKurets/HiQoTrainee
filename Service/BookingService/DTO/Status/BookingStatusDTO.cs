@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Service.BookingService.DTO.Status
 {
-    class BookingStatusDTO
+    public class BookingStatusDTO
     {
         public short Id { get; set; }
         public string Description { get; set; }
