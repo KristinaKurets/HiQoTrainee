@@ -13,17 +13,16 @@ namespace Service.AdminService.Realization
     public class AllDesksService:IAllDesksService
     {
         protected readonly IUnitOfWork UnitOfWork;
-        protected readonly IRepository<Desk> Repository;
         public AllDesksService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Repository = UnitOfWork.GetRepository<Desk>();
         }
 
         protected IQueryable<DeskDto> CreateDto()
         {
+            var repository = UnitOfWork.GetRepository<Desk>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<Desk, DeskDto>()).CreateMapper();
-            return mapper.Map<IQueryable<DeskDto>>(Repository.ReadAll());
+            return mapper.Map<IQueryable<DeskDto>>(repository.ReadAll());
         }
 
         protected IQueryable<DeskStatusLookUpDto> CreateDeskStatusesDto()
@@ -41,21 +40,24 @@ namespace Service.AdminService.Realization
 
         public IQueryable<DeskDto> UpdateDesks(DeskDto desk)
         {
-            Repository.Update((Desk)desk);
+            var repository = UnitOfWork.GetRepository<Desk>();
+            repository.Update((Desk)desk);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public IQueryable<DeskDto> CreateDesk(DeskDto desk)
         {
-            Repository.Create((Desk) desk);
+            var repository = UnitOfWork.GetRepository<Desk>();
+            repository.Create((Desk) desk);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public IQueryable<DeskDto> DeleteDesk(DeskDto desk)
         {
-            Repository.Delete((Desk)desk);
+            var repository = UnitOfWork.GetRepository<Desk>();
+            repository.Delete((Desk)desk);
             UnitOfWork.Save();
             return CreateDto();
         }
