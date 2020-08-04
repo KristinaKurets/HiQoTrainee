@@ -25,6 +25,7 @@ namespace Service.AdminService.Realization
                 BookingInfoDto>()).CreateMapper();
             return mapper.Map<IQueryable<BookingInfoDto>>(Repository.ReadAll());
         }
+
         public IQueryable<BookingInfoDto> Create(BookingInfoDto booking)
         {
             Repository.Create((BookingInfo) booking);

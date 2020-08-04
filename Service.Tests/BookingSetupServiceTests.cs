@@ -30,8 +30,13 @@ namespace Service.Tests
         public void Read_MockObject()
         {
             var bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
-            var result = bookingSetupService.Read();
-            Assert.Equals(result.Id, bookingSetupService.Read().Id);
+            var room = new Room()
+            {
+                Id = 1, 
+                Title = "jdfks",
+            };
+            var result = bookingSetupService.Read(room);
+            Assert.Equals(result.Id, bookingSetupService.Read(room).Id);
         }
         
     }
