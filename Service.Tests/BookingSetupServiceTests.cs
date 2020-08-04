@@ -21,7 +21,7 @@ namespace Service.Tests
             unitOfWorkMock = new Mock<IUnitOfWork>();
             var bookingInfoMock = new Mock<IRepository<BookingInfo>>();
 
-            bookingInfoMock.Setup(r => r.Read(It.IsAny<int>())).Returns(new BookingInfo { Id = It.IsAny<int>() } );
+            bookingInfoMock.Setup(r => r.Read(It.IsAny<int>())).Returns(new BookingInfo { Id = It.IsAny<int>() });
             unitOfWorkMock.Setup(x => x.Save());
             unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoMock.Object);
         }
@@ -30,9 +30,14 @@ namespace Service.Tests
         public void Read_MockObject()
         {
             var bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
-            var result = bookingSetupService.Read();
-            Assert.Equals(result.Id, bookingSetupService.Read().Id);
+            var room = new Room
+            {
+                Id = 1,
+                Title = "title",
+            };
+            var result = bookingSetupService.Read(room);
+            Assert.Equals(result.Id, bookingSetupService.Read(room).Id);
         }
-        
+
     }
 }
