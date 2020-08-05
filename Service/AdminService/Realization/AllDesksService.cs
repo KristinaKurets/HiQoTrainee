@@ -43,7 +43,7 @@ namespace Service.AdminService.Realization
         {
             Desk deskUp = DeskChanger.ChangeFromDto(Repository.Read(desk.Id), desk);
             var repository = UnitOfWork.GetRepository<Room>();
-            deskUp.Room = repository.Read(desk.Room.Id);
+            deskUp.Room = repository.Read(desk.RoomId);
             Repository.Update(deskUp);
             UnitOfWork.Save();
             return CreateDto();
@@ -52,7 +52,7 @@ namespace Service.AdminService.Realization
         public List<DeskDto> CreateDesk(DeskDto desk)
         {
             Desk result = (Desk) desk;
-            result.Room = UnitOfWork.GetRepository<Room>().Read(desk.Room.Id);
+            result.Room = UnitOfWork.GetRepository<Room>().Read(desk.RoomId);
             Repository.Create(result);
             UnitOfWork.Save();
             return CreateDto();

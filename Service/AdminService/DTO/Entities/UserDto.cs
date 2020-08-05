@@ -12,11 +12,11 @@ namespace Service.AdminService.DTO.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public UserPositionDto Position { get; set; }
+        public int PositionId { get; set; }
         public UserRoleDto Role { get; set; }
-        public WorkPlanDto WorkPlan { get; set; }
-        public RoomDto Room { get; set; }
-        public DeskDto Desk { get; set; }
+        public int? WorkPlanId { get; set; }
+        public int? RoomId { get; set; }
+        public int? DeskId { get; set; }
         public DateTime? PlanChangeDate { get; set; }
 
         public static implicit operator UserDto(User user)
@@ -26,13 +26,13 @@ namespace Service.AdminService.DTO.Entities
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Desk = user.Desk,
+                DeskId = user.DeskId,
                 Email = user.Email,
                 PlanChangeDate = user.PlanChangeDate,
-                Position = user.Position,
+                PositionId = user.UserPositionId,
                 Role = (UserRoleDto) user.Role,
-                Room = user.Room, 
-                WorkPlan = user.WorkPlan
+                RoomId = user.RoomId, 
+                WorkPlanId = user.WorkPlanId
             };
         }
 
@@ -42,13 +42,13 @@ namespace Service.AdminService.DTO.Entities
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Desk = (Desk) user.Desk,
+                DeskId = user.DeskId,
                 Email = user.Email,
                 PlanChangeDate = user.PlanChangeDate,
-                Position = (UserPosition) user.Position,
+                UserPositionId = user.PositionId,
                 Role = (UserRole) user.Role,
-                Room = (Room) user.Room,
-                WorkPlan = (WorkPlan) user.WorkPlan
+                RoomId = user.RoomId,
+                WorkPlanId = user.WorkPlanId
             };
         }
     }

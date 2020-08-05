@@ -10,7 +10,7 @@ namespace Service.AdminService.DTO.Entities
         public TimeSpan? WorkStartTime { get; set; }
         public TimeSpan? WorkEndTime { get; set; }
         public bool IsOff { get; set; }
-        public RoomDto Room { get; set; }
+        public int? RoomId { get; set; }
 
         public static implicit operator WorkingDaysCalendarDto(WorkingDaysCalendar calendar)
         {
@@ -21,7 +21,7 @@ namespace Service.AdminService.DTO.Entities
                 WorkStartTime = calendar.WorkStartTime,
                 WorkEndTime = calendar.WorkEndTime,
                 IsOff = calendar.IsOff,
-                Room = calendar.Room
+                RoomId = calendar.RoomId
             };
         }
 
@@ -33,7 +33,7 @@ namespace Service.AdminService.DTO.Entities
                 WorkStartTime = calendar.WorkStartTime,
                 WorkEndTime = calendar.WorkEndTime,
                 IsOff = calendar.IsOff,
-                Room = (Room) calendar.Room
+                RoomId = calendar.RoomId
             };
         }
     }

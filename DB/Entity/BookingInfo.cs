@@ -28,6 +28,7 @@ namespace DB.Entity
 
         [Required]
         [Column("room_id")]
+        public int RoomId { get; set; }
         public Room Room { get; set; }
     }
 }

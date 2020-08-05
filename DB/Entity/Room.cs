@@ -21,6 +21,7 @@ namespace DB.Entity
         [Column("floor")]
         public short Floor { get; set; }
         [ForeignKey("booking-info_id")]
+        public int? BookingInfoId { get; set; }
         public BookingInfo BookingInfo { get; set; }
         public virtual ICollection<Desk> Desks { get; set; }
         public virtual ICollection<User> Users { get; set; }
