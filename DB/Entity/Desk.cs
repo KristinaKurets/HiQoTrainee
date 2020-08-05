@@ -28,12 +28,12 @@ namespace DB.Entity
         
         [Required]
         [ForeignKey("room_id")]
+        public int RoomId { get; set; }
         public Room Room { get; set; }
         
         [Required]
         [ForeignKey("status_id")]
         public DeskStatus Status { get; set; }
-
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<User> Users { get; set; }
         
