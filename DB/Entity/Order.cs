@@ -18,10 +18,12 @@ namespace DB.Entity
 
         [Required]
         [ForeignKey("desk_id")]
+        public int DeskId { get; set; }
         public Desk Desk { get; set; }
         
         [Required]
         [ForeignKey("user_id")]
+        public int UserId { get; set; }
         public User User { get; set; }
 
         [Column("date")]

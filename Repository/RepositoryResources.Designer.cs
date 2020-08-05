@@ -22,7 +22,7 @@ namespace Repository {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class RepositoryResources {
+    internal class RepositoryResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Repository {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Repository.RepositoryResources", typeof(RepositoryResources).Assembly);
@@ -51,7 +51,7 @@ namespace Repository {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,20 +61,20 @@ namespace Repository {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на &quot;SET IDENTITY_INSERT [dbo].[{0}] OFF&quot;.
+        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[Users] OFF.
         /// </summary>
-        public static string IdentityInsertOff {
+        internal static string UsersIdentityInsertOff {
             get {
-                return ResourceManager.GetString("IdentityInsertOff", resourceCulture);
+                return ResourceManager.GetString("UsersIdentityInsertOff", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[{0}] ON.
+        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[Users] ON.
         /// </summary>
-        public static string IdentityInsertOn {
+        internal static string UsersIdentityInsertOn {
             get {
-                return ResourceManager.GetString("IdentityInsertOn", resourceCulture);
+                return ResourceManager.GetString("UsersIdentityInsertOn", resourceCulture);
             }
         }
     }

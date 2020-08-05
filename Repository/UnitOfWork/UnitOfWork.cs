@@ -14,23 +14,18 @@ namespace Repository.UnitOfWork
         {
             db = dbContext;
         }
-
-        public void Save()
-        {
-            db.SaveChanges();
-        }
         
         private bool disposed = false;
        
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     db.Dispose();
                 }
-                this.disposed = true;
+                disposed = true;
             }
         }
                 
@@ -45,5 +40,15 @@ namespace Repository.UnitOfWork
             return (IRepository<TSource>)Activator.CreateInstance(typeof(Repository<TSource>), db);
         }
 
+        public void Save()
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                db.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOn));
+                db.SaveChanges();
+                db.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOff));
+                transaction.Commit();
+            }
+        }
     }
 }
