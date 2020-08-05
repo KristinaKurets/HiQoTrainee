@@ -2,7 +2,7 @@
 using DB.Entity;
 using Repository.Interface;
 using Repository.UnitOfWork;
-using Service.AdminService.DTO;
+using Service.AdminService.DTO.Entities;
 using Service.AdminService.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -45,25 +45,25 @@ namespace Service.AdminService.Services
         public void UpdateWorkPlan(UserDto user, WorkPlanDto workPlan)
         {
             var repUser = userRepository.Read(user.Id);
-            repUser.WorkPlan = workPlan;
+            repUser.WorkPlan = (WorkPlan)workPlan;
             userRepository.Update(repUser);
         }
 
         public void UpdateDesk(UserDto user, DeskDto desk)
         {
             var repUser = userRepository.Read(user.Id);
-            repUser.Desk = desk;
+            repUser.Desk = (Desk)desk;
             userRepository.Update(repUser);
         }
 
-        public List<WorkingDayCalendarDto> GetWorkingDayCalendars()
+        public List<WorkingDaysCalendarDto> GetWorkingDayCalendars()
         {
             var mapper = new MapperConfiguration(confiExpression =>
             confiExpression.CreateMap<User, UserDto>()).CreateMapper();
-            return mapper.Map<List<WorkingDaysCalendar>, List<WorkingDayCalendarDto>>(calendarRepository.ReadAll().ToList());
+            return mapper.Map<List<WorkingDaysCalendar>, List<WorkingDaysCalendarDto>>(calendarRepository.ReadAll().ToList());
         }
 
-        public void SetDayOff(WorkingDayCalendarDto calendar)
+        public void SetDayOff(WorkingDaysCalendarDto calendar)
         {
             var cal = calendarRepository.Read(calendar.Id);
             cal.IsOff = true;
