@@ -4,7 +4,6 @@ using Repository.Interface;
 using Repository.UnitOfWork;
 using Service.AdminService.DTO;
 using Service.AdminService.Interfaces;
-using Service.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +25,11 @@ namespace Service.AdminService.Services
 
         public List<UserDto> GetUsers()
         {
-            var configuration = new MapperConfiguration(cfg =>
-                cfg.CreateMap<User, UserDto>().ConvertUsing(new UserConverter()));
+            var configuration = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
             var mapper = configuration.CreateMapper();
-            return mapper.Map<List<User>, List<UserDto>>(userRepository.ReadAll().ToList());
+            var users = userRepository.ReadAll().ToList();
+            var workPlan = users.First().WorkPlan;
+            return mapper.Map<List<UserDto>>(users);
         }
 
         public List<UserDto> OrderUsersBy<TKey>(Func<UserDto, TKey> key)
@@ -37,9 +37,9 @@ namespace Service.AdminService.Services
             return GetUsers().OrderBy(key).ToList();
         }
 
-        public List<UserDto> FilterBy(Func<UserDto, bool> predicate)
+        public List<UserDto> FilterBy(Func<UserDto, bool> predicate, List<UserDto> users)
         {
-            return GetUsers().Where(predicate).ToList();
+            return users.Where(predicate).ToList();
         }
 
         public void UpdateWorkPlan(UserDto user, WorkPlanDto workPlan)
@@ -68,7 +68,6 @@ namespace Service.AdminService.Services
             var cal = calendarRepository.Read(calendar.Id);
             cal.IsOff = true;
             calendarRepository.Update(cal);
-
         }
     }
 }
