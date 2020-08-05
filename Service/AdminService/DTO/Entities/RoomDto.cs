@@ -32,6 +32,7 @@ namespace Service.AdminService.DTO.Entities
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
                 Title = room.Title
+
             };
         }
     }
