@@ -40,5 +40,15 @@ namespace Repository.UnitOfWork
             return (IRepository<TSource>)Activator.CreateInstance(typeof(Repository<TSource>), db);
         }
 
+        public void Save()
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                db.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOn));
+                db.SaveChanges();
+                db.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOff));
+                transaction.Commit();
+            }
+        }
     }
 }

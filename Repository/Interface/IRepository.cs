@@ -14,6 +14,5 @@ namespace Repository.Interface
         IQueryable<TSource> ReadAll(Func<TSource, bool> predicate);
         IQueryable<TSource> ReadAll();
         void DeleteAll();
-        void Save(string tableName);
     }
 }

@@ -53,17 +53,6 @@ namespace Repository.Repositories
             return set.AsQueryable();
         }
 
-        public void Save(string tableName)
-        {
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOn, tableName));
-                context.SaveChanges();
-                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOff, tableName));
-                transaction.Commit();
-            }
-        }
-
         public void Update(TSource item)
         {
             context.Entry(item).State = EntityState.Modified;

@@ -21,15 +21,14 @@ namespace Test
             var context = new HqrbContext(options.Options);
             using (var unit = new UnitOfWork(context))
             {
-                var service = new AdminService(unit);
-                var users = service.GetUsers();
-                //var repository = unit.GetRepository<UserPosition>();
-                //var position = repository.Read((short)1);
-                //position.Type = "Olaf";
-                //repository.Update(position);
-                //repository.Save("Positions");
+                var position = new UserPosition()
+                {
+                    Type = "Jora"
+                };
+                var repository = unit.GetRepository<UserPosition>();
+                repository.Create(position);
+                unit.Save();
             }
-            
             Console.ReadKey();
         }
     }

@@ -61,20 +61,20 @@ namespace Repository {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[{0}] OFF.
+        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[Users] OFF.
         /// </summary>
-        internal static string IdentityInsertOff {
+        internal static string UsersIdentityInsertOff {
             get {
-                return ResourceManager.GetString("IdentityInsertOff", resourceCulture);
+                return ResourceManager.GetString("UsersIdentityInsertOff", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[{0}] ON.
+        ///   Ищет локализованную строку, похожую на SET IDENTITY_INSERT [dbo].[Users] ON.
         /// </summary>
-        internal static string IdentityInsertOn {
+        internal static string UsersIdentityInsertOn {
             get {
-                return ResourceManager.GetString("IdentityInsertOn", resourceCulture);
+                return ResourceManager.GetString("UsersIdentityInsertOn", resourceCulture);
             }
         }
     }

@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IdentityInsertOff" xml:space="preserve">
-    <value>SET IDENTITY_INSERT [dbo].[{0}] OFF</value>
+  <data name="UsersIdentityInsertOff" xml:space="preserve">
+    <value>SET IDENTITY_INSERT [dbo].[Users] OFF</value>
   </data>
-  <data name="IdentityInsertOn" xml:space="preserve">
-    <value>SET IDENTITY_INSERT [dbo].[{0}] ON</value>
+  <data name="UsersIdentityInsertOn" xml:space="preserve">
+    <value>SET IDENTITY_INSERT [dbo].[Users] ON</value>
   </data>
 </root>
