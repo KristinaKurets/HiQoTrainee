@@ -13,7 +13,7 @@ namespace Service.Tests
 {
     public class WorkPlanServiceTests
     {
-        private IQueryable<WorkPlan> GetTestUsers()
+        private IQueryable<WorkPlan> GetTestWorkplans()
         {
             return new WorkPlan[]
             {
@@ -28,20 +28,20 @@ namespace Service.Tests
         [SetUp]
         public void SetUp()
         {
-            var userSetupServiceMock = new Mock<IRepository<WorkPlan>>();
+            var workPlanServiceMock = new Mock<IRepository<WorkPlan>>();
             unitOfWorkMock = new Mock<IUnitOfWork>();
-            userSetupServiceMock.Setup(x => x.ReadAll()).Returns(GetTestUsers());
-            userSetupServiceMock.Setup(x => x.Create(It.IsAny<WorkPlan>()));
+
+            workPlanServiceMock.Setup(x => x.ReadAll()).Returns(GetTestWorkplans());
             unitOfWorkMock.Setup(x => x.Save());
-            unitOfWorkMock.Setup(x => x.GetRepository<WorkPlan>()).Returns(userSetupServiceMock.Object);
+            unitOfWorkMock.Setup(x => x.GetRepository<WorkPlan>()).Returns(workPlanServiceMock.Object);
         }
 
         [Test]
         public void ReadAll_Test()
         {
-            var userSetupService = new UserSetupService(unitOfWorkMock.Object);
-            var result = userSetupService.ReadAll();
-            Assert.Equals(result.Count(), userSetupService.ReadAll().Count());
+            var workPlanService = new WorkPlanService(unitOfWorkMock.Object);
+            var result = workPlanService.ReadAll();
+            Assert.AreEqual(result.Count(), workPlanService.ReadAll().Count());
         }
     }
 }

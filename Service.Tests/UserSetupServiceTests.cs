@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using Repository.Interface;
 using Repository.UnitOfWork;
+using Service.AdminService.DTO.Entities;
 using Service.AdminService.Realization;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ namespace Service.Tests
         {
             var userSetupServiceMock = new Mock<IRepository<User>>();
             unitOfWorkMock = new Mock<IUnitOfWork>();
+
             userSetupServiceMock.Setup(x => x.ReadAll()).Returns(GetTestUsers());
-            userSetupServiceMock.Setup(x => x.Create(It.IsAny<User>()));
             unitOfWorkMock.Setup(x => x.Save());
             unitOfWorkMock.Setup(x => x.GetRepository<User>()).Returns(userSetupServiceMock.Object);
         }
@@ -41,7 +42,7 @@ namespace Service.Tests
         {
             var userSetupService = new UserSetupService(unitOfWorkMock.Object);
             var result = userSetupService.ReadAll();
-            Assert.Equals(result.Count(), userSetupService.ReadAll().Count());
+            Assert.AreEqual(result.Count(), userSetupService.ReadAll().Count());
         }
     }
 }
