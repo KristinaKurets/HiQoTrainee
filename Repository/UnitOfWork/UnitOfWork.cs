@@ -14,23 +14,18 @@ namespace Repository.UnitOfWork
         {
             db = dbContext;
         }
-
-        public void Save()
-        {
-            db.SaveChanges();
-        }
         
         private bool disposed = false;
        
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     db.Dispose();
                 }
-                this.disposed = true;
+                disposed = true;
             }
         }
                 

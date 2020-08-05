@@ -25,7 +25,7 @@ namespace Repository.Repositories
 
         public void Create(IEnumerable<TSource> range)
         {
-            set.AddRange(range);
+            set.AddRange(range);            
         }
 
         public void Delete(TSource item)
@@ -38,9 +38,9 @@ namespace Repository.Repositories
             set.RemoveRange(ReadAll().ToList());
         }
 
-        public TSource Read(int id)
+        public TSource Read(params object[] keyValue)
         {
-            return set.Find(id);
+            return set.Find(keyValue);
         }
 
         public IQueryable<TSource> ReadAll(Func<TSource, bool> predicate)
@@ -51,6 +51,22 @@ namespace Repository.Repositories
         public IQueryable<TSource> ReadAll()
         {
             return set.AsQueryable();
+        }
+
+        public void Save(string tableName)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOn, tableName));
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOff, tableName));
+                transaction.Commit();
+            }
+        }
+
+        public void Update(TSource item)
+        {
+            context.Entry(item).State = EntityState.Modified;
         }
     }
 }
