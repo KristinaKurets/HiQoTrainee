@@ -30,7 +30,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new BookingInfo()
             {
-                Id = bookingInfoDto.Id,
                 TimeCloseForBooking = bookingInfoDto.TimeCloseForBooking,
                 TimeOpenForBooking = bookingInfoDto.TimeOpenForBooking,
                 DaysCloseForBooking = bookingInfoDto.DaysCloseForBooking,

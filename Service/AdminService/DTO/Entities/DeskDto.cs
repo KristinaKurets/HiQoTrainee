@@ -33,7 +33,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new Desk()
             {
-                Id = desk.Id,
                 Title = desk.Title,
                 MacBook = desk.MacBook,
                 Camera = desk.Camera,

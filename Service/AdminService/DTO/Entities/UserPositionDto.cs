@@ -21,7 +21,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new UserPosition()
             {
-                Id = userPosition.Id,
                 Type = userPosition.Type
             };
         }

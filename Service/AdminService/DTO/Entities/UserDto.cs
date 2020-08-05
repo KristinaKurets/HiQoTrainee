@@ -40,7 +40,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new User()
             {
-                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Desk = (Desk) user.Desk,
