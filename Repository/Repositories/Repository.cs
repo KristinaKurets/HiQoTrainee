@@ -57,5 +57,16 @@ namespace Repository.Repositories
         {
             context.Entry(item).State = EntityState.Modified;
         }
+        public void Save(string tableName)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOff, tableName));
+                context.SaveChanges();
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOn, tableName));
+                transaction.Commit();
+            }
+        }
+
     }
 }

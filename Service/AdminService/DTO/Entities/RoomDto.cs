@@ -27,7 +27,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new Room()
             {
-                Id = room.Id,
                 BookingInfo = (BookingInfo) room.BookingInfo,
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,

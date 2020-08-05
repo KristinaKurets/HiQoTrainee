@@ -29,7 +29,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new Order()
             {
-                Id = order.Id,
                 Desk = (Desk) order.Desk,
                 User = (User) order.User,
                 DateTime = order.DateTime, 

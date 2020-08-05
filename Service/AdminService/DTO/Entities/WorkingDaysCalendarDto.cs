@@ -29,7 +29,6 @@ namespace Service.AdminService.DTO.Entities
         {
             return new WorkingDaysCalendar()
             {
-                Id = calendar.Id,
                 Date = calendar.Date,
                 WorkStartTime = calendar.WorkStartTime,
                 WorkEndTime = calendar.WorkEndTime,
