@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB.Migrations
 {
     [DbContext(typeof(HqrbContext))]
-    [Migration("20200803194455_InitialCreate")]
+    [Migration("20200805172607_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,10 @@ namespace DB.Migrations
                         .HasColumnName("days-open-for-booking")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnName("room_id")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("TimeCloseForBooking")
                         .HasColumnName("time-close-for-booking")
                         .HasColumnType("time");
@@ -46,6 +50,8 @@ namespace DB.Migrations
                         .HasColumnType("time");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("BookingInfo");
                 });
@@ -73,6 +79,10 @@ namespace DB.Migrations
                         .HasColumnName("macBook")
                         .HasColumnType("bit");
 
+                    b.Property<int>("RoomId")
+                        .HasColumnName("room_id")
+                        .HasColumnType("int");
+
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
 
@@ -81,15 +91,11 @@ namespace DB.Migrations
                         .HasColumnName("title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("room_id")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DeskStatusLookupID");
 
-                    b.HasIndex("room_id");
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Desks");
                 });
@@ -109,24 +115,24 @@ namespace DB.Migrations
                         .HasColumnName("date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DeskId")
+                        .HasColumnName("desk_id")
+                        .HasColumnType("int");
+
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
 
-                    b.Property<int?>("desk_id")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("user_id")
-                        .IsRequired()
+                    b.Property<int>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingStatusLookupID");
 
-                    b.HasIndex("desk_id");
+                    b.HasIndex("DeskId");
 
-                    b.HasIndex("user_id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -138,6 +144,10 @@ namespace DB.Migrations
                         .HasColumnName("room_id")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BookingInfoId")
+                        .HasColumnName("booking-info_id")
+                        .HasColumnType("int");
 
                     b.Property<short>("Floor")
                         .HasColumnName("floor")
@@ -152,14 +162,9 @@ namespace DB.Migrations
                         .HasColumnName("title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("booking-info_id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("booking-info_id")
-                        .IsUnique()
-                        .HasFilter("[booking-info_id] IS NOT NULL");
+                    b.HasIndex("BookingInfoId");
 
                     b.ToTable("Rooms");
                 });
@@ -171,6 +176,10 @@ namespace DB.Migrations
                         .HasColumnName("user_id")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("DeskId")
+                        .HasColumnName("desk_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -194,35 +203,34 @@ namespace DB.Migrations
                     b.Property<short>("Role")
                         .HasColumnType("smallint");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnName("room_id")
+                        .HasColumnType("int");
+
+                    b.Property<short>("UserPositionId")
+                        .HasColumnName("positions_id")
+                        .HasColumnType("smallint");
+
                     b.Property<short?>("UserRoleLookupID")
                         .HasColumnType("smallint");
 
-                    b.Property<int?>("desk_id")
-                        .HasColumnType("int");
-
-                    b.Property<short?>("positions_id")
-                        .IsRequired()
-                        .HasColumnType("smallint");
-
-                    b.Property<int?>("room_id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("work-plan_id")
+                    b.Property<int?>("WorkPlanId")
+                        .HasColumnName("work-plan_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Email");
 
+                    b.HasIndex("DeskId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserPositionId");
+
                     b.HasIndex("UserRoleLookupID");
 
-                    b.HasIndex("desk_id");
-
-                    b.HasIndex("positions_id");
-
-                    b.HasIndex("room_id");
-
-                    b.HasIndex("work-plan_id");
+                    b.HasIndex("WorkPlanId");
 
                     b.ToTable("Users");
                 });
@@ -300,6 +308,10 @@ namespace DB.Migrations
                         .HasColumnName("is_dayoff")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnName("room_id")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan?>("WorkEndTime")
                         .HasColumnName("end_of_work")
                         .HasColumnType("time");
@@ -308,12 +320,9 @@ namespace DB.Migrations
                         .HasColumnName("start_of_work")
                         .HasColumnType("time");
 
-                    b.Property<int?>("room_id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("room_id");
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Calendar");
                 });
@@ -427,6 +436,15 @@ namespace DB.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DB.Entity.BookingInfo", b =>
+                {
+                    b.HasOne("DB.Entity.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DB.Entity.Desk", b =>
                 {
                     b.HasOne("DB.LookupTable.DeskStatusLookup", null)
@@ -435,7 +453,7 @@ namespace DB.Migrations
 
                     b.HasOne("DB.Entity.Room", "Room")
                         .WithMany("Desks")
-                        .HasForeignKey("room_id")
+                        .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -448,13 +466,13 @@ namespace DB.Migrations
 
                     b.HasOne("DB.Entity.Desk", "Desk")
                         .WithMany("Orders")
-                        .HasForeignKey("desk_id")
+                        .HasForeignKey("DeskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DB.Entity.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("user_id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -462,40 +480,40 @@ namespace DB.Migrations
             modelBuilder.Entity("DB.Entity.Room", b =>
                 {
                     b.HasOne("DB.Entity.BookingInfo", "BookingInfo")
-                        .WithOne("Room")
-                        .HasForeignKey("DB.Entity.Room", "booking-info_id");
+                        .WithMany()
+                        .HasForeignKey("BookingInfoId");
                 });
 
             modelBuilder.Entity("DB.Entity.User", b =>
                 {
+                    b.HasOne("DB.Entity.Desk", "Desk")
+                        .WithMany("Users")
+                        .HasForeignKey("DeskId");
+
+                    b.HasOne("DB.Entity.Room", "Room")
+                        .WithMany("Users")
+                        .HasForeignKey("RoomId");
+
+                    b.HasOne("DB.Entity.UserPosition", "Position")
+                        .WithMany("Users")
+                        .HasForeignKey("UserPositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DB.LookupTable.UserRoleLookup", null)
                         .WithMany("Users")
                         .HasForeignKey("UserRoleLookupID");
 
-                    b.HasOne("DB.Entity.Desk", "Desk")
-                        .WithMany("Users")
-                        .HasForeignKey("desk_id");
-
-                    b.HasOne("DB.Entity.UserPosition", "Position")
-                        .WithMany("Users")
-                        .HasForeignKey("positions_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DB.Entity.Room", "Room")
-                        .WithMany("Users")
-                        .HasForeignKey("room_id");
-
                     b.HasOne("DB.Entity.WorkPlan", "WorkPlan")
                         .WithMany("Users")
-                        .HasForeignKey("work-plan_id");
+                        .HasForeignKey("WorkPlanId");
                 });
 
             modelBuilder.Entity("DB.Entity.WorkingDaysCalendar", b =>
                 {
                     b.HasOne("DB.Entity.Room", "Room")
                         .WithMany("BookingCalendars")
-                        .HasForeignKey("room_id");
+                        .HasForeignKey("RoomId");
                 });
 #pragma warning restore 612, 618
         }

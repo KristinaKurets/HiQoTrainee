@@ -9,8 +9,8 @@ namespace Service.AdminService.DTO.Entities
     {
         public long Id { get; set; }
         public BookingStatusDto Status { get; set; }
-        public DeskDto Desk { get; set; }
-        public UserDto User { get; set; }
+        public int DeskId { get; set; }
+        public int UserId { get; set; }
         public DateTime DateTime { get; set; }
 
         public static implicit operator OrderDto(Order order)
@@ -18,8 +18,8 @@ namespace Service.AdminService.DTO.Entities
             return new OrderDto()
             {
                 Id = order.Id,
-                Desk = order.Desk,
-                User = order.User,
+                DeskId = order.DeskId,
+                UserId = order.UserId,
                 DateTime = order.DateTime, 
                 Status = (BookingStatusDto)order.Status
             };
@@ -29,8 +29,8 @@ namespace Service.AdminService.DTO.Entities
         {
             return new Order()
             {
-                Desk = (Desk) order.Desk,
-                User = (User) order.User,
+                DeskId = order.DeskId,
+                UserId = order.UserId,
                 DateTime = order.DateTime, 
                 Status = (BookingStatus)order.Status
             };

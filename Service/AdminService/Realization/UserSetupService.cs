@@ -79,10 +79,10 @@ namespace Service.AdminService.Realization
         public List<UserDto> Create(UserDto user)
         {
             User result = (User) user;
-            result.Room = UnitOfWork.GetRepository<Room>().Read(user.Room.Id);
-            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.Position.Id);
-            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlan.Id);
-            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.Desk.Id);
+            result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.PositionId);
+            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
+            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
             Repository.Create(result);
             UnitOfWork.Save();
             return CreateUsersDto();
@@ -91,10 +91,10 @@ namespace Service.AdminService.Realization
         public List<UserDto> Update(UserDto user)
         {
             User result = UserChanger.ChangeFromDto(Repository.Read(user.Id), user);
-            result.Room = UnitOfWork.GetRepository<Room>().Read(user.Room.Id);
-            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.Position.Id);
-            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlan.Id);
-            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.Desk.Id);
+            result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.PositionId);
+            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
+            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
             Repository.Update(result);
             UnitOfWork.Save();
             return CreateUsersDto();
