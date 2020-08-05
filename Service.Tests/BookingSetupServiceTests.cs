@@ -34,6 +34,7 @@ namespace Service.Tests
             {
                 Id = 1,
                 Title = "title",
+
             };
             var result = bookingSetupService.Read(room);
             Assert.Equals(result.Id, bookingSetupService.Read(room).Id);
