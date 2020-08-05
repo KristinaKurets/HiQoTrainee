@@ -32,6 +32,7 @@ namespace Service.BookingService.DTO
                 Room = (BookingRoomDTO)desk.Room,
                 Status = (DeskStatusDTO)desk.Status,
                 Order = null,
+                // это правильно, но сломается так-как в бд сущность неправильна
                 User = (BookingUserDTO)desk.Users
                
 

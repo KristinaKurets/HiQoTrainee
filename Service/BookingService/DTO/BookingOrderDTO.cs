@@ -19,11 +19,11 @@ namespace Service.BookingService.DTO
         {
             return new BookingOrderDTO()
             {
-                Id=order.Id,
-                Status=order.Status,
-                Desk=order.Desk,
-                DateTime=order.DateTime
-                
+                Id = order.Id,
+                Status = order.Status,
+                Desk = order.Desk,
+                DateTime = order.DateTime,
+                User = order.User
 
             };
         }
