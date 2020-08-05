@@ -12,7 +12,7 @@ namespace Service.AdminService.DTO.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int PositionId { get; set; }
+        public short PositionId { get; set; }
         public UserRoleDto Role { get; set; }
         public int? WorkPlanId { get; set; }
         public int? RoomId { get; set; }

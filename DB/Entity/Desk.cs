@@ -27,7 +27,8 @@ namespace DB.Entity
         public bool Headset { get; set; }
         
         [Required]
-        [ForeignKey("room_id")]
+        [Column("room_id")]
+        [ForeignKey("Room")]
         public int RoomId { get; set; }
         public Room Room { get; set; }
         

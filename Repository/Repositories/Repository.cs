@@ -61,9 +61,9 @@ namespace Repository.Repositories
         {
             using (var transaction = context.Database.BeginTransaction())
             {
-                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOff, tableName));
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOff, tableName));
                 context.SaveChanges();
-                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.IdentityInsertOn, tableName));
+                context.Database.ExecuteSqlRaw(string.Format(RepositoryResources.UsersIdentityInsertOn, tableName));
                 transaction.Commit();
             }
         }
