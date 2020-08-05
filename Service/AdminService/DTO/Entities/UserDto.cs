@@ -12,7 +12,7 @@ namespace Service.AdminService.DTO.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public short PositionId { get; set; }
+        public int UserPositionId { get; set; }
         public UserRoleDto Role { get; set; }
         public int? WorkPlanId { get; set; }
         public int? RoomId { get; set; }
@@ -29,7 +29,7 @@ namespace Service.AdminService.DTO.Entities
                 DeskId = user.DeskId,
                 Email = user.Email,
                 PlanChangeDate = user.PlanChangeDate,
-                PositionId = user.UserPositionId,
+                UserPositionId = user.UserPositionId,
                 Role = (UserRoleDto) user.Role,
                 RoomId = user.RoomId, 
                 WorkPlanId = user.WorkPlanId
@@ -45,7 +45,7 @@ namespace Service.AdminService.DTO.Entities
                 DeskId = user.DeskId,
                 Email = user.Email,
                 PlanChangeDate = user.PlanChangeDate,
-                UserPositionId = user.PositionId,
+                UserPositionId = user.UserPositionId,
                 Role = (UserRole) user.Role,
                 RoomId = user.RoomId,
                 WorkPlanId = user.WorkPlanId

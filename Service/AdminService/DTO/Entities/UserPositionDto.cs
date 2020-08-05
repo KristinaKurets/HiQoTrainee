@@ -5,7 +5,7 @@ namespace Service.AdminService.DTO.Entities
 {
     public class UserPositionDto
     {
-        public short Id { get; set; }
+        public int Id { get; set; }
         public string Type { get; set; }
 
         public static implicit operator UserPositionDto(UserPosition userPosition)

@@ -28,7 +28,7 @@ namespace DB.Entity
         [Required]
         [Column("positions_id")]
         [ForeignKey("Position")]
-        public short UserPositionId { get; set; }
+        public int UserPositionId { get; set; }
         public UserPosition Position { get; set; }
 
         [Required]

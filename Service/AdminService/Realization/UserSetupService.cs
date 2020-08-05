@@ -80,7 +80,7 @@ namespace Service.AdminService.Realization
         {
             User result = (User) user;
             result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
-            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.PositionId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.UserPositionId);
             result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
             result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
             Repository.Create(result);
@@ -92,7 +92,7 @@ namespace Service.AdminService.Realization
         {
             User result = UserChanger.ChangeFromDto(Repository.Read(user.Id), user);
             result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
-            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.PositionId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.UserPositionId);
             result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
             result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
             Repository.Update(result);

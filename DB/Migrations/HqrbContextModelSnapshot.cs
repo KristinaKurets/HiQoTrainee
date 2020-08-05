@@ -205,9 +205,9 @@ namespace DB.Migrations
                         .HasColumnName("room_id")
                         .HasColumnType("int");
 
-                    b.Property<short>("UserPositionId")
+                    b.Property<int>("UserPositionId")
                         .HasColumnName("positions_id")
-                        .HasColumnType("smallint");
+                        .HasColumnType("int");
 
                     b.Property<short?>("UserRoleLookupID")
                         .HasColumnType("smallint");
@@ -235,10 +235,10 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.UserPosition", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("position_id")
-                        .HasColumnType("smallint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")

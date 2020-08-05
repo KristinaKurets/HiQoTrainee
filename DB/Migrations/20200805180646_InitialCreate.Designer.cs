@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB.Migrations
 {
     [DbContext(typeof(HqrbContext))]
-    [Migration("20200805172607_InitialCreate")]
+    [Migration("20200805180646_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,9 +207,9 @@ namespace DB.Migrations
                         .HasColumnName("room_id")
                         .HasColumnType("int");
 
-                    b.Property<short>("UserPositionId")
+                    b.Property<int>("UserPositionId")
                         .HasColumnName("positions_id")
-                        .HasColumnType("smallint");
+                        .HasColumnType("int");
 
                     b.Property<short?>("UserRoleLookupID")
                         .HasColumnType("smallint");
@@ -237,10 +237,10 @@ namespace DB.Migrations
 
             modelBuilder.Entity("DB.Entity.UserPosition", b =>
                 {
-                    b.Property<short>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("position_id")
-                        .HasColumnType("smallint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")

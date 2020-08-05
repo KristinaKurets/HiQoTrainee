@@ -35,7 +35,7 @@ namespace DB.Migrations
                 name: "Positions",
                 columns: table => new
                 {
-                    position_id = table.Column<short>(nullable: false)
+                    position_id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     position_type = table.Column<string>(nullable: false)
                 },
@@ -199,7 +199,7 @@ namespace DB.Migrations
                     first_name = table.Column<string>(nullable: false),
                     last_name = table.Column<string>(nullable: false),
                     user_email = table.Column<string>(nullable: false),
-                    positions_id = table.Column<short>(nullable: false),
+                    positions_id = table.Column<int>(nullable: false),
                     Role = table.Column<short>(nullable: false),
                     workplan_id = table.Column<int>(name: "work-plan_id", nullable: true),
                     room_id = table.Column<int>(nullable: true),

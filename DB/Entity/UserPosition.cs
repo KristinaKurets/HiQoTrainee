@@ -10,7 +10,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("position_id")]
-        public short Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("position_type")]
