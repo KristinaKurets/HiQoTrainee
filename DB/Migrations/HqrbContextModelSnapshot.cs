@@ -19,6 +19,35 @@ namespace DB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DB.Entity.BookingInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("booking-info_id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DaysCloseForBooking")
+                        .HasColumnName("days-close-for-booking")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DaysOpenForBooking")
+                        .HasColumnName("days-open-for-booking")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeCloseForBooking")
+                        .HasColumnName("time-close-for-booking")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeOpenForBooking")
+                        .HasColumnName("time-open-for-booking")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookingInfo");
+                });
+
             modelBuilder.Entity("DB.Entity.Desk", b =>
                 {
                     b.Property<int>("Id")
@@ -121,7 +150,14 @@ namespace DB.Migrations
                         .HasColumnName("title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("booking-info_id")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("booking-info_id")
+                        .IsUnique()
+                        .HasFilter("[booking-info_id] IS NOT NULL");
 
                     b.ToTable("Rooms");
                 });
@@ -219,11 +255,11 @@ namespace DB.Migrations
                         .HasColumnName("guaranteed_desk")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("MaxOfficeDay")
+                    b.Property<byte?>("MaxOfficeDay")
                         .HasColumnName("max_days_per_month")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("MinOfficeDay")
+                    b.Property<byte?>("MinOfficeDay")
                         .HasColumnName("min_days_per_month")
                         .HasColumnType("tinyint");
 
@@ -419,6 +455,13 @@ namespace DB.Migrations
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DB.Entity.Room", b =>
+                {
+                    b.HasOne("DB.Entity.BookingInfo", "BookingInfo")
+                        .WithOne("Room")
+                        .HasForeignKey("DB.Entity.Room", "booking-info_id");
                 });
 
             modelBuilder.Entity("DB.Entity.User", b =>

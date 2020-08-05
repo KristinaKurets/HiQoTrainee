@@ -13,6 +13,7 @@ namespace Repository.Interface
         void Delete(TSource item);
         IQueryable<TSource> ReadAll(Func<TSource, bool> predicate);
         IQueryable<TSource> ReadAll();
+        void Update(TSource item);
         void DeleteAll();
     }
 }
