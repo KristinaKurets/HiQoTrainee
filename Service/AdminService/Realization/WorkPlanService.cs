@@ -3,6 +3,7 @@ using AutoMapper;
 using DB.Entity;
 using Repository.Interface;
 using Repository.UnitOfWork;
+using Service.AdminService.Changers;
 using Service.AdminService.DTO.Entities;
 using Service.AdminService.Interfaces;
 
@@ -30,7 +31,8 @@ namespace Service.AdminService.Realization
 
         public List<WorkPlanDto> Update(WorkPlanDto workPlanDto)
         {
-            Repository.Update(Repository.Read(workPlanDto.Id));
+            WorkPlan plan = WorkPlanChanger.ChangeFromDto(Repository.Read(workPlanDto.Id), workPlanDto);
+            Repository.Update(plan);
             UnitOfWork.Save();
             return CreateDto();
         }
