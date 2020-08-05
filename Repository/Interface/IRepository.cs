@@ -6,9 +6,9 @@ namespace Repository.Interface
 {
     public interface IRepository<TSource> where TSource : class
     {
-        TSource Read(int id);
-        TSource Read(long id);
+        TSource Read(params object[] keyValue);
         TSource Create(TSource item);
+        void Update(TSource item);
         void Create(IEnumerable<TSource> range);
         void Delete(TSource item);
         IQueryable<TSource> ReadAll(Func<TSource, bool> predicate);

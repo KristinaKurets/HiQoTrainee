@@ -25,7 +25,7 @@ namespace Repository.Repositories
 
         public void Create(IEnumerable<TSource> range)
         {
-            set.AddRange(range);
+            set.AddRange(range);            
         }
 
         public void Delete(TSource item)
@@ -38,13 +38,9 @@ namespace Repository.Repositories
             set.RemoveRange(ReadAll().ToList());
         }
 
-        public TSource Read(long id)
+        public TSource Read(params object[] keyValue)
         {
-            return set.Find(id);
-        }
-        public TSource Read(int id)
-        {
-            return set.Find(id);
+            return set.Find(keyValue);
         }
 
         public IQueryable<TSource> ReadAll(Func<TSource, bool> predicate)
