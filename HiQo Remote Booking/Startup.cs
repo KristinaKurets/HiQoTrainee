@@ -1,10 +1,15 @@
 using DB.Context;
+using DB.Entity;
+using HiQo_Remote_Booking.ServiceProviderExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository.Interface;
+using Repository.Repositories;
+using Repository.UnitOfWork;
 
 namespace HiQo_Remote_Booking
 {
@@ -22,6 +27,8 @@ namespace HiQo_Remote_Booking
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<HqrbContext>(options => options.UseSqlServer(connection));
+            services.AddUnitOfWorkAndRepositories();
+            services.AddBusinessLogicLayer();
             services.AddControllers();
         }
 
