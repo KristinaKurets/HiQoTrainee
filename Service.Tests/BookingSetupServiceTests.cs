@@ -22,7 +22,8 @@ namespace Service.Tests
         public void Setup()
         {
             Room room = new Room();
-            ICollection<Room> rooms = new List<Room>()
+            
+            var rooms = new List<Room>()
             {
                 room,
             };
@@ -33,13 +34,13 @@ namespace Service.Tests
                 Room = room,
             };
 
-            ICollection<BookingInfo> bookingInfos = new List<BookingInfo>()
+            var bookingInfos = new List<BookingInfo>()
             {
                 bookingInfo
             };
             room.BookingInfo = bookingInfo;
 
-            RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
+            var repositoryDescriptor = new RepositoryDescriptor()
             {
                 BookingInfo = bookingInfos,
                 Rooms = rooms,
@@ -62,13 +63,21 @@ namespace Service.Tests
         [Test]
         public void Read_MockObject()
         {
-            RoomDto room = new RoomDto()
+            Room room = new Room();
+
+            var rooms = new List<Room>()
+            {
+                room,
+            };
+
+            var bookingInfo = new BookingInfo()
             {
                 Id = 1,
+                Room = room,
             };
-            var result = bookingSetupService.Read(room);
-            Assert.Equals(result.Id, bookingSetupService.Read(room).Id);
-        }
 
+            var result = bookingSetupService.Read(room);
+            Assert.Equals(result.RoomId, bookingSetupService.Read(room).Id);
+        }
     }
 }

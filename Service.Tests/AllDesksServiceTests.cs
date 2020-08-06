@@ -15,7 +15,7 @@ namespace Service.Tests
 {
     public class AllDesksServiceTests
     {
-        private ICollection<Desk> desks = new Desk[] {
+        private IList<Desk> desks = new Desk[] {
             new Desk
             {
                 Id=1, 
@@ -61,8 +61,9 @@ namespace Service.Tests
         [SetUp]
         public void Setup()
         {
-             Room room = new Room();
-            ICollection<Room> rooms = new List<Room>()
+            Room room = new Room();
+
+            var rooms = new List<Room>()
             {
                 room,
             };
@@ -73,7 +74,7 @@ namespace Service.Tests
                 Room = room,
             };
 
-            ICollection<BookingInfo> bookingInfos = new List<BookingInfo>()
+            var bookingInfos = new List<BookingInfo>()
             {
                 bookingInfo
             };
@@ -105,13 +106,12 @@ namespace Service.Tests
         [Test]
         public void UpdateDesk_Desk_ListDesks()
         {
+            var testDesk = desks[0];
+            testDesk.Title = "test";
+            var result = allDesksService.UpdateDesks(testDesk);
 
 
-            //var testDeskDto = (DeskDto)testDesk;
-
-            //var result = allDesksService.UpdateDesks(testDeskDto);
-
-            //Assert.Equals(result.First(i => i.Id == 1).Title, testDesk.Title);
+            Assert.AreEqual(result.First(i => i.Id == testDesk.Id).Title, testDesk.Title);
         }
     }
 }
