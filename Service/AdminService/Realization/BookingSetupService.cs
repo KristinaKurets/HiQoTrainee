@@ -30,8 +30,8 @@ namespace Service.AdminService.Realization
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo,
                 BookingInfoDto>()).CreateMapper();
-            var name = Repository.Read(u => u.RoomId == 1);
-            return mapper.Map<BookingInfoDto>(Repository.Read(u=>u.RoomId == room.Id));
+            var result = Repository.Read(u => u.RoomId == room.Id);
+            return mapper.Map<BookingInfoDto>(result);
         }
         public List<BookingInfoDto> Create(BookingInfoDto booking)
         {

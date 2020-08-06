@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using DB.Entity;
 using Moq;
@@ -59,6 +60,8 @@ namespace Service.Tests
                         repositoryMock.Setup(x => x.Read(It.IsAny<object[]>()))
                             .Returns<object[]>(p => items[(int) p[0]]);
                         repositoryMock.Setup(x => x.Update(It.IsAny<T>()));
+                        repositoryMock.Setup(x => x.Read(It.IsAny<Func<T, bool>>())).
+                            Returns<Func<T, bool>>(items.FirstOrDefault);
                     }
                 }
 

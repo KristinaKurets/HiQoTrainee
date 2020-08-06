@@ -17,15 +17,14 @@ namespace Service.Tests
     {
         private Mock<IUnitOfWork> unitOfWorkMock;
         private BookingSetupService bookingSetupService;
-        private RoomDto room = new RoomDto()
-        {
-            Id = 1
-        };
-
+        private IList<BookingInfo> bookingInfos;
         [SetUp]
         public void Setup()
         {
-            Room room = new Room();
+            Room room = new Room()
+            {
+                Id = 1
+            };
             var rooms = new List<Room>()
             {
                 room,
@@ -34,13 +33,15 @@ namespace Service.Tests
             var bookingInfo = new BookingInfo()
             {
                 Id = 1,
+                RoomId = room.Id,
                 Room = room,
             };
 
-            var bookingInfos = new List<BookingInfo>()
+            bookingInfos = new List<BookingInfo>()
             {
                 bookingInfo
             };
+
             room.BookingInfo = bookingInfo;
 
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
@@ -51,25 +52,14 @@ namespace Service.Tests
 
             ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
             bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
-
-
-            //    unitOfWorkMock = new Mock<IUnitOfWork>();
-
-            //    var bookingInfoMock = new Mock<IRepository<BookingInfo>>();
-            //    bookingInfoMock.Setup(r => r.Read(room)).Returns(new BookingInfo() { RoomId = 1 });
-
-            //    unitOfWorkMock.Setup(x => x.Save());
-            //    unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoMock.Object);
-            //    bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
         }
 
             [Test]
         public void Read_MockObject()
         {
-            
-            var result = bookingSetupService.Read(room);
-            Assert.Equals(result.Id, bookingSetupService.Read(room).Id);
+            var result = bookingSetupService.Read(bookingInfos[0].Room);
+            Assert.AreEqual(result.RoomId, bookingInfos[0].RoomId);
         }
-
+        
     }
 }
