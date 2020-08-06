@@ -1,3 +1,4 @@
+using AutoMapper;
 using DB.Context;
 using DB.Entity;
 using HiQo_Remote_Booking.ServiceProviderExtensions;
@@ -7,9 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Repository.Interface;
-using Repository.Repositories;
-using Repository.UnitOfWork;
+using Profiles;
 
 namespace HiQo_Remote_Booking
 {
@@ -26,10 +25,9 @@ namespace HiQo_Remote_Booking
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DbContext,HqrbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connection));
-            services.AddUnitOfWorkAndRepositories();
-            services.AddBusinessLogicLayer();
-            services.AddControllers();
+            services.AddDbContext<HqrbContext>(options => options.UseSqlServer(connection));
+            services.AddAutoMapper(typeof(DtoProfile));
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +46,9 @@ namespace HiQo_Remote_Booking
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

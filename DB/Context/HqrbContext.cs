@@ -78,11 +78,6 @@ namespace DB.Context
         }
         public HqrbContext(DbContextOptions<HqrbContext> options)
             : base(options)
-        { 
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseLazyLoadingProxies();
-
+        { }
     }
 }
