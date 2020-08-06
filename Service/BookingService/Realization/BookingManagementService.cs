@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Service.BookingService.Realization
 {
-    class BookingManagementService:BookingBaseService,IBookingManagementService
+    public class BookingManagementService:BookingBaseService,IBookingManagementService
     {
         protected readonly IRepository<Order> _orderRepository;
         protected readonly IRepository<User> _userRepository;

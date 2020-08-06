@@ -1,5 +1,7 @@
 using AutoMapper;
 using DB.Context;
+using DB.Entity;
+using HiQo_Remote_Booking.ServiceProviderExtensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
