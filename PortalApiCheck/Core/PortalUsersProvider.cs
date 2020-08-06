@@ -25,14 +25,22 @@ namespace PortalApiCheck.Core
         }
 
         public IEnumerable<User> GetAllUsers()
-        {
+        { 
             IEnumerable<PortalTeamUserInfo> users = _portalApiClient.GetPortalTeam();
             if (users == null)
                 return null;
 
-            //PortalTeamUserInfo have no birthday
+            // PortalTeamUserInfo have no birthday
             IEnumerable<User> adUsers = users
-                .Select(user => new User { Id = user.Id, FirstName = user.FirstName, LastName = user.LastName, Email = user.Email })
+                .Select(user => new User
+                {
+                    Id = user.Id, 
+                    FirstName = user.FirstName, 
+                    LastName = user.LastName, 
+                    Email = user.Email, 
+                    Position = new UserPosition { Type = user.Category.Name },
+                    Role = UserRole.User
+                })
                 .ToArray();
 
             return adUsers;
@@ -59,9 +67,9 @@ namespace PortalApiCheck.Core
             if (userProfile == null)
                 return null;
 
-            User adUser = GetUserInfo(userProfile);
+            User addUser = GetUserInfo(userProfile);
 
-            return adUser;
+            return addUser;
         }
 
         public User GetUserByID(string guid)
@@ -76,9 +84,17 @@ namespace PortalApiCheck.Core
             return adUser;
         }
 
+
         private User GetUserInfo(PortalProfile profile)
         {
-            User adUser = new User { Id = profile.UserId, FirstName = profile.FirstName, LastName = profile.LastName, Email = profile.Email, Role = (UserRole)Enum.Parse(typeof(UserRole), profile.Position) };
+            User adUser = new User
+            {
+                Id = profile.UserId, 
+                FirstName = profile.FirstName, 
+                LastName = profile.LastName, 
+                Email = profile.Email, 
+                Role = UserRole.User,
+            };
             return adUser;
         }
     }
