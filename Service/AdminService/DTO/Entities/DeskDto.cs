@@ -14,8 +14,6 @@ namespace Service.AdminService.DTO.Entities
         public bool Headset { get; set; }
         public RoomDto Room { get; set; }
         public DeskStatusDto Status { get; set; }
-        public virtual ICollection<OrderDto> Orders { get; set; }
-        public virtual ICollection<UserDto> Users { get; set; }
 
         public static implicit operator DeskDto(Desk desk)
         {
@@ -27,9 +25,7 @@ namespace Service.AdminService.DTO.Entities
                 Camera = desk.Camera,
                 Headset = desk.Headset,
                 Room = desk.Room,
-                Status = (DeskStatusDto) desk.Status,
-                Orders = (ICollection<OrderDto>) desk.Orders,
-                Users = (ICollection<UserDto>)desk.Users
+                Status = (DeskStatusDto) desk.Status
             };
         }
 
@@ -43,9 +39,7 @@ namespace Service.AdminService.DTO.Entities
                 Camera = desk.Camera,
                 Headset = desk.Headset,
                 Room = (Room) desk.Room,
-                Status = (DeskStatus) desk.Status,
-                Orders = (ICollection<Order>) desk.Orders,
-                Users = (ICollection<User>) desk.Users
+                Status = (DeskStatus) desk.Status
             };
         }
     }

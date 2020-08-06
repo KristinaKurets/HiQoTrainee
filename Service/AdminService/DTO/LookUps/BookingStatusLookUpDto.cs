@@ -11,15 +11,13 @@ namespace Service.AdminService.DTO.LookUps
     {
         public short Id { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<OrderDto> Orders { get; set; }
 
         public static implicit operator BookingStatusLookUpDto(BookingStatusLookup status)
         {
             return new BookingStatusLookUpDto()
             {
                 Id = status.ID,
-                Description = status.Description,
-                Orders = (ICollection<OrderDto>) status.Orders
+                Description = status.Description
             };
         }
 
@@ -28,8 +26,7 @@ namespace Service.AdminService.DTO.LookUps
             return new BookingStatusLookup()
             {
                 ID = status.Id,
-                Description = status.Description,
-                Orders = (ICollection<Order>)status.Orders
+                Description = status.Description
             };
         }
 

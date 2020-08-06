@@ -38,6 +38,10 @@ namespace Repository.Repositories
             set.RemoveRange(ReadAll().ToList());
         }
 
+        public TSource Read(long id)
+        {
+            return set.Find(id);
+        }
         public TSource Read(int id)
         {
             return set.Find(id);
