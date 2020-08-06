@@ -6,7 +6,7 @@ using Service.AdminService.Services;
 
 namespace ConsoleApp1
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

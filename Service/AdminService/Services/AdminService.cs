@@ -24,9 +24,10 @@ namespace Service.AdminService.Services
         private readonly IRepository<WorkPlan> _workPlanRepository;
         private readonly IRepository<Room> _roomRepository;
         private readonly IRepository<DeskStatusLookup> _deskStatusRepository;
-        private IUnitOfWork DataBase { get; set; }
+        private IUnitOfWork DataBase { get; }
+        private readonly IMapper _mapper;
 
-        public AdminService(IUnitOfWork unitOfWork)
+        public AdminService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             DataBase = unitOfWork;
             _userRepository = DataBase.GetRepository<User>();
@@ -38,13 +39,12 @@ namespace Service.AdminService.Services
             _workPlanRepository = DataBase.GetRepository<WorkPlan>();
             _roomRepository = DataBase.GetRepository<Room>();
             _deskStatusRepository = DataBase.GetRepository<DeskStatusLookup>();
+            _mapper = mapper;
         }
 
         public List<UserDto> GetUsers()
         {
-            var configuration = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDto>());
-            var mapper = configuration.CreateMapper();
-            return mapper.Map<List<UserDto>>(_userRepository.ReadAll().ToList());
+            return _mapper.Map<List<UserDto>>(_userRepository.ReadAll().ToList());
         }
 
         public List<UserDto> OrderUsersBy<TKey>(Func<UserDto, TKey> key)
@@ -59,8 +59,7 @@ namespace Service.AdminService.Services
 
         public List<DeskDto> GetDesks()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<Desk, DeskDto>()).CreateMapper();
-            return mapper.Map<List<DeskDto>>(_deskRepository.ReadAll());
+            return _mapper.Map<List<DeskDto>>(_deskRepository.ReadAll());
         }
 
         public List<DeskDto> UpdateDesks(DeskDto desk)
@@ -90,16 +89,12 @@ namespace Service.AdminService.Services
 
         public List<DeskStatusLookUpDto> GetDesksStatuses()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<DeskStatusLookup,
-                DeskStatusLookUpDto>()).CreateMapper();
-            return mapper.Map<List<DeskStatusLookUpDto>>(_deskStatusRepository.ReadAll());
+            return _mapper.Map<List<DeskStatusLookUpDto>>(_deskStatusRepository.ReadAll());
         }
 
         public List<BookingInfoDto> GetBookingInfo()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo,
-                BookingInfoDto>()).CreateMapper();
-            return mapper.Map<List<BookingInfoDto>>(_bookingInfoRepository.ReadAll());
+            return _mapper.Map<List<BookingInfoDto>>(_bookingInfoRepository.ReadAll());
         }
         public List<BookingInfoDto> CreateBookingInfo(BookingInfoDto booking)
         {
@@ -159,29 +154,22 @@ namespace Service.AdminService.Services
 
         public List<UserPositionDto> GetPositions()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<UserPosition,
-                UserPositionDto>()).CreateMapper();
-            return mapper.Map<List<UserPositionDto>>(_userPositionRepository.ReadAll());
+            return _mapper.Map<List<UserPositionDto>>(_userPositionRepository.ReadAll());
         }
 
         public List<UserRoleLookUpDto> GetRoles()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<UserRoleLookup,
-                UserRoleLookUpDto>()).CreateMapper();
-            return mapper.Map<List<UserRoleLookUpDto>>(_userRoleLookupRepository.ReadAll());
+            return _mapper.Map<List<UserRoleLookUpDto>>(_userRoleLookupRepository.ReadAll());
         }
 
         public List<WorkPlanDto> GetWorkPlans()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<WorkPlan,
-                WorkPlanDto>()).CreateMapper();
-            return mapper.Map<List<WorkPlanDto>>(_workPlanRepository.ReadAll());
+            return _mapper.Map<List<WorkPlanDto>>(_workPlanRepository.ReadAll());
         }
 
         public List<RoomDto> GetRooms()
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<Room, RoomDto>()).CreateMapper();
-            return mapper.Map<List<RoomDto>>(_roomRepository.ReadAll());
+            return _mapper.Map<List<RoomDto>>(_roomRepository.ReadAll());
         }
 
         public List<DeskDto> GetDesks(RoomDto room)
@@ -191,15 +179,12 @@ namespace Service.AdminService.Services
 
         private List<DeskDto> GetDesks(Func<Desk, bool> predicate)
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<Desk, DeskDto>()).CreateMapper();
-            return mapper.Map<List<DeskDto>>(_deskRepository.ReadAll(predicate));
+            return _mapper.Map<List<DeskDto>>(_deskRepository.ReadAll(predicate));
         }
 
         public BookingInfoDto GetBookingInfoAboutOneRoom(RoomDto room)
         {
-            var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo,
-                BookingInfoDto>()).CreateMapper();
-            return mapper.Map<BookingInfoDto>(_bookingInfoRepository.ReadAll(u => u.Room.Equals((Room)room)));
+            return _mapper.Map<BookingInfoDto>(_bookingInfoRepository.ReadAll(u => u.Room.Equals((Room)room)));
         }
 
         public List<WorkPlanDto> UpdateWorkPlan(WorkPlanDto workPlanDto)
@@ -233,9 +218,7 @@ namespace Service.AdminService.Services
 
         public List<WorkingDaysCalendarDto> GetWorkingDayCalendars()
         {
-            var mapper = new MapperConfiguration(confiExpression =>
-            confiExpression.CreateMap<User, UserDto>()).CreateMapper();
-            return mapper.Map<List<WorkingDaysCalendar>, List<WorkingDaysCalendarDto>>(_calendarRepository.ReadAll().ToList());
+            return _mapper.Map<List<WorkingDaysCalendar>, List<WorkingDaysCalendarDto>>(_calendarRepository.ReadAll().ToList());
         }
 
         public void SetDayOff(WorkingDaysCalendarDto calendar)
