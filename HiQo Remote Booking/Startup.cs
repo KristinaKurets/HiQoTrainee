@@ -26,7 +26,6 @@ namespace HiQo_Remote_Booking
             services.AddDbContext<HqrbContext>(options => options.UseSqlServer(connection));
             services.AddAutoMapper(typeof(DtoProfile));
             services.AddControllersWithViews();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

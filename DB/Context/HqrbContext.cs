@@ -78,9 +78,6 @@ namespace DB.Context
         }
         public HqrbContext(DbContextOptions<HqrbContext> options)
             : base(options)
-        { 
-
-        }
-
+        { }
     }
 }
