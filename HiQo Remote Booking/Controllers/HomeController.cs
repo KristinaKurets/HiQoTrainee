@@ -11,10 +11,9 @@ namespace HiQo_Remote_Booking.Controllers
     {
         private readonly IAdminService _service;
 
-        public HomeController(IMapper mapper, HqrbContext context)
+        public HomeController(IMapper mapper, IUnitOfWork unit)
         {
-            IUnitOfWork unitOfWork = new UnitOfWork(context);
-            _service=new AdminService(unitOfWork, mapper);
+            _service=new AdminService(unit, mapper);
         }
         public IActionResult Index()
         {

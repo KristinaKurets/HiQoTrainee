@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,10 +27,6 @@ namespace DB.Entity
         [Column("days-close-for-booking")]
         public int DaysCloseForBooking { get; set; }
 
-        [Required]
-        [Column("room_id")]
-        [ForeignKey("Room")]
-        public int RoomId { get; set; }
-        public virtual Room Room { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

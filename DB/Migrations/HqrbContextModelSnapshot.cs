@@ -35,10 +35,6 @@ namespace DB.Migrations
                         .HasColumnName("days-open-for-booking")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnName("room_id")
-                        .HasColumnType("int");
-
                     b.Property<TimeSpan>("TimeCloseForBooking")
                         .HasColumnName("time-close-for-booking")
                         .HasColumnType("time");
@@ -48,8 +44,6 @@ namespace DB.Migrations
                         .HasColumnType("time");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("BookingInfo");
                 });
@@ -434,15 +428,6 @@ namespace DB.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DB.Entity.BookingInfo", b =>
-                {
-                    b.HasOne("DB.Entity.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("DB.Entity.Desk", b =>
                 {
                     b.HasOne("DB.LookupTable.DeskStatusLookup", null)
@@ -478,7 +463,7 @@ namespace DB.Migrations
             modelBuilder.Entity("DB.Entity.Room", b =>
                 {
                     b.HasOne("DB.Entity.BookingInfo", "BookingInfo")
-                        .WithMany()
+                        .WithMany("Rooms")
                         .HasForeignKey("BookingInfoId");
                 });
 

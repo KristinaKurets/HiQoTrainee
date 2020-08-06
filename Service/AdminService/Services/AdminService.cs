@@ -99,7 +99,6 @@ namespace Service.AdminService.Services
         public List<BookingInfoDto> CreateBookingInfo(BookingInfoDto booking)
         {
             BookingInfo bookingInfo = (BookingInfo)booking;
-            bookingInfo.Room = _roomRepository.Read(booking.RoomId);
             _bookingInfoRepository.Create(bookingInfo);
             DataBase.Save();
             return GetBookingInfo();
@@ -108,7 +107,6 @@ namespace Service.AdminService.Services
         public List<BookingInfoDto> UpdateBookingInfo(BookingInfoDto booking)
         {
             BookingInfo info = BookingInfoChanger.ChangeFromDto(_bookingInfoRepository.Read(booking.Id), booking);
-            info.Room = _roomRepository.Read(booking.RoomId);
             _bookingInfoRepository.Update(info);
             DataBase.Save();
             return GetBookingInfo();
@@ -184,7 +182,7 @@ namespace Service.AdminService.Services
 
         public BookingInfoDto GetBookingInfoAboutOneRoom(RoomDto room)
         {
-            return _mapper.Map<BookingInfoDto>(_bookingInfoRepository.ReadAll(u => u.Room.Equals((Room)room)));
+            return _mapper.Map<BookingInfoDto>(_bookingInfoRepository.Read(u=>u.Id==room.BookingInfoId));
         }
 
         public List<WorkPlanDto> UpdateWorkPlan(WorkPlanDto workPlanDto)
