@@ -6,6 +6,7 @@ namespace Repository.Interface
 {
     public interface IRepository<TSource> where TSource : class
     {
+        TSource Read(Func<TSource, bool> predicate);
         TSource Read(params object[] keyValue);
         TSource Create(TSource item);
         void Update(TSource item);

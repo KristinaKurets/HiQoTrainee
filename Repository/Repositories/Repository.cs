@@ -38,6 +38,10 @@ namespace Repository.Repositories
             set.RemoveRange(ReadAll().ToList());
         }
 
+        public TSource Read(Func<TSource, bool> predicate)
+        {
+            return set.FirstOrDefault(predicate);
+        }
         public TSource Read(params object[] keyValue)
         {
             return set.Find(keyValue);
