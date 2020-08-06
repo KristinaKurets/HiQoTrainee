@@ -11,6 +11,6 @@ namespace Service.BookingService.Interfaces
 
        
         public bool CreateBooking(BookingUserDTO user, BookingDeskDTO desc, DateTime time);
-        public bool СancelИooking(BookingUserDTO user,long orderID);
+        public bool СancelBooking(BookingUserDTO user,long orderID);
     }
 }
