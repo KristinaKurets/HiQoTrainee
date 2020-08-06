@@ -18,7 +18,6 @@ namespace Service.AdminService.DTO.Entities
             return new WorkPlan()
             {
                 DeskGuaranteed = workPlan.DeskGuaranteed,
-                Id = workPlan.Id,
                 MaxOfficeDay = workPlan.MaxOfficeDay,
                 MinOfficeDay = workPlan.MinOfficeDay,
                 Plan = workPlan.Plan,

@@ -18,7 +18,7 @@ namespace DB.Entity
         public string FirstName { get; set; }
 
         [Required]
-        [Column("last_name")] 
+        [Column("last_name")]
         public string LastName { get; set; }
 
         [Required]
@@ -26,7 +26,9 @@ namespace DB.Entity
         public string Email { get; set; }
 
         [Required]
-        [ForeignKey("positions_id")]
+        [Column("positions_id")]
+        [ForeignKey("Position")]
+        public int UserPositionId { get; set; }
         public UserPosition Position { get; set; }
 
         [Required]
@@ -34,13 +36,19 @@ namespace DB.Entity
         public UserRole Role { get; set; }
 
         
-        [ForeignKey("work-plan_id")]
+        [Column("work-plan_id")]
+        [ForeignKey("WorkPlan")]
+        public int? WorkPlanId { get; set; }
         public WorkPlan WorkPlan { get; set; }
 
-        [ForeignKey("room_id")]
+        [Column("room_id")]
+        [ForeignKey("Room")]
+        public int? RoomId { get; set; }
         public Room Room { get; set; }
 
-        [ForeignKey("desk_id")]
+        [Column("desk_id")]
+        [ForeignKey("Desk")]
+        public int? DeskId { get; set; }
         public Desk Desk { get; set; }
 
         [Column("date_of_change_plan")]

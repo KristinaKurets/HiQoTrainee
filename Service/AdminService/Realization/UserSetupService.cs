@@ -4,6 +4,7 @@ using DB.Entity;
 using DB.LookupTable;
 using Repository.Interface;
 using Repository.UnitOfWork;
+using Service.AdminService.Changers;
 using Service.AdminService.DTO.Entities;
 using Service.AdminService.DTO.LookUps;
 using Service.AdminService.Interfaces;
@@ -77,14 +78,24 @@ namespace Service.AdminService.Realization
 
         public List<UserDto> Create(UserDto user)
         {
-            Repository.Create((User) user);
+            User result = (User) user;
+            result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.UserPositionId);
+            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
+            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
+            Repository.Create(result);
             UnitOfWork.Save();
             return CreateUsersDto();
         }
 
         public List<UserDto> Update(UserDto user)
         {
-            Repository.Update(Repository.Read(user.Id));
+            User result = UserChanger.ChangeFromDto(Repository.Read(user.Id), user);
+            result.Room = UnitOfWork.GetRepository<Room>().Read(user.RoomId);
+            result.Position = UnitOfWork.GetRepository<UserPosition>().Read(user.UserPositionId);
+            result.WorkPlan = UnitOfWork.GetRepository<WorkPlan>().Read(user.WorkPlanId);
+            result.Desk = UnitOfWork.GetRepository<Desk>().Read(user.DeskId);
+            Repository.Update(result);
             UnitOfWork.Save();
             return CreateUsersDto();
         }

@@ -7,7 +7,7 @@ namespace Repository.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        public IRepository<TSource> GetRepository<TSource>() where TSource : class;
+        IRepository<TSource> GetRepository<TSource>() where TSource : class;
         void Save();
     }
 }

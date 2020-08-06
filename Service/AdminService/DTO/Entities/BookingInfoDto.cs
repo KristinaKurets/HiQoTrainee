@@ -11,7 +11,7 @@ namespace Service.AdminService.DTO.Entities
         public int DaysOpenForBooking { get; set; }
 
         public int DaysCloseForBooking { get; set; }
-        public RoomDto Room { get; set; }
+        public int RoomId { get; set; }
 
         public static implicit operator BookingInfoDto(BookingInfo bookingInfo)
         {
@@ -22,7 +22,7 @@ namespace Service.AdminService.DTO.Entities
                 TimeCloseForBooking = bookingInfo.TimeCloseForBooking,
                 TimeOpenForBooking = bookingInfo.TimeOpenForBooking,
                 Id = bookingInfo.Id,
-                Room = bookingInfo.Room
+                RoomId = bookingInfo.RoomId
             };
         }
 
@@ -30,12 +30,11 @@ namespace Service.AdminService.DTO.Entities
         {
             return new BookingInfo()
             {
-                Id = bookingInfoDto.Id,
                 TimeCloseForBooking = bookingInfoDto.TimeCloseForBooking,
                 TimeOpenForBooking = bookingInfoDto.TimeOpenForBooking,
                 DaysCloseForBooking = bookingInfoDto.DaysCloseForBooking,
                 DaysOpenForBooking = bookingInfoDto.DaysOpenForBooking, 
-                Room = (Room)bookingInfoDto.Room
+                RoomId = bookingInfoDto.RoomId
             };
         }
     }

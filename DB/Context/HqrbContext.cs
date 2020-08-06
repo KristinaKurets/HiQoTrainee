@@ -9,7 +9,7 @@ using DB.EntityStatus;
 namespace DB.Context
 {
    
-    public class HqrbContext:DbContext
+    public class HqrbContext : DbContext
     {
 
         public DbSet<User> Users { get; set; }
@@ -77,8 +77,10 @@ namespace DB.Context
                 x => x.Email);
         }
         public HqrbContext(DbContextOptions<HqrbContext> options)
-            :base(options)
-        { }
+            : base(options)
+        { 
+
+        }
 
     }
 }
