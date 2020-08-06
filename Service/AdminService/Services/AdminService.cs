@@ -168,7 +168,7 @@ namespace Service.AdminService.Services
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<UserRoleLookup,
                 UserRoleLookUpDto>()).CreateMapper();
-            return mapper.Map<List<UserRoleLookUpDto>>(_userPositionRepository.ReadAll());
+            return mapper.Map<List<UserRoleLookUpDto>>(_userRoleLookupRepository.ReadAll());
         }
 
         public List<WorkPlanDto> GetWorkPlans()

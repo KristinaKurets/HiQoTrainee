@@ -2,7 +2,7 @@
 using DB.Context;
 using Microsoft.EntityFrameworkCore;
 using Repository.UnitOfWork;
-using Service.AdminService.Realization;
+using Service.AdminService.Services;
 
 namespace ConsoleApp1
 {
@@ -15,8 +15,8 @@ namespace ConsoleApp1
             var options = new DbContextOptionsBuilder<HqrbContext>().UseSqlServer(connection);
             var context = new HqrbContext(options.Options);
             using var unit = new UnitOfWork(context);
-            var service = new UserSetupService(unit);
-            var users = service.ReadAll();
+            var service = new AdminService(unit);
+            var users = service.GetRooms();
             Console.ReadKey();
         }
     }
