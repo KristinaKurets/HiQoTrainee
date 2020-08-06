@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using DB.Entity;
 using Moq;
@@ -12,21 +14,21 @@ namespace Service.Tests
 {
     public class RepositoryDescriptor
     {
-        public ICollection<User> Users { get; set; }
+        public IList<User> Users { get; set; }
 
-        public ICollection<Desk> Desks { get; set; }
+        public IList<Desk> Desks { get; set; }
 
-        public ICollection<BookingInfo> BookingInfo { get; set; }
+        public IList<BookingInfo> BookingInfo { get; set; }
 
-        public ICollection<Room> Rooms { get; set; }
+        public IList<Room> Rooms { get; set; }
 
-        public ICollection<UserPosition> UsersPosition { get; set; }
+        public IList<UserPosition> UsersPosition { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public IList<Order> Orders { get; set; }
 
-        public ICollection<WorkingDaysCalendar> WorkingDaysCalendar { get; set; }
+        public IList<WorkingDaysCalendar> WorkingDaysCalendar { get; set; }
 
-        public ICollection<WorkPlan> WorkPlans { get; set; }
+        public IList<WorkPlan> WorkPlans { get; set; }
 
     }
 
@@ -50,12 +52,14 @@ namespace Service.Tests
 
             if (descriptor != null)
             {
-                void SetupItems<T>(Mock<IRepository<T>> repositoryMock, ICollection<T> items) where T : class
+                void SetupItems<T>(Mock<IRepository<T>> repositoryMock, IList<T> items) where T : class
                 {
                     if (items != null)
                     {
                         repositoryMock.Setup(x => x.ReadAll()).
-                            Returns(items.AsQueryable());
+                        Returns(items.AsQueryable());
+                        repositoryMock.Setup(x => x.Read(It.IsAny<object[]>()))
+                        .Returns<object[]>(p => items[(int)p[0]]);
                     }
                 }
 
@@ -82,16 +86,10 @@ namespace Service.Tests
             unitOfWorkMock.Setup(x => x.GetRepository<WorkPlan>()).Returns(workPlanRepositoryMock.Object);
             unitOfWorkMock.Setup(x => x.GetRepository<WorkingDaysCalendar>()).Returns(calendarRepositoryMock.Object);
 
-            desksRepositoryMock.Setup(x => x.Update(It.IsAny<Desk>())).Callback<Desk>(d => descriptor.Desks.Add(d));
+            //desksRepositoryMock.Setup(x => x.Update(It.IsAny<Desk>())).Callback<Desk>(d => descriptor.Desks.Add(d));
 
 
-            //bookingInfoRepositoryMock.Setup(r => r.Read(It.IsAny<BookingInfo[]>())).Callback<BookingInfo[]>(d =>
-            //{
-            //    foreach (var book in d)
-            //    {
-            //        return descriptor.BookingInfo;
-            //    }
-            //});
+           // bookingInfoRepositoryMock.Setup(r => r.Read(It.IsAny<object[]>()).Returns<object[]>(p => items[(int)p[0]]);
         }
     }
 }

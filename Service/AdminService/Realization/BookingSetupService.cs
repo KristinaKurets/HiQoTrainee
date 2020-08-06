@@ -19,7 +19,7 @@ namespace Service.AdminService.Realization
             UnitOfWork = unitOfWork;
             Repository = UnitOfWork.GetRepository<BookingInfo>();
         }
-
+        
         protected List<BookingInfoDto> CreateDto()
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo, 
@@ -30,7 +30,8 @@ namespace Service.AdminService.Realization
         {
             var mapper = new MapperConfiguration(cm => cm.CreateMap<BookingInfo,
                 BookingInfoDto>()).CreateMapper();
-            return mapper.Map<BookingInfoDto>(Repository.ReadAll(u=>u.Room.Equals((Room)room)));
+            var name = Repository.Read(u => u.RoomId == 1);
+            return mapper.Map<BookingInfoDto>(Repository.Read(u=>u.RoomId == room.Id));
         }
         public List<BookingInfoDto> Create(BookingInfoDto booking)
         {

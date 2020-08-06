@@ -7,6 +7,7 @@ namespace Repository.Interface
     public interface IRepository<TSource> where TSource : class
     {
         TSource Read(params object[] keyValue);
+        TSource Read(Func<TSource, bool> predicate);
         TSource Create(TSource item);
         void Update(TSource item);
         void Create(IEnumerable<TSource> range);

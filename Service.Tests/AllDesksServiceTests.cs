@@ -15,7 +15,7 @@ namespace Service.Tests
 {
     public class AllDesksServiceTests
     {
-        private ICollection<Desk> desks = new Desk[] {
+        private IList<Desk> desks = new Desk[] {
             new Desk
             {
                 Id=1, 
@@ -62,7 +62,7 @@ namespace Service.Tests
         public void Setup()
         {
              Room room = new Room();
-            ICollection<Room> rooms = new List<Room>()
+            var rooms = new List<Room>()
             {
                 room,
             };
@@ -73,7 +73,7 @@ namespace Service.Tests
                 Room = room,
             };
 
-            ICollection<BookingInfo> bookingInfos = new List<BookingInfo>()
+            var bookingInfos = new List<BookingInfo>()
             {
                 bookingInfo
             };
