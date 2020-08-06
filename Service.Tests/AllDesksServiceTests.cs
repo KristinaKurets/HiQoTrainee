@@ -99,7 +99,7 @@ namespace Service.Tests
         {
             var result = (List<DeskDto>) allDesksService.ReadAll();
             
-            Assert.Equals(result.Count(), desks.Count());
+            Assert.AreEqual(result.Count(), desks.Count());
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Service.Tests
         {
 
 
-            //var testDeskDto = (DeskDto) testDesk;
+            //var testDeskDto = (DeskDto)testDesk;
 
             //var result = allDesksService.UpdateDesks(testDeskDto);
 

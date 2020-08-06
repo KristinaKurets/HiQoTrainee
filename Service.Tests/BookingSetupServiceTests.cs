@@ -1,4 +1,5 @@
 ﻿using DB.Entity;
+using DB.EntityStatus;
 using Moq;
 using NUnit.Framework;
 using Repository.Interface;
@@ -14,27 +15,56 @@ namespace Service.Tests
     public class BookingSetupServiceTests
     {
         private Mock<IUnitOfWork> unitOfWorkMock;
+        private BookingSetupService bookingSetupService;
+        
 
         [SetUp]
         public void Setup()
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-            var bookingInfoMock = new Mock<IRepository<BookingInfo>>();
+            Room room = new Room();
+            ICollection<Room> rooms = new List<Room>()
+            {
+                room,
+            };
 
-            bookingInfoMock.Setup(r => r.Read(It.IsAny<int>())).Returns(new BookingInfo { Id = It.IsAny<int>() , Room = It.IsAny<Room>()});
-            unitOfWorkMock.Setup(x => x.Save());
-            unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoMock.Object);
-        }
+            var bookingInfo = new BookingInfo()
+            {
+                Id = 1,
+                Room = room,
+            };
+
+            ICollection<BookingInfo> bookingInfos = new List<BookingInfo>()
+            {
+                bookingInfo
+            };
+            room.BookingInfo = bookingInfo;
+
+            RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
+            {
+                BookingInfo = bookingInfos,
+                Rooms = rooms,
+            };
+
+            ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
+            bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
+
+
+            //    unitOfWorkMock = new Mock<IUnitOfWork>();
+            //    var bookingInfoMock = new Mock<IRepository<BookingInfo>>();
+
+            //    bookingInfoMock.Setup(r => r.Read(It.IsAny<BookingInfo[]>())).Returns((BookingInfo)new BookingInfoDto { Id = It.IsAny<int>() });
+
+            //    unitOfWorkMock.Setup(x => x.Save());
+            //    unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoMock.Object);
+            //    bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
+            }
 
         [Test]
         public void Read_MockObject()
         {
-            var bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
-            var room = new RoomDto
+            RoomDto room = new RoomDto()
             {
                 Id = 1,
-                Title = "title",
-
             };
             var result = bookingSetupService.Read(room);
             Assert.Equals(result.Id, bookingSetupService.Read(room).Id);

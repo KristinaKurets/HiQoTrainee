@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using DB.Entity;
 using Moq;
@@ -32,10 +33,12 @@ namespace Service.Tests
 
     public class ServiceTestHelper
     {
+        
+
         public static void MockRepository(out Mock<IUnitOfWork> unitOfWorkMock, RepositoryDescriptor descriptor = null)
         {
             unitOfWorkMock = new Mock<IUnitOfWork>();
-           
+
             var desksRepositoryMock = new Mock<IRepository<Desk>>();
             var bookingInfoRepositoryMock = new Mock<IRepository<BookingInfo>>();
             var roomRepositoryMock = new Mock<IRepository<Room>>();
@@ -47,7 +50,7 @@ namespace Service.Tests
 
             if (descriptor != null)
             {
-                void SetupItems<T>(Mock<IRepository<T>> repositoryMock, ICollection<T> items) where T: class
+                void SetupItems<T>(Mock<IRepository<T>> repositoryMock, ICollection<T> items) where T : class
                 {
                     if (items != null)
                     {
@@ -55,8 +58,11 @@ namespace Service.Tests
                             Returns(items.AsQueryable());
                     }
                 }
-                
+
                 SetupItems(userRepositoryMock, descriptor.Users);
+
+                SetupItems(bookingInfoRepositoryMock, descriptor.BookingInfo);
+
                 SetupItems(desksRepositoryMock, descriptor.Desks);
                 SetupItems(roomRepositoryMock, descriptor.Rooms);
                 SetupItems(userPositionRepositoryMock, descriptor.UsersPosition);
@@ -66,7 +72,7 @@ namespace Service.Tests
             }
 
             unitOfWorkMock.Setup(x => x.Save());
-           
+
             unitOfWorkMock.Setup(x => x.GetRepository<Desk>()).Returns(desksRepositoryMock.Object);
             unitOfWorkMock.Setup(x => x.GetRepository<Room>()).Returns(roomRepositoryMock.Object);
             unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoRepositoryMock.Object);
@@ -77,6 +83,15 @@ namespace Service.Tests
             unitOfWorkMock.Setup(x => x.GetRepository<WorkingDaysCalendar>()).Returns(calendarRepositoryMock.Object);
 
             desksRepositoryMock.Setup(x => x.Update(It.IsAny<Desk>())).Callback<Desk>(d => descriptor.Desks.Add(d));
+
+
+            //bookingInfoRepositoryMock.Setup(r => r.Read(It.IsAny<BookingInfo[]>())).Callback<BookingInfo[]>(d =>
+            //{
+            //    foreach (var book in d)
+            //    {
+            //        return descriptor.BookingInfo;
+            //    }
+            //});
         }
     }
 }
