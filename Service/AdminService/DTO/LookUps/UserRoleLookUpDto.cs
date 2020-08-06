@@ -11,15 +11,13 @@ namespace Service.AdminService.DTO.LookUps
     {
         public short Id { get; set; }
         public string Role { get; set; }
-        public virtual ICollection<UserDto> Users { get; set; }
 
         public static implicit operator UserRoleLookUpDto(UserRoleLookup role)
         {
             return new UserRoleLookUpDto()
             {
                 Id = role.ID,
-                Role = role.Role,
-                Users = (ICollection<UserDto>) role.Users
+                Role = role.Role
             };
         }
 
@@ -28,8 +26,7 @@ namespace Service.AdminService.DTO.LookUps
             return new UserRoleLookup()
             {
                 ID = role.Id,
-                Role = role.Role,
-                Users = (ICollection<User>) role.Users
+                Role = role.Role
             };
         }
 

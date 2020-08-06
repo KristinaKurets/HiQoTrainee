@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DB.Entity;
 using DB.LookupTable;
@@ -20,47 +21,46 @@ namespace Service.AdminService.Realization
             Repository = UnitOfWork.GetRepository<Desk>();
         }
 
-        protected IQueryable<DeskDto> CreateDto()
+        protected List<DeskDto> CreateDto()
         {
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<Desk, DeskDto>()).CreateMapper();
-            return mapper.Map<IQueryable<DeskDto>>(Repository.ReadAll());
+            return mapper.Map<List<DeskDto>>(Repository.ReadAll());
         }
 
-        protected IQueryable<DeskStatusLookUpDto> CreateDeskStatusesDto()
+        protected List<DeskStatusLookUpDto> CreateDeskStatusesDto()
         {
-            var repository = UnitOfWork.GetRepository<DeskStatusLookup>();
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<DeskStatusLookup, 
                 DeskStatusLookUpDto>()).CreateMapper();
-            return mapper.Map<IQueryable<DeskStatusLookUpDto>>(repository.ReadAll());
+            return mapper.Map<List<DeskStatusLookUpDto>>(Repository.ReadAll());
         }
 
-        public IQueryable<DeskDto> ReadAll()
+        public List<DeskDto> ReadAll()
         {
             return CreateDto();
         }
 
-        public IQueryable<DeskDto> UpdateDesks(DeskDto desk)
-        {
-            Repository.Update((Desk)desk);
+        public List<DeskDto> UpdateDesks(DeskDto desk)
+        { 
+            Repository.Update(Repository.Read(desk.Id));
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<DeskDto> CreateDesk(DeskDto desk)
+        public List<DeskDto> CreateDesk(DeskDto desk)
         {
             Repository.Create((Desk) desk);
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<DeskDto> DeleteDesk(DeskDto desk)
+        public List<DeskDto> DeleteDesk(DeskDto desk)
         {
-            Repository.Delete((Desk)desk);
+            Repository.Delete(Repository.Read(desk.Id));
             UnitOfWork.Save();
             return CreateDto();
         }
 
-        public IQueryable<DeskStatusLookUpDto> GetDesksStatuses()
+        public List<DeskStatusLookUpDto> GetDesksStatuses()
         {
             return CreateDeskStatusesDto();
         }

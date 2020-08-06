@@ -11,15 +11,13 @@ namespace Service.AdminService.DTO.LookUps
     {
         public short Id { get; set; }
         public string Status { get; set; }
-        public virtual ICollection<DeskDto> Desks { get; set; }
 
         public static implicit operator DeskStatusLookUpDto(DeskStatusLookup status)
         {
             return new DeskStatusLookUpDto()
             {
                 Id = status.ID,
-                Status = status.Status,
-                Desks = (ICollection<DeskDto>) status.Desks
+                Status = status.Status
             };
         }
 
@@ -28,8 +26,7 @@ namespace Service.AdminService.DTO.LookUps
             return new DeskStatusLookup()
             {
                 ID = status.Id,
-                Status = status.Status,
-                Desks = (ICollection<Desk>) status.Desks
+                Status = status.Status
             };
         }
 

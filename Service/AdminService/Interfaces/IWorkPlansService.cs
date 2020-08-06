@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Service.AdminService.DTO;
 using Service.AdminService.DTO.Entities;
 
@@ -6,8 +7,8 @@ namespace Service.AdminService.Interfaces
 {
     public interface IWorkPlansService
     {
-        IQueryable<WorkPlanDto> ReadAll();
-        IQueryable<WorkPlanDto> Update(WorkPlanDto workPlanDto);
-        IQueryable<WorkPlanDto> Delete(WorkPlanDto workPlanDto);
+        List<WorkPlanDto> ReadAll();
+        List<WorkPlanDto> Update(WorkPlanDto workPlanDto);
+        List<WorkPlanDto> Delete(WorkPlanDto workPlanDto);
     }
 }
