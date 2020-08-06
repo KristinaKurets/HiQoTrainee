@@ -2,7 +2,7 @@
 
 namespace DB.EntityStatus
 {
-    public enum DeskStatus :short
+    public enum DeskStatus : short
     {
         Fixed = 1,
         Available = 2,

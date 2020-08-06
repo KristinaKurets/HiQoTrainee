@@ -26,22 +26,30 @@ namespace DB.Entity
         public string Email { get; set; }
 
         [Required]
-        [ForeignKey("positions_id")]
+        [Column("positions_id")]
+        [ForeignKey("Position")]
+        public int UserPositionId { get; set; }
         public UserPosition Position { get; set; }
 
         [Required]
         [ForeignKey("role_id")]
         public UserRole Role { get; set; }
 
+        
+        [Column("work-plan_id")]
+        [ForeignKey("WorkPlan")]
+        public int? WorkPlanId { get; set; }
+        public virtual WorkPlan WorkPlan { get; set; }
 
-        [ForeignKey("work-plan_id")]
-        public WorkPlan WorkPlan { get; set; }
+        [Column("room_id")]
+        [ForeignKey("Room")]
+        public int? RoomId { get; set; }
+        public virtual Room Room { get; set; }
 
-        [ForeignKey("room_id")]
-        public Room Room { get; set; }
-
-        [ForeignKey("desk_id")]
-        public Desk Desk { get; set; }
+        [Column("desk_id")]
+        [ForeignKey("Desk")]
+        public int? DeskId { get; set; }
+        public virtual Desk Desk { get; set; }
 
         [Column("date_of_change_plan")]
         public DateTime? PlanChangeDate { get; set; }

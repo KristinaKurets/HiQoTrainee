@@ -9,14 +9,14 @@ namespace Service.AdminService.DTO.Entities
         public string Title { get; set; }
         public short MaxEmployees { get; set; }
         public short Floor { get; set; }
-        public BookingInfoDto BookingInfo { get; set; }
+        public int? BookingInfoId { get; set; }
 
         public static implicit operator RoomDto(Room room)
         {
             return new RoomDto()
             {
                 Id = room.Id,
-                BookingInfo = room.BookingInfo,
+                BookingInfoId = room.BookingInfoId,
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
                 Title = room.Title
@@ -27,8 +27,7 @@ namespace Service.AdminService.DTO.Entities
         {
             return new Room()
             {
-                Id = room.Id,
-                BookingInfo = (BookingInfo) room.BookingInfo,
+                BookingInfoId = room.BookingInfoId,
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
                 Title = room.Title

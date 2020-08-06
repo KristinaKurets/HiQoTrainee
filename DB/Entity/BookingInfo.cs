@@ -28,6 +28,8 @@ namespace DB.Entity
 
         [Required]
         [Column("room_id")]
-        public Room Room { get; set; }
+        [ForeignKey("Room")]
+        public int RoomId { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

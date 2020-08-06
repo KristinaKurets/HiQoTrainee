@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using DB.Entity;
 using Repository.Interface;
 using Repository.UnitOfWork;
+using Service.AdminService.Changers;
 using Service.AdminService.DTO.Entities;
 using Service.AdminService.Interfaces;
 
@@ -34,14 +34,19 @@ namespace Service.AdminService.Realization
         }
         public List<BookingInfoDto> Create(BookingInfoDto booking)
         {
-            Repository.Create((BookingInfo) booking);
+            BookingInfo bookingInfo = (BookingInfo) booking;
+            bookingInfo.Room = UnitOfWork.GetRepository<Room>().Read(booking.RoomId);
+            Repository.Create(bookingInfo);
             UnitOfWork.Save();
             return CreateDto();
         }
 
         public List<BookingInfoDto> Update(BookingInfoDto booking)
         {
-            Repository.Update(Repository.Read(booking.Id));
+            BookingInfo info = BookingInfoChanger.ChangeFromDto(Repository.Read(booking.Id), booking);
+            var repository = UnitOfWork.GetRepository<Room>();
+            info.Room = repository.Read(booking.RoomId);
+            Repository.Update(info);
             UnitOfWork.Save();
             return CreateDto();
         }

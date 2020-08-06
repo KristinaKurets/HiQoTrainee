@@ -20,8 +20,11 @@ namespace DB.Entity
         
         [Column("floor")]
         public short Floor { get; set; }
-        [ForeignKey("booking-info_id")]
-        public BookingInfo BookingInfo { get; set; }
+
+        [Column("booking-info_id")]
+        [ForeignKey("BookingInfo")]
+        public int? BookingInfoId { get; set; }
+        public virtual BookingInfo BookingInfo { get; set; }
         public virtual ICollection<Desk> Desks { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<WorkingDaysCalendar> BookingCalendars { get; set; }

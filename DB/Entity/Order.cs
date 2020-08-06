@@ -17,14 +17,18 @@ namespace DB.Entity
         public BookingStatus Status { get; set; }
 
         [Required]
-        [ForeignKey("desk_id")]
-        public Desk Desk { get; set; }
+        [Column("desk_id")]
+        [ForeignKey("Desk")]
+        public int DeskId { get; set; }
+        public virtual Desk Desk { get; set; }
         
         [Required]
-        [ForeignKey("user_id")]
-        public User User { get; set; }
+        [Column("user_id")]
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         [Column("date")]
-        public DateTime DateTime { get; set; }
+        public  DateTime DateTime { get; set; }
     }
 }
