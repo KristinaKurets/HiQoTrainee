@@ -29,7 +29,7 @@ namespace Repository.Repositories
             this.traits = traits;
         }
 
-        public T Read(int id) => repository.Read(id);
+        public T Read(params object[] keyValue) => repository.Read(keyValue);
 
         public T Create(T item)
         {
@@ -66,5 +66,6 @@ namespace Repository.Repositories
         public void Update(T item) => repository.Update(item);
 
         public void DeleteAll() => repository.DeleteAll();
+        public void Save(string tableName) => repository.Save(tableName);
     }
 }
