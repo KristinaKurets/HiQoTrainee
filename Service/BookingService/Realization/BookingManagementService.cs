@@ -88,7 +88,7 @@ namespace Service.BookingService.Realization
             return false;
         }
         
-        public bool СancelИooking(BookingUserDTO user,long orderID) {
+        public bool СancelBooking(BookingUserDTO user,long orderID) {
             var order =_orderRepository.Read(orderID);
             if (order != null && order.User.Id == user.Id) {
 
