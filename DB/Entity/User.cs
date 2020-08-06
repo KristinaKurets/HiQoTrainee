@@ -39,17 +39,17 @@ namespace DB.Entity
         [Column("work-plan_id")]
         [ForeignKey("WorkPlan")]
         public int? WorkPlanId { get; set; }
-        public WorkPlan WorkPlan { get; set; }
+        public virtual WorkPlan WorkPlan { get; set; }
 
         [Column("room_id")]
         [ForeignKey("Room")]
         public int? RoomId { get; set; }
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
         [Column("desk_id")]
         [ForeignKey("Desk")]
         public int? DeskId { get; set; }
-        public Desk Desk { get; set; }
+        public virtual Desk Desk { get; set; }
 
         [Column("date_of_change_plan")]
         public DateTime? PlanChangeDate { get; set; }

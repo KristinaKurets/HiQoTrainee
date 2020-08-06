@@ -82,5 +82,7 @@ namespace DB.Context
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseLazyLoadingProxies();
+
     }
 }

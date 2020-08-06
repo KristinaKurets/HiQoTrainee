@@ -30,6 +30,6 @@ namespace DB.Entity
         [Column("room_id")]
         [ForeignKey("Room")]
         public int? RoomId { get; set; }
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

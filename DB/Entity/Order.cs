@@ -20,15 +20,15 @@ namespace DB.Entity
         [Column("desk_id")]
         [ForeignKey("Desk")]
         public int DeskId { get; set; }
-        public Desk Desk { get; set; }
+        public virtual Desk Desk { get; set; }
         
         [Required]
         [Column("user_id")]
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         [Column("date")]
-        public DateTime DateTime { get; set; }
+        public  DateTime DateTime { get; set; }
     }
 }
