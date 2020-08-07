@@ -20,6 +20,22 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookingInfo",
+                columns: table => new
+                {
+                    bookinginfo_id = table.Column<int>(name: "booking-info_id", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    timeopenforbooking = table.Column<TimeSpan>(name: "time-open-for-booking", nullable: false),
+                    timecloseforbooking = table.Column<TimeSpan>(name: "time-close-for-booking", nullable: false),
+                    daysopenforbooking = table.Column<int>(name: "days-open-for-booking", nullable: false),
+                    dayscloseforbooking = table.Column<int>(name: "days-close-for-booking", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingInfo", x => x.bookinginfo_id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Desks_status",
                 columns: table => new
                 {
@@ -75,29 +91,6 @@ namespace DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    order_id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<short>(nullable: false),
-                    desk_id = table.Column<int>(nullable: false),
-                    user_id = table.Column<int>(nullable: false),
-                    date = table.Column<DateTime>(nullable: false),
-                    BookingStatusLookupID = table.Column<short>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.order_id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Booking_status_BookingStatusLookupID",
-                        column: x => x.BookingStatusLookupID,
-                        principalTable: "Booking_status",
-                        principalColumn: "booking_status_id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -111,29 +104,12 @@ namespace DB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.room_id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookingInfo",
-                columns: table => new
-                {
-                    bookinginfo_id = table.Column<int>(name: "booking-info_id", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    timeopenforbooking = table.Column<TimeSpan>(name: "time-open-for-booking", nullable: false),
-                    timecloseforbooking = table.Column<TimeSpan>(name: "time-close-for-booking", nullable: false),
-                    daysopenforbooking = table.Column<int>(name: "days-open-for-booking", nullable: false),
-                    dayscloseforbooking = table.Column<int>(name: "days-close-for-booking", nullable: false),
-                    room_id = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookingInfo", x => x.bookinginfo_id);
                     table.ForeignKey(
-                        name: "FK_BookingInfo_Rooms_room_id",
-                        column: x => x.room_id,
-                        principalTable: "Rooms",
-                        principalColumn: "room_id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Rooms_BookingInfo_booking-info_id",
+                        column: x => x.bookinginfo_id,
+                        principalTable: "BookingInfo",
+                        principalColumn: "booking-info_id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,6 +219,41 @@ namespace DB.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    order_id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<short>(nullable: false),
+                    desk_id = table.Column<int>(nullable: false),
+                    user_id = table.Column<int>(nullable: false),
+                    date = table.Column<DateTime>(nullable: false),
+                    BookingStatusLookupID = table.Column<short>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.order_id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Booking_status_BookingStatusLookupID",
+                        column: x => x.BookingStatusLookupID,
+                        principalTable: "Booking_status",
+                        principalColumn: "booking_status_id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Desks_desk_id",
+                        column: x => x.desk_id,
+                        principalTable: "Desks",
+                        principalColumn: "desk_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "Users",
+                        principalColumn: "user_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Booking_status",
                 columns: new[] { "booking_status_id", "description" },
@@ -274,11 +285,6 @@ namespace DB.Migrations
                     { (short)1, "User" },
                     { (short)2, "Admin" }
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookingInfo_room_id",
-                table: "BookingInfo",
-                column: "room_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Calendar_room_id",
@@ -339,38 +345,10 @@ namespace DB.Migrations
                 name: "IX_Users_work-plan_id",
                 table: "Users",
                 column: "work-plan_id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Desks_desk_id",
-                table: "Orders",
-                column: "desk_id",
-                principalTable: "Desks",
-                principalColumn: "desk_id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Users_user_id",
-                table: "Orders",
-                column: "user_id",
-                principalTable: "Users",
-                principalColumn: "user_id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Rooms_BookingInfo_booking-info_id",
-                table: "Rooms",
-                column: "booking-info_id",
-                principalTable: "BookingInfo",
-                principalColumn: "booking-info_id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_BookingInfo_Rooms_room_id",
-                table: "BookingInfo");
-
             migrationBuilder.DropTable(
                 name: "Calendar");
 
