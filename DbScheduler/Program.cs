@@ -16,10 +16,10 @@ namespace DbScheduler
 {
     public class Program
     {
-        private static readonly string url = "https://portal-api.hiqo-solutions.com/api/";
-        private static readonly string login = "portal-api-reader@hiqo-solutions.com".EncodeToBase64();
-        private static readonly string password = "bb#6qZwdUs2HG61Gh$5".EncodeToBase64();
-        private static readonly string connection = "Server=tcp:hqrb.database.windows.net,1433;Initial Catalog=hqrbSolutions;Persist Security Info=False;User ID=HiQo;Password=Solutions2007;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private static readonly string url = Resource.url;
+        private static readonly string login = Resource.login.EncodeToBase64();
+        private static readonly string password = Resource.password.EncodeToBase64();
+        private static readonly string connection = Resource.connection;
 
 
         public static void Main(string[] args)
