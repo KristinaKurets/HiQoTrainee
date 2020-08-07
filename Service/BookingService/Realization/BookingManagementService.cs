@@ -20,19 +20,14 @@ namespace Service.BookingService.Realization
         protected readonly IRepository<BookingInfo> _BookingSetingsRepository;
         protected readonly IRepository<WorkingDaysCalendar> _CalendarRepository;
 
-        public BookingManagementService(
-            IUnitOfWork unitOfWork,
-            IRepository<Order> orderRepository,
-            IRepository<User> userRepository,
-            IRepository<Desk> deskRepository,
-            IRepository<BookingInfo> BookingSetingsRepository,
-            IRepository<WorkingDaysCalendar> CalendarRepository) : base(unitOfWork)
+        public BookingManagementService(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
         {
-            _orderRepository = orderRepository;
-            _deskRepository = deskRepository;
-            _userRepository = userRepository;
-            _BookingSetingsRepository = BookingSetingsRepository;
-            _CalendarRepository = CalendarRepository;
+            _orderRepository = unitOfWork.GetRepository<Order>();
+            _deskRepository = unitOfWork.GetRepository<Desk>();
+            _userRepository = unitOfWork.GetRepository<User>();
+            _BookingSetingsRepository = unitOfWork.GetRepository<BookingInfo>();
+            _CalendarRepository = unitOfWork.GetRepository<WorkingDaysCalendar>();
         }
 
         protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) {

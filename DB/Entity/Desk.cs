@@ -35,7 +35,7 @@ namespace DB.Entity
         [Required]
         [ForeignKey("status_id")]
         public DeskStatus Status { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

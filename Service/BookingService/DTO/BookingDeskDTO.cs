@@ -29,8 +29,8 @@ namespace Service.BookingService.DTO
                 MacBook = desk.MacBook,
                 Camera = desk.Camera,
                 Headset = desk.Headset,
-                Room = (BookingRoomDTO)desk.Room,
-                Status = (DeskStatusDTO)desk.Status,
+                Room = desk.Room,
+                Status = desk.Status,
                 Order = null,
                 // это правильно, но сломается так-как в бд сущность неправильна
                 User = desk.User

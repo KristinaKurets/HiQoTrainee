@@ -16,9 +16,9 @@ namespace Service.BookingService.Realization
     public class DeskAvailabilityService : BookingBaseService, IDeskAvailabilityService
     {
         protected readonly IRepository<Desk> _repository;
-        public DeskAvailabilityService(IUnitOfWork unitOfWork, IRepository<Desk> repository) : base(unitOfWork)
+        public DeskAvailabilityService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _repository = repository;
+            _repository = unitOfWork.GetRepository<Desk>();
         }
 
         protected IEnumerable<BookingDeskDTO> CountDesksStatus(IEnumerable<Desk> desks,DateTime time) {

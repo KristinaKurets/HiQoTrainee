@@ -12,8 +12,9 @@ namespace Service.AdminService.DTO.Entities
         public bool MacBook { get; set; }
         public bool Camera { get; set; }
         public bool Headset { get; set; }
-        public int RoomId { get; set; }
+        public RoomDto Room { get; set; }
         public DeskStatusDto Status { get; set; }
+        public UserDto User { get; set; }
 
         public static implicit operator DeskDto(Desk desk)
         {
@@ -24,7 +25,7 @@ namespace Service.AdminService.DTO.Entities
                 MacBook = desk.MacBook,
                 Camera = desk.Camera,
                 Headset = desk.Headset,
-                RoomId = desk.RoomId,
+                Room = desk.Room,
                 Status = (DeskStatusDto) desk.Status
             };
         }
@@ -37,7 +38,7 @@ namespace Service.AdminService.DTO.Entities
                 MacBook = desk.MacBook,
                 Camera = desk.Camera,
                 Headset = desk.Headset,
-                RoomId = desk.RoomId,
+                Room = (Room) desk.Room,
                 Status = (DeskStatus) desk.Status
             };
         }

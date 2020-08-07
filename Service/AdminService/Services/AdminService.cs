@@ -122,10 +122,10 @@ namespace Service.AdminService.Services
         public List<UserDto> CreateUser(UserDto user)
         {
             User result = (User)user;
-            result.Room = _roomRepository.Read(user.RoomId);
-            result.Position = _userPositionRepository.Read(user.UserPositionId);
-            result.WorkPlan = _workPlanRepository.Read(user.WorkPlanId);
-            result.Desk = _deskRepository.Read(user.DeskId);
+            //result.Room = _roomRepository.Read(user.Room.Id);
+            //result.Position = _userPositionRepository.Read(user.Position.Id);
+            //result.WorkPlan = _workPlanRepository.Read(user.WorkPlan.Id);
+            //result.Desk = _deskRepository.Read(user.Desk.Id);
             _userRepository.Create(result);
             DataBase.Save();
             return GetUsers();
@@ -134,10 +134,6 @@ namespace Service.AdminService.Services
         public List<UserDto> UpdateUser(UserDto user)
         {
             User result = UserChanger.ChangeFromDto(_userRepository.Read(user.Id), user);
-            result.Room = _roomRepository.Read(user.RoomId);
-            result.Position = _userPositionRepository.Read(user.UserPositionId);
-            result.WorkPlan = _workPlanRepository.Read(user.WorkPlanId);
-            result.Desk = _deskRepository.Read(user.DeskId);
             _userRepository.Update(result);
             DataBase.Save();
             return GetUsers();

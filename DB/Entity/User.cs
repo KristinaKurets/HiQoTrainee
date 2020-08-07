@@ -29,7 +29,7 @@ namespace DB.Entity
         [Column("positions_id")]
         [ForeignKey("Position")]
         public int UserPositionId { get; set; }
-        public UserPosition Position { get; set; }
+        public virtual UserPosition Position { get; set; }
 
         [Required]
         [ForeignKey("role_id")]

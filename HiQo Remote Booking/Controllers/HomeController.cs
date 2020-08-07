@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using DB.Context;
-using Microsoft.AspNetCore.Mvc;
-using Repository.UnitOfWork;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service.AdminService.Interfaces;
-using Service.AdminService.Services;
+using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers
 {
@@ -11,9 +8,11 @@ namespace HiQo_Remote_Booking.Controllers
     {
         private readonly IAdminService _service;
 
-        public HomeController(IMapper mapper, IUnitOfWork unit)
+        public HomeController(IAdminService adminService, IBookingManagementService service)
         {
-            _service=new AdminService(unit, mapper);
+            _service = adminService;
+            var list = _service.GetUsers();
+            var desk = list[0].Desk;
         }
         public IActionResult Index()
         {
