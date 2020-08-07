@@ -18,30 +18,27 @@ namespace Service.Tests
     {
         private Mock<IUnitOfWork> unitOfWorkMock;
         private BookingSetupService bookingSetupService;
-        private TestCaseClass t;
-       
-        
+
         [SetUp]
         public void Setup()
         {
-            t = new TestCaseClass();
-            RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
+            
+            var repositoryDescriptor = new RepositoryDescriptor()
             {
-                Rooms = t.RoomList(),
-                BookingInfo = t.BookingInfoList(),
-                
+                Rooms = TestCaseClass.RoomList(),
+                BookingInfo = TestCaseClass.BookingInfos(),
+
             };
 
             ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
             bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
         }
 
-        [Test, TestCaseSource(typeof(TestCaseClass), "BookingInfoList")]
-        public void Read_MockObject()
+        [Test, TestCaseSource(typeof(TestCaseClass), nameof(TestCaseClass.BookingInfoTest))]
+        public int Read_MockObject(IList<BookingInfo> bookingInfos)
         {
-            var bookingInfos = t.BookingInfoList();
             var result = bookingSetupService.Read(bookingInfos[0].Room);
-            Assert.AreEqual(result.RoomId, bookingInfos[0].RoomId);
+            return result.RoomId;
         }
         
     }

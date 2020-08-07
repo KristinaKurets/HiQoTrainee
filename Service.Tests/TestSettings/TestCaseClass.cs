@@ -2,17 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NUnit.Framework;
 
 namespace Service.Tests
 {
     public class TestCaseClass
     {
-        private Room room = new Room
+        private static Room room = new Room
         {
             Id = 1
         };
             
-        public List<Room> RoomList()
+        public static IList<Room> RoomList()
         {
             var rooms = new List<Room>()
             {
@@ -21,8 +22,8 @@ namespace Service.Tests
             return rooms;
         }
 
-         public List<BookingInfo> BookingInfoList()
-            {
+        public static IList<BookingInfo> BookingInfos()
+        {
             var bookingInfo = new BookingInfo()
             {
                 Id = 1,
@@ -30,18 +31,20 @@ namespace Service.Tests
                 Room = room,
             };
             var bookingInfos = new List<BookingInfo>()
-                {
-                    bookingInfo
-                };
+            {
+                bookingInfo
+            };
 
             room.BookingInfo = bookingInfo;
             return bookingInfos;
+        }
+
+         public static IEnumerable<TestCaseData> BookingInfoTest
+         {
+             get
+             {
+                 yield return new TestCaseData(BookingInfos()).Returns(1);
+             }
          }
-
-
-
-
-        //}
-
     }
 }
