@@ -1,5 +1,6 @@
 ﻿using DB.Entity;
 using DB.EntityStatus;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using Repository.Interface;
@@ -17,46 +18,28 @@ namespace Service.Tests
     {
         private Mock<IUnitOfWork> unitOfWorkMock;
         private BookingSetupService bookingSetupService;
-        private IList<BookingInfo> bookingInfos;
+        private TestCaseClass t;
+       
+        
         [SetUp]
         public void Setup()
         {
-            Room room = new Room()
-            {
-                Id = 1
-            };
-            var rooms = new List<Room>()
-            {
-                room,
-            };
-
-            var bookingInfo = new BookingInfo()
-            {
-                Id = 1,
-                RoomId = room.Id,
-                Room = room,
-            };
-
-            bookingInfos = new List<BookingInfo>()
-            {
-                bookingInfo
-            };
-
-            room.BookingInfo = bookingInfo;
-
+            t = new TestCaseClass();
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
             {
-                BookingInfo = bookingInfos,
-                Rooms = rooms,
+                Rooms = t.RoomList(),
+                BookingInfo = t.BookingInfoList(),
+                
             };
 
             ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
             bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
         }
 
-            [Test]
+        [Test, TestCaseSource(typeof(TestCaseClass), "BookingInfoList")]
         public void Read_MockObject()
         {
+            var bookingInfos = t.BookingInfoList();
             var result = bookingSetupService.Read(bookingInfos[0].Room);
             Assert.AreEqual(result.RoomId, bookingInfos[0].RoomId);
         }
