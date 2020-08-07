@@ -29,6 +29,8 @@ namespace Repository.Repositories
             this.traits = traits;
         }
 
+        public T Read(Func<T, bool> predicate) => repository.Read(predicate);
+
         public T Read(params object[] keyValue) => repository.Read(keyValue);
 
         public T Create(T item)
