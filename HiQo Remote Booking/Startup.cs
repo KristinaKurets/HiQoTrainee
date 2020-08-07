@@ -31,8 +31,8 @@ namespace HiQo_Remote_Booking
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DbContext ,HqrbContext>(options => 
                 options.UseSqlServer(connection));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(DtoProfile));
+            services.AddUnitOfWorkAndRepository();
             services.AddBusinessLogicLayer();
             services.AddControllersWithViews();
         }

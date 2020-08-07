@@ -10,9 +10,9 @@ namespace HiQo_Remote_Booking.ServiceProviderExtensions
     {
         public static void AddBusinessLogicLayer(this IServiceCollection services)
         {
-            //services.AddTransient<IBookingManagementService, BookingManagementService>();
-            //services.AddTransient<IDeskAvailabilityService, DeskAvailabilityService>();
-            //services.AddTransient<IMyBookingsService, MyBookingsService>();
+            services.AddTransient<IBookingManagementService, BookingManagementService>();
+            services.AddTransient<IDeskAvailabilityService, DeskAvailabilityService>();
+            services.AddTransient<IMyBookingsService, MyBookingsService>();
             services.AddTransient<IAdminService, AdminService>();
         }
     }
