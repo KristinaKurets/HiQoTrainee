@@ -38,7 +38,7 @@ namespace Service.AdminService.DTO.Entities
                 MacBook = desk.MacBook,
                 Camera = desk.Camera,
                 Headset = desk.Headset,
-                Room = (Room) desk.Room,
+                RoomId = desk.Room.Id,
                 Status = (DeskStatus) desk.Status
             };
         }

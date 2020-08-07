@@ -65,7 +65,7 @@ namespace Service.AdminService.Services
         public List<DeskDto> UpdateDesks(DeskDto desk)
         {
             Desk deskUp = DeskChanger.ChangeFromDto(_deskRepository.Read(desk.Id), desk);
-            deskUp.Room = _roomRepository.Read(desk.RoomId);
+            deskUp.Room = _roomRepository.Read(desk.Room.Id);
             _deskRepository.Update(deskUp);
             DataBase.Save();
             return GetDesks();
@@ -74,7 +74,8 @@ namespace Service.AdminService.Services
         public List<DeskDto> CreateDesk(DeskDto desk)
         {
             Desk result = (Desk)desk;
-            result.Room = _roomRepository.Read(desk.RoomId);
+            //тут могут быть вопросы, там нет поля для id, чтобы не создавать двойную связь
+            result.User = _userRepository.Read(u => u.Id == desk.User.Id);
             _deskRepository.Create(result);
             DataBase.Save();
             return GetDesks();

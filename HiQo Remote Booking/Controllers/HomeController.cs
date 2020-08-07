@@ -12,7 +12,7 @@ namespace HiQo_Remote_Booking.Controllers
         {
             _service = adminService;
             var list = _service.GetUsers();
-            var desk = list[0].Desk;
+            //var desk = list[0].Desk;
         }
         public IActionResult Index()
         {
