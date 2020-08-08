@@ -11,6 +11,7 @@ using Service.AdminService.Realization;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Service.Tests.TestSettings;
 
 namespace Service.Tests
 {

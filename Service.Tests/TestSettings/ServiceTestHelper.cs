@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using DB.Entity;
 using Moq;
 using Repository.Interface;
 using Repository.UnitOfWork;
 
-namespace Service.Tests
+namespace Service.Tests.TestSettings
 {
     public class RepositoryDescriptor
     {
@@ -31,11 +29,8 @@ namespace Service.Tests
 
     }
 
-
     public class ServiceTestHelper
     {
-        
-
         public static void MockRepository(out Mock<IUnitOfWork> unitOfWorkMock, RepositoryDescriptor descriptor = null)
         {
             unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -57,18 +52,41 @@ namespace Service.Tests
                     {
                         repositoryMock.Setup(x => x.ReadAll()).
                             Returns(items.AsQueryable());
-                        repositoryMock.Setup(x => x.Read(It.IsAny<object[]>()))
-                            .Returns<object[]>(p => items[(int) p[0]]);
-                        repositoryMock.Setup(x => x.Update(It.IsAny<T>()));
+                        repositoryMock.Setup(x => x.ReadAll(It.IsAny<Func<T, bool>>())).
+                            Returns<Func<T, bool>> (f => items.Where(f).AsQueryable());
+
+                        repositoryMock.Setup(x => x.Read(It.IsAny<object[]>())).
+                            Returns<object[]>(p => items[(int) p[0]]);
                         repositoryMock.Setup(x => x.Read(It.IsAny<Func<T, bool>>())).
                             Returns<Func<T, bool>>(items.FirstOrDefault);
+
+                        repositoryMock.Setup(x => x.Update(It.IsAny<T>()));
+                        
+                        repositoryMock.Setup(x => x.Create(It.IsAny<T>())).
+                            Returns<T>(t => 
+                            {
+                                items.Add(t);
+                                return t;
+                            });
+                        repositoryMock.Setup(x => x.Create(It.IsAny<IEnumerable<T>>())).
+                            Callback<IEnumerable<T>>( x =>
+                            {
+                                foreach (var item in x)
+                                {
+                                    items.Add(item);
+                                }
+                            }).Verifiable();
+
+                        repositoryMock.Setup(x => x.Delete(It.IsAny<T>())).
+                            Callback<T>(x => items.Remove(x)).
+                            Verifiable();
+
+                        repositoryMock.Setup(x => x.DeleteAll()).Callback(items.Clear).Verifiable();
                     }
                 }
 
                 SetupItems(userRepositoryMock, descriptor.Users);
-
                 SetupItems(bookingInfoRepositoryMock, descriptor.BookingInfo);
-
                 SetupItems(desksRepositoryMock, descriptor.Desks);
                 SetupItems(roomRepositoryMock, descriptor.Rooms);
                 SetupItems(userPositionRepositoryMock, descriptor.UsersPosition);

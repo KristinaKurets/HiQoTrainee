@@ -10,6 +10,7 @@ using Repository.UnitOfWork;
 using Service.AdminService.DTO.Entities;
 using Service.AdminService.DTO.EntitiesStatuses;
 using Service.AdminService.Realization;
+using Service.Tests.TestSettings;
 
 namespace Service.Tests
 {
