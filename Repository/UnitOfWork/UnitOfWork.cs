@@ -10,7 +10,6 @@ namespace Repository.UnitOfWork
     {
         private Dictionary<string, object> repositories;
         private readonly DbContext db;
-        //public UnitOfWork() : this(new HqrbContext()) { }
 
         public UnitOfWork(DbContext dbContext)
         {
