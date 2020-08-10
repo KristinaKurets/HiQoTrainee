@@ -32,7 +32,8 @@ namespace Service.AdminService.Realization
         {
             var mapper=new MapperConfiguration(cm=>cm.CreateMap<DeskStatusLookup, 
                 DeskStatusLookUpDto>()).CreateMapper();
-            return mapper.Map<List<DeskStatusLookUpDto>>(Repository.ReadAll());
+            var result = Repository.ReadAll();
+            return mapper.Map<List<DeskStatusLookUpDto>>(result);
         }
 
         public List<DeskDto> ReadAll()
@@ -42,7 +43,8 @@ namespace Service.AdminService.Realization
 
         public List<DeskDto> UpdateDesks(DeskDto desk)
         {
-            Desk deskUp = DeskChanger.ChangeFromDto(Repository.Read(desk.Id), desk);
+            var deskSearch = Repository.Read(desk.Id);
+            Desk deskUp = DeskChanger.ChangeFromDto(deskSearch, desk);
             var repository = UnitOfWork.GetRepository<Room>();
             deskUp.Room = repository.Read(desk.RoomId);
             Repository.Update(deskUp);

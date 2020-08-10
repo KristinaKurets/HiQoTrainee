@@ -1,16 +1,12 @@
-﻿using DB.Entity;
+﻿using System.Linq;
+using DB.Entity;
 using Moq;
 using NUnit.Framework;
 using Repository.Interface;
 using Repository.UnitOfWork;
-using Service.AdminService.DTO.Entities;
 using Service.AdminService.Realization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Service.Tests
+namespace Service.Tests.AdminServiceTest
 {
     public class UserSetupServiceTests
     {

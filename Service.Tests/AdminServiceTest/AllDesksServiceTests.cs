@@ -1,118 +1,100 @@
 using System.Collections.Generic;
 using System.Linq;
-using DB.Context;
 using DB.Entity;
 using DB.EntityStatus;
-using Moq;
 using NUnit.Framework;
-using Repository.Interface;
-using Repository.UnitOfWork;
-using Service.AdminService.DTO.Entities;
-using Service.AdminService.DTO.EntitiesStatuses;
 using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
+using Service.Tests.TestSettings.TestCases;
 
-namespace Service.Tests
+namespace Service.Tests.AdminServiceTest
 {
     public class AllDesksServiceTests
     {
-        private IList<Desk> desks = new Desk[] {
-            new Desk
-            {
-                Id=1, 
-                Title= "Tom", 
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
-            },
-            new Desk
-            {
-                Id=2, 
-                Title="Alice",
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
-            },
-            new Desk 
-            { 
-                Id=3, 
-                Title="Sam",
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
-            },
-            new Desk
-            {
-                Id=4, 
-                Title="Kate",
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
-            }
-        };
-       
-
-        private Mock<IUnitOfWork> unitOfWorkMock;
         private AllDesksService allDesksService;
+        private RepositoryMockResult mockResult;
 
-        [SetUp]
-        public void Setup()
+        public void Setup(IList<Desk> desks)
         {
-            Room room = new Room();
-
-            var rooms = new List<Room>()
-            {
-                room,
-            };
-
-            var bookingInfo = new BookingInfo()
-            {
-                Id = 1,
-                Room = room,
-            };
-
-            var bookingInfos = new List<BookingInfo>()
-            {
-                bookingInfo
-            };
-            room.BookingInfo = bookingInfo;
 
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
             {
                 Desks = desks,
-                BookingInfo = bookingInfos,
-                Rooms = rooms,
             };
 
-      
-            ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
+            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
 
-
-            allDesksService = new AllDesksService(unitOfWorkMock.Object);
+            allDesksService = new AllDesksService(mockResult.UnitOfWorkMock.Object);
         }
 
-
-        [Test]
-        public void ReadAll_ReturnDesks()
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksReadAllCase))]
+        public int ReadAll_ReturnDesks(IList<Desk> desks)
         {
-            var result = (List<DeskDto>) allDesksService.ReadAll();
-            
-            Assert.AreEqual(result.Count(), desks.Count());
+            Setup(desks);
+            var result = allDesksService.ReadAll();
+
+            return result.Count();
         }
 
-        [Test]
-        public void UpdateDesk_Desk_ListDesks()
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksUpdateCase))]
+        public string UpdateDesk_Desk_ListDesks(IList<Desk> desks)
         {
-            var testDesk = desks[0];
-            testDesk.Title = "test";
+            Setup(desks);
+            var testDesk = new Desk
+            {
+                Title = "title",
+                Id = 1,
+            };
+
             var result = allDesksService.UpdateDesks(testDesk);
 
 
-            Assert.AreEqual(result.First(i => i.Id == testDesk.Id).Title, testDesk.Title);
+            return result.First(i => i.Id == testDesk.Id).Title;
+        }
+
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksCreateCase))]
+        public int CreateDesk_Desk_ListDesks(IList<Desk> desks)
+        {
+            Setup(desks);
+            var testDesk = new Desk
+            {
+                Title = "title",
+                Id = 5,
+            };
+
+            var result = allDesksService.CreateDesk(testDesk);
+
+
+            return result.Count;
+        }
+
+
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DeskDeleteCase))]
+        public int DeleteDesk_Desk_ListDesks(IList<Desk> desks)
+        {
+            Setup(desks);
+            var desk = new Desk
+            {
+                Id = 1,
+                Title = "Tom",
+                Orders = new List<Order>(),
+                RoomId = 1,
+                Status = DeskStatus.Fixed,
+                Users = new List<User>(),
+            };
+            var result = allDesksService.DeleteDesk(desk);
+            return result.Count;
+        }
+
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DeskDeleteCase))]
+        public int GetDeskStatus_Desk_ListDesks(IList<Desk> desks)
+        {
+            Setup(desks);
+
+            var result = allDesksService.GetDesksStatuses();
+            return result.Count;
         }
     }
 }
+
+   

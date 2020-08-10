@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using DB.Entity;
+using DB.LookupTable;
 using Moq;
 using Repository.Interface;
 using Repository.UnitOfWork;
@@ -29,90 +30,100 @@ namespace Service.Tests.TestSettings
 
     }
 
+    public class RepositoryMockResult
+    {
+        public Mock<IUnitOfWork> UnitOfWorkMock { get; set; }
+
+        public Mock<IRepository<User>> UserRepositoryMock { get; set; }
+
+        public Mock<IRepository<Desk>> DeskRepositoryMock { get; set; }
+
+        public Mock<IRepository<Room>> RoomRepositoryMock { get; set; }
+
+        public Mock<IRepository<BookingInfo>> BookingInfoRepositoryMock { get; set; }
+
+        public Mock<IRepository<UserPosition>> UserPositionRepositoryMock { get; set; }
+
+        public Mock<IRepository<WorkingDaysCalendar>> WorkingDaysCalendarRepositoryMock { get; set; }
+
+        public Mock<IRepository<WorkPlan>> WorkPlanRepositoryMock { get; set; }
+
+
+    }
+
     public class ServiceTestHelper
     {
-        public static void MockRepository(out Mock<IUnitOfWork> unitOfWorkMock, RepositoryDescriptor descriptor = null)
+        public static RepositoryMockResult MockRepository(RepositoryDescriptor descriptor = null)
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-
-            var desksRepositoryMock = new Mock<IRepository<Desk>>();
-            var bookingInfoRepositoryMock = new Mock<IRepository<BookingInfo>>();
-            var roomRepositoryMock = new Mock<IRepository<Room>>();
-            var userRepositoryMock = new Mock<IRepository<User>>();
-            var userPositionRepositoryMock = new Mock<IRepository<UserPosition>>();
-            var orderRepositoryMock = new Mock<IRepository<Order>>();
-            var calendarRepositoryMock = new Mock<IRepository<WorkingDaysCalendar>>();
-            var workPlanRepositoryMock = new Mock<IRepository<WorkPlan>>();
-
-            if (descriptor != null)
-            {
-                void SetupItems<T>(Mock<IRepository<T>> repositoryMock, IList<T> items) where T : class
-                {
-                    if (items != null)
-                    {
-                        repositoryMock.Setup(x => x.ReadAll()).
-                            Returns(items.AsQueryable());
-                        repositoryMock.Setup(x => x.ReadAll(It.IsAny<Func<T, bool>>())).
-                            Returns<Func<T, bool>> (f => items.Where(f).AsQueryable());
-
-                        repositoryMock.Setup(x => x.Read(It.IsAny<object[]>())).
-                            Returns<object[]>(p => items[(int) p[0]]);
-                        repositoryMock.Setup(x => x.Read(It.IsAny<Func<T, bool>>())).
-                            Returns<Func<T, bool>>(items.FirstOrDefault);
-
-                        repositoryMock.Setup(x => x.Update(It.IsAny<T>()));
-                        
-                        repositoryMock.Setup(x => x.Create(It.IsAny<T>())).
-                            Returns<T>(t => 
-                            {
-                                items.Add(t);
-                                return t;
-                            });
-                        repositoryMock.Setup(x => x.Create(It.IsAny<IEnumerable<T>>())).
-                            Callback<IEnumerable<T>>( x =>
-                            {
-                                foreach (var item in x)
-                                {
-                                    items.Add(item);
-                                }
-                            }).Verifiable();
-
-                        repositoryMock.Setup(x => x.Delete(It.IsAny<T>())).
-                            Callback<T>(x => items.Remove(x)).
-                            Verifiable();
-
-                        repositoryMock.Setup(x => x.DeleteAll()).Callback(items.Clear).Verifiable();
-                    }
-                }
-
-                SetupItems(userRepositoryMock, descriptor.Users);
-                SetupItems(bookingInfoRepositoryMock, descriptor.BookingInfo);
-                SetupItems(desksRepositoryMock, descriptor.Desks);
-                SetupItems(roomRepositoryMock, descriptor.Rooms);
-                SetupItems(userPositionRepositoryMock, descriptor.UsersPosition);
-                SetupItems(orderRepositoryMock, descriptor.Orders);
-                SetupItems(calendarRepositoryMock, descriptor.WorkingDaysCalendar);
-                SetupItems(workPlanRepositoryMock, descriptor.WorkPlans);
-            }
-
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
             unitOfWorkMock.Setup(x => x.Save());
 
-            unitOfWorkMock.Setup(x => x.GetRepository<Desk>()).Returns(desksRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<Room>()).Returns(roomRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<BookingInfo>()).Returns(bookingInfoRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<User>()).Returns(userRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<UserPosition>()).Returns(userPositionRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<Order>()).Returns(orderRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<WorkPlan>()).Returns(workPlanRepositoryMock.Object);
-            unitOfWorkMock.Setup(x => x.GetRepository<WorkingDaysCalendar>()).Returns(calendarRepositoryMock.Object);
+            Mock<IRepository<T>> SetupRepository<T>(Func<RepositoryDescriptor, IList<T>> itemsGetter, Func<T, long> idGetter) where T : class
+            {
+                var repositoryMock = new Mock<IRepository<T>>();
+                unitOfWorkMock.Setup(x => x.GetRepository<T>()).Returns(repositoryMock.Object);
 
-            //bookingInfoRepositoryMock.Setup(r => r.Read(It.IsAny<BookingInfo[]>())).Callback<BookingInfo[]>(d =>
-            //{
-            //    foreach (var book in d)
-            //    {
-            //        return descriptor.BookingInfo;
-            //    }
-            //});
+                var items = descriptor != null ? itemsGetter(descriptor) : null;
+                items = items != null ? new List<T>(items) : new List<T>();
+
+                repositoryMock.Setup(x => x.ReadAll()).
+                    Returns(items.AsQueryable());
+                repositoryMock.Setup(x => x.ReadAll(It.IsAny<Func<T, bool>>())).
+                    Returns<Func<T, bool>>(f => items.Where(f).AsQueryable());
+
+                repositoryMock.Setup(x => x.Read(It.IsAny<object[]>())).
+                    Returns<object[]>(p =>
+                    {
+                        var id = (int) p[0];
+                        return items.FirstOrDefault(x => idGetter(x) == id);
+                    });
+                repositoryMock.Setup(x => x.Read(It.IsAny<Func<T, bool>>())).
+                    Returns<Func<T, bool>>(items.FirstOrDefault);
+
+                repositoryMock.Setup(x => x.Update(It.IsAny<T>())).Callback<T>(x =>
+                {
+                    var id = idGetter(x);
+                    var existingItem = items.First(v => idGetter(v) == id);
+                    items.Remove(existingItem);
+                    items.Add(x);
+                }).Verifiable();
+                repositoryMock.Setup(x => x.Create(It.IsAny<T>())).
+                    Returns<T>(t =>
+                    {
+                        items.Add(t);
+                        return t;
+                    });
+                repositoryMock.Setup(x => x.Create(It.IsAny<IEnumerable<T>>())).
+                    Callback<IEnumerable<T>>(x =>
+                    {
+                        foreach (var item in x)
+                        {
+                            items.Add(item);
+                        }
+                    }).Verifiable();
+
+                repositoryMock.Setup(x => x.Delete(It.IsAny<T>())).
+                    Callback<T>(x => items.Remove(x)).
+                    Verifiable();
+
+                repositoryMock.Setup(x => x.DeleteAll()).Callback(items.Clear).Verifiable();
+  
+                return repositoryMock;
+            }
+
+            return new RepositoryMockResult
+            {
+                UnitOfWorkMock = unitOfWorkMock,
+                DeskRepositoryMock = SetupRepository(x => x.Desks, x => x.Id),
+                UserRepositoryMock = SetupRepository(x => x.Users, x => x.Id),
+                RoomRepositoryMock = SetupRepository(x => x.Rooms, x => x.Id),
+                BookingInfoRepositoryMock = SetupRepository(x => x.BookingInfo, x => x.Id),
+                UserPositionRepositoryMock = SetupRepository(x => x.UsersPosition, x => x.Id),
+                WorkingDaysCalendarRepositoryMock = SetupRepository(x => x.WorkingDaysCalendar, x => x.Id),
+                WorkPlanRepositoryMock = SetupRepository(x => x.WorkPlans, x => x.Id),
+            };
+
         }
+
     }
 }

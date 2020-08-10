@@ -1,24 +1,16 @@
-﻿using DB.Entity;
-using DB.EntityStatus;
-using Microsoft.Extensions.Options;
-using Moq;
+﻿using System.Collections.Generic;
+using DB.Entity;
 using NUnit.Framework;
-using Repository.Interface;
-using Repository.UnitOfWork;
-using Service.AdminService.DTO.Entities;
-using Service.AdminService.Interfaces;
 using Service.AdminService.Realization;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Service.Tests.TestSettings;
+using Service.Tests.TestSettings.TestCases;
 
-namespace Service.Tests
+namespace Service.Tests.AdminServiceTest
 {
     public class BookingSetupServiceTests
     {
-        private Mock<IUnitOfWork> unitOfWorkMock;
         private BookingSetupService bookingSetupService;
+        private RepositoryMockResult mockResult;
 
         [SetUp]
         public void Setup()
@@ -26,16 +18,18 @@ namespace Service.Tests
             
             var repositoryDescriptor = new RepositoryDescriptor()
             {
-                Rooms = TestCaseClass.RoomList(),
-                BookingInfo = TestCaseClass.BookingInfos(),
+                Rooms = BookingTestCase.RoomList(),
+                BookingInfo = BookingTestCase.BookingInfos(),
 
             };
 
-            ServiceTestHelper.MockRepository(out unitOfWorkMock, repositoryDescriptor);
-            bookingSetupService = new BookingSetupService(unitOfWorkMock.Object);
+            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+
+            
+            bookingSetupService = new BookingSetupService(mockResult.UnitOfWorkMock.Object);
         }
 
-        [Test, TestCaseSource(typeof(TestCaseClass), nameof(TestCaseClass.BookingInfoTest))]
+        [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingInfoTest))]
         public int Read_MockObject(IList<BookingInfo> bookingInfos)
         {
             var result = bookingSetupService.Read(bookingInfos[0].Room);

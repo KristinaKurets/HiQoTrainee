@@ -1,12 +1,10 @@
-﻿using DB.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using DB.Entity;
 using NUnit.Framework;
 
-namespace Service.Tests
+namespace Service.Tests.TestSettings.TestCases
 {
-    public class TestCaseClass
+    public class BookingTestCase
     {
         private static Room room = new Room
         {
