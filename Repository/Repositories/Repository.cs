@@ -9,7 +9,7 @@ namespace Repository.Repositories
     public class Repository<TSource> : IRepository<TSource> where TSource: class
     {
         private readonly DbContext context;
-        private DbSet<TSource> set;
+        private readonly DbSet<TSource> set;
 
         public Repository(DbContext context)
         {
