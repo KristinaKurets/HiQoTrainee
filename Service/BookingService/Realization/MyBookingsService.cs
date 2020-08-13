@@ -16,7 +16,7 @@ namespace Service.BookingService.Realization
         protected readonly IRepository<Order> _repository;
         public MyBookingsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _repository = unitOfWork.GetRepository<Order>();
+            _repository = unitOfWork.OrderRepository;
         }
 
         public IEnumerable<BookingOrderDTO> GetActiveBookings(BookingUserDTO user) {

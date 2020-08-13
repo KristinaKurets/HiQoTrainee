@@ -30,15 +30,15 @@ namespace Service.AdminService.Services
         public AdminService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             DataBase = unitOfWork;
-            _userRepository = DataBase.GetRepository<User>();
-            _calendarRepository = DataBase.GetRepository<WorkingDaysCalendar>();
-            _deskRepository = DataBase.GetRepository<Desk>();
-            _bookingInfoRepository = DataBase.GetRepository<BookingInfo>();
-            _userPositionRepository = DataBase.GetRepository<UserPosition>();
-            _userRoleLookupRepository=DataBase.GetRepository<UserRoleLookup>();
-            _workPlanRepository = DataBase.GetRepository<WorkPlan>();
-            _roomRepository = DataBase.GetRepository<Room>();
-            _deskStatusRepository = DataBase.GetRepository<DeskStatusLookup>();
+            _userRepository = DataBase.UserRepository;
+            _calendarRepository = DataBase.CalendarRepository;
+            _deskRepository = DataBase.DeskRepository;
+            _bookingInfoRepository = DataBase.BookingInfoRepository;
+            _userPositionRepository = DataBase.UserPositionRepository;
+            _userRoleLookupRepository = DataBase.UserRoleLookupRepository;
+            _workPlanRepository = DataBase.WorkPlanRepository;
+            _roomRepository = DataBase.RoomRepository;
+            _deskStatusRepository = DataBase.DeskStatusRepository;
             _mapper = mapper;
         }
 

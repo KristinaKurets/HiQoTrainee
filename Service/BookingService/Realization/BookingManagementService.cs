@@ -6,9 +6,7 @@ using Service.BookingService.Base;
 using Service.BookingService.DTO;
 using Service.BookingService.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Service.BookingService.Realization
 {
@@ -23,11 +21,11 @@ namespace Service.BookingService.Realization
         public BookingManagementService(IUnitOfWork unitOfWork) 
             : base(unitOfWork)
         {
-            _orderRepository = unitOfWork.GetRepository<Order>();
-            _deskRepository = unitOfWork.GetRepository<Desk>();
-            _userRepository = unitOfWork.GetRepository<User>();
-            _BookingSetingsRepository = unitOfWork.GetRepository<BookingInfo>();
-            _CalendarRepository = unitOfWork.GetRepository<WorkingDaysCalendar>();
+            _orderRepository = unitOfWork.OrderRepository;
+            _deskRepository = unitOfWork.DeskRepository;
+            _userRepository = unitOfWork.UserRepository;
+            _BookingSetingsRepository = unitOfWork.BookingInfoRepository;
+            _CalendarRepository = unitOfWork.CalendarRepository;
         }
 
         protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) {
