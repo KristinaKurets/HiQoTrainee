@@ -47,8 +47,8 @@ namespace Service.Tests.TestSettings.TestCases
             get
             {
                 yield return new TestCaseData(workPlansList).Returns("Test plan");
-                yield return new TestCaseData(new List<WorkPlan>());
-                yield return new TestCaseData(null);
+                yield return new TestCaseData(new List<WorkPlan>()).Returns(typeof(NullReferenceException));
+                yield return new TestCaseData(null).Returns(typeof(NullReferenceException));
             }
         }
 
