@@ -15,11 +15,8 @@ namespace Service.BookingService.Realization
 {
     public class DeskAvailabilityService : BookingBaseService, IDeskAvailabilityService
     {
-        protected readonly IRepository<Desk> _repository;
-        public DeskAvailabilityService(IUnitOfWork unitOfWork, IRepository<Desk> repository) : base(unitOfWork)
-        {
-            _repository = repository;
-        }
+        public DeskAvailabilityService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        { }
 
         protected IEnumerable<BookingDeskDTO> CountDesksStatus(IEnumerable<Desk> desks,DateTime time) {
             var statusCounter = new DeskStatusHelper(time);
@@ -27,11 +24,11 @@ namespace Service.BookingService.Realization
         }
         public IEnumerable<BookingDeskDTO> GetDeskAvailability(DateTime dateTime)
         {
-            return CountDesksStatus(_repository.ReadAll(),dateTime);
+            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(),dateTime);
         }
         public IEnumerable<BookingDeskDTO> GetDeskAvailability(DateTime dateTime, DeskStatus status)
         {
-            return CountDesksStatus(_repository.ReadAll(x=>x.Status==status),dateTime);
+            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(x=>x.Status==status),dateTime);
         }
     }
 }

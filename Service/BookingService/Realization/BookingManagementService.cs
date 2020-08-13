@@ -1,42 +1,24 @@
 ﻿using DB.Entity;
 using DB.EntityStatus;
-using Repository.Interface;
 using Repository.UnitOfWork;
 using Service.BookingService.Base;
 using Service.BookingService.DTO;
 using Service.BookingService.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Service.BookingService.Realization
 {
     public class BookingManagementService:BookingBaseService,IBookingManagementService
     {
-        protected readonly IRepository<Order> _orderRepository;
-        protected readonly IRepository<User> _userRepository;
-        protected readonly IRepository<Desk> _deskRepository;
-        protected readonly IRepository<BookingInfo> _BookingSetingsRepository;
-        protected readonly IRepository<WorkingDaysCalendar> _CalendarRepository;
 
-        public BookingManagementService(
-            IUnitOfWork unitOfWork,
-            IRepository<Order> orderRepository,
-            IRepository<User> userRepository,
-            IRepository<Desk> deskRepository,
-            IRepository<BookingInfo> BookingSetingsRepository,
-            IRepository<WorkingDaysCalendar> CalendarRepository) : base(unitOfWork)
+        public BookingManagementService(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
+        { }
+
+        protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
         {
-            _orderRepository = orderRepository;
-            _deskRepository = deskRepository;
-            _userRepository = userRepository;
-            _BookingSetingsRepository = BookingSetingsRepository;
-            _CalendarRepository = CalendarRepository;
-        }
-
-        protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) {
-            _orderRepository.Create(new Order()
+            UnitOfWork.OrderRepository.Create(new Order()
             {
                 Status = status,
                 Desk = desc,
@@ -45,15 +27,17 @@ namespace Service.BookingService.Realization
             });
         }
 
-        protected void RejectOrders(IQueryable<Order> orders) {
+        protected void RejectOrders(IQueryable<Order> orders) 
+        {
             foreach (var order in orders)
             {
                 order.Status = BookingStatus.Rejected;
-                _orderRepository.Update(order);
+                UnitOfWork.OrderRepository.Update(order);
             }
         }
-        protected bool CreateBooking(User user, Desk desc, DateTime time) {
-            var dayOrders = _orderRepository.ReadAll(x => x.DateTime == time && x.Desk.Id == desc.Id);
+        protected bool CreateBooking(User user, Desk desc, DateTime time) 
+        {
+            var dayOrders = UnitOfWork.OrderRepository.ReadAll(x => x.DateTime == time && x.Desk.Id == desc.Id);
             if (dayOrders.Where(x => x.Status == BookingStatus.Booked).Count() == 0)
             {
                 var dayWaitOrders = dayOrders.Where(x => x.Status == BookingStatus.Waiting);
@@ -78,9 +62,10 @@ namespace Service.BookingService.Realization
             }
         }
 
-        public bool CreateBooking(BookingUserDTO userDTO, BookingDeskDTO descDTO, DateTime time) {
-            User user = _userRepository.Read(userDTO.Id);
-            Desk desk = _deskRepository.Read(descDTO.Id);
+        public bool CreateBooking(BookingUserDTO userDTO, BookingDeskDTO descDTO, DateTime time) 
+        {
+            User user = UnitOfWork.UserRepository.Read(userDTO.Id);
+            Desk desk = UnitOfWork.DeskRepository.Read(descDTO.Id);
             if (user != null && desk != null){
                // тут еще нужна проверка на рабочий день и правила букинга 
                 return CreateBooking(user, desk, time);
@@ -88,12 +73,13 @@ namespace Service.BookingService.Realization
             return false;
         }
         
-        public bool СancelBooking(BookingUserDTO user,long orderID) {
-            var order =_orderRepository.Read(orderID);
+        public bool СancelBooking(BookingUserDTO user,long orderID)
+        {
+            var order = UnitOfWork.OrderRepository.Read(orderID);
             if (order != null && order.User.Id == user.Id) {
 
                 order.Status = BookingStatus.Cancelled;
-                _orderRepository.Update(order);
+                UnitOfWork.OrderRepository.Update(order);
                 UnitOfWork.Save();
                 return true;
             }

@@ -13,6 +13,7 @@ namespace Service.AdminService.Changers
             desk.Camera = source.Camera;
             desk.Headset = source.Headset;
             desk.MacBook = source.MacBook;
+            desk.RoomId = source.Room.Id;
             return desk;
         }
     }

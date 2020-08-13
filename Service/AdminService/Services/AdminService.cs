@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using DB.Entity;
-using Repository.Interface;
 using Repository.UnitOfWork;
 using Service.AdminService.DTO.Entities;
 using Service.AdminService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DB.LookupTable;
 using Service.AdminService.Changers;
 using Service.AdminService.DTO.LookUps;
 
@@ -15,36 +13,18 @@ namespace Service.AdminService.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly IRepository<User> _userRepository;
-        private readonly IRepository<WorkingDaysCalendar> _calendarRepository;
-        private readonly IRepository<Desk> _deskRepository;
-        private readonly IRepository<BookingInfo> _bookingInfoRepository;
-        private readonly IRepository<UserPosition> _userPositionRepository;
-        private readonly IRepository<UserRoleLookup> _userRoleLookupRepository;
-        private readonly IRepository<WorkPlan> _workPlanRepository;
-        private readonly IRepository<Room> _roomRepository;
-        private readonly IRepository<DeskStatusLookup> _deskStatusRepository;
         private IUnitOfWork DataBase { get; }
         private readonly IMapper _mapper;
 
         public AdminService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             DataBase = unitOfWork;
-            _userRepository = DataBase.GetRepository<User>();
-            _calendarRepository = DataBase.GetRepository<WorkingDaysCalendar>();
-            _deskRepository = DataBase.GetRepository<Desk>();
-            _bookingInfoRepository = DataBase.GetRepository<BookingInfo>();
-            _userPositionRepository = DataBase.GetRepository<UserPosition>();
-            _userRoleLookupRepository=DataBase.GetRepository<UserRoleLookup>();
-            _workPlanRepository = DataBase.GetRepository<WorkPlan>();
-            _roomRepository = DataBase.GetRepository<Room>();
-            _deskStatusRepository = DataBase.GetRepository<DeskStatusLookup>();
             _mapper = mapper;
         }
 
         public List<UserDto> GetUsers()
         {
-            return _mapper.Map<List<UserDto>>(_userRepository.ReadAll().ToList());
+            return _mapper.Map<List<UserDto>>(DataBase.UserRepository.ReadAll().ToList());
         }
 
         public List<UserDto> OrderUsersBy<TKey>(Func<UserDto, TKey> key)
@@ -59,14 +39,13 @@ namespace Service.AdminService.Services
 
         public List<DeskDto> GetDesks()
         {
-            return _mapper.Map<List<DeskDto>>(_deskRepository.ReadAll());
+            return _mapper.Map<List<DeskDto>>(DataBase.DeskRepository.ReadAll());
         }
 
         public List<DeskDto> UpdateDesks(DeskDto desk)
         {
-            Desk deskUp = DeskChanger.ChangeFromDto(_deskRepository.Read(desk.Id), desk);
-            deskUp.Room = _roomRepository.Read(desk.RoomId);
-            _deskRepository.Update(deskUp);
+            Desk deskUp = DeskChanger.ChangeFromDto(DataBase.DeskRepository.Read(desk.Id), desk);
+            DataBase.DeskRepository.Update(deskUp);
             DataBase.Save();
             return GetDesks();
         }
@@ -74,47 +53,48 @@ namespace Service.AdminService.Services
         public List<DeskDto> CreateDesk(DeskDto desk)
         {
             Desk result = (Desk)desk;
-            result.Room = _roomRepository.Read(desk.RoomId);
-            _deskRepository.Create(result);
+            //тут могут быть вопросы, там нет поля для id, чтобы не создавать двойную связь
+            result.User = DataBase.UserRepository.Read(u => u.Id == desk.User.Id);
+            DataBase.DeskRepository.Create(result);
             DataBase.Save();
             return GetDesks();
         }
 
         public List<DeskDto> DeleteDesk(DeskDto desk)
         {
-            _deskRepository.Delete(_deskRepository.Read(desk.Id));
+            DataBase.DeskRepository.Delete(DataBase.DeskRepository.Read(desk.Id));
             DataBase.Save();
             return GetDesks();
         }
 
         public List<DeskStatusLookUpDto> GetDesksStatuses()
         {
-            return _mapper.Map<List<DeskStatusLookUpDto>>(_deskStatusRepository.ReadAll());
+            return _mapper.Map<List<DeskStatusLookUpDto>>(DataBase.DeskStatusRepository.ReadAll());
         }
 
         public List<BookingInfoDto> GetBookingInfo()
         {
-            return _mapper.Map<List<BookingInfoDto>>(_bookingInfoRepository.ReadAll());
+            return _mapper.Map<List<BookingInfoDto>>(DataBase.BookingInfoRepository.ReadAll());
         }
         public List<BookingInfoDto> CreateBookingInfo(BookingInfoDto booking)
         {
             BookingInfo bookingInfo = (BookingInfo)booking;
-            _bookingInfoRepository.Create(bookingInfo);
+            DataBase.BookingInfoRepository.Create(bookingInfo);
             DataBase.Save();
             return GetBookingInfo();
         }
 
         public List<BookingInfoDto> UpdateBookingInfo(BookingInfoDto booking)
         {
-            BookingInfo info = BookingInfoChanger.ChangeFromDto(_bookingInfoRepository.Read(booking.Id), booking);
-            _bookingInfoRepository.Update(info);
+            BookingInfo info = BookingInfoChanger.ChangeFromDto(DataBase.BookingInfoRepository.Read(booking.Id), booking);
+            DataBase.BookingInfoRepository.Update(info);
             DataBase.Save();
             return GetBookingInfo();
         }
 
         public List<BookingInfoDto> DeleteBookingInfo(BookingInfoDto booking)
         {
-            _bookingInfoRepository.Delete(_bookingInfoRepository.Read(booking.Id));
+            DataBase.BookingInfoRepository.Delete(DataBase.BookingInfoRepository.Read(booking.Id));
             DataBase.Save();
             return GetBookingInfo();
         }
@@ -122,52 +102,44 @@ namespace Service.AdminService.Services
         public List<UserDto> CreateUser(UserDto user)
         {
             User result = (User)user;
-            result.Room = _roomRepository.Read(user.RoomId);
-            result.Position = _userPositionRepository.Read(user.UserPositionId);
-            result.WorkPlan = _workPlanRepository.Read(user.WorkPlanId);
-            result.Desk = _deskRepository.Read(user.DeskId);
-            _userRepository.Create(result);
+            DataBase.UserRepository.Create(result);
             DataBase.Save();
             return GetUsers();
         }
 
         public List<UserDto> UpdateUser(UserDto user)
         {
-            User result = UserChanger.ChangeFromDto(_userRepository.Read(user.Id), user);
-            result.Room = _roomRepository.Read(user.RoomId);
-            result.Position = _userPositionRepository.Read(user.UserPositionId);
-            result.WorkPlan = _workPlanRepository.Read(user.WorkPlanId);
-            result.Desk = _deskRepository.Read(user.DeskId);
-            _userRepository.Update(result);
+            User result = UserChanger.ChangeFromDto(DataBase.UserRepository.Read(user.Id), user);
+            DataBase.UserRepository.Update(result);
             DataBase.Save();
             return GetUsers();
         }
 
         public List<UserDto> DeleteUser(UserDto user)
         {
-            _userRepository.Delete(_userRepository.Read(user.Id));
+            DataBase.UserRepository.Delete(DataBase.UserRepository.Read(user.Id));
             DataBase.Save();
             return GetUsers();
         }
 
         public List<UserPositionDto> GetPositions()
         {
-            return _mapper.Map<List<UserPositionDto>>(_userPositionRepository.ReadAll());
+            return _mapper.Map<List<UserPositionDto>>(DataBase.UserPositionRepository.ReadAll());
         }
 
         public List<UserRoleLookUpDto> GetRoles()
         {
-            return _mapper.Map<List<UserRoleLookUpDto>>(_userRoleLookupRepository.ReadAll());
+            return _mapper.Map<List<UserRoleLookUpDto>>(DataBase.UserRoleLookupRepository.ReadAll());
         }
 
         public List<WorkPlanDto> GetWorkPlans()
         {
-            return _mapper.Map<List<WorkPlanDto>>(_workPlanRepository.ReadAll());
+            return _mapper.Map<List<WorkPlanDto>>(DataBase.WorkPlanRepository.ReadAll());
         }
 
         public List<RoomDto> GetRooms()
         {
-            return _mapper.Map<List<RoomDto>>(_roomRepository.ReadAll());
+            return _mapper.Map<List<RoomDto>>(DataBase.RoomRepository.ReadAll());
         }
 
         public List<DeskDto> GetDesks(RoomDto room)
@@ -177,53 +149,53 @@ namespace Service.AdminService.Services
 
         private List<DeskDto> GetDesks(Func<Desk, bool> predicate)
         {
-            return _mapper.Map<List<DeskDto>>(_deskRepository.ReadAll(predicate));
+            return _mapper.Map<List<DeskDto>>(DataBase.DeskRepository.ReadAll(predicate));
         }
 
         public BookingInfoDto GetBookingInfoAboutOneRoom(RoomDto room)
         {
-            return _mapper.Map<BookingInfoDto>(_bookingInfoRepository.Read(u=>u.Id==room.BookingInfoId));
+            return _mapper.Map<BookingInfoDto>(DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId));
         }
 
         public List<WorkPlanDto> UpdateWorkPlan(WorkPlanDto workPlanDto)
         {
-            WorkPlan plan = WorkPlanChanger.ChangeFromDto(_workPlanRepository.Read(workPlanDto.Id), workPlanDto);
-            _workPlanRepository.Update(plan);
+            WorkPlan plan = WorkPlanChanger.ChangeFromDto(DataBase.WorkPlanRepository.Read(workPlanDto.Id), workPlanDto);
+            DataBase.WorkPlanRepository.Update(plan);
             DataBase.Save();
             return GetWorkPlans();
         }
 
         public List<WorkPlanDto> DeleteWorkPlan(WorkPlanDto workPlanDto)
         {
-            _workPlanRepository.Delete(_workPlanRepository.Read(workPlanDto.Id));
+            DataBase.WorkPlanRepository.Delete(DataBase.WorkPlanRepository.Read(workPlanDto.Id));
             DataBase.Save();
             return GetWorkPlans();
         }
 
         public void UpdateWorkPlan(UserDto user, WorkPlanDto workPlan)
         {
-            var repUser = _userRepository.Read(user.Id);
+            var repUser = DataBase.UserRepository.Read(user.Id);
             repUser.WorkPlan = (WorkPlan)workPlan;
-            _userRepository.Update(repUser);
+            DataBase.UserRepository.Update(repUser);
         }
 
         public void UpdateDesk(UserDto user, DeskDto desk)
         {
-            var repUser = _userRepository.Read(user.Id);
+            var repUser = DataBase.UserRepository.Read(user.Id);
             repUser.Desk = (Desk)desk;
-            _userRepository.Update(repUser);
+            DataBase.UserRepository.Update(repUser);
         }
 
         public List<WorkingDaysCalendarDto> GetWorkingDayCalendars()
         {
-            return _mapper.Map<List<WorkingDaysCalendar>, List<WorkingDaysCalendarDto>>(_calendarRepository.ReadAll().ToList());
+            return _mapper.Map<List<WorkingDaysCalendar>, List<WorkingDaysCalendarDto>>(DataBase.CalendarRepository.ReadAll().ToList());
         }
 
         public void SetDayOff(WorkingDaysCalendarDto calendar)
         {
-            var cal = _calendarRepository.Read(calendar.Id);
+            var cal = DataBase.CalendarRepository.Read(calendar.Id);
             cal.IsOff = true;
-            _calendarRepository.Update(cal);
+            DataBase.CalendarRepository.Update(cal);
         }
     }
 }

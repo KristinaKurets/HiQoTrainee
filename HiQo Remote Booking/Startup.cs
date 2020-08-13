@@ -29,8 +29,8 @@ namespace HiQo_Remote_Booking
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DbContext ,HqrbContext>(options => 
-                options.UseSqlServer(connection));
+            services.AddDbContext<DbContext, HqrbContext>(options => 
+                options.UseLazyLoadingProxies().UseSqlServer(connection));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(DtoProfile));
             services.AddBusinessLogicLayer();

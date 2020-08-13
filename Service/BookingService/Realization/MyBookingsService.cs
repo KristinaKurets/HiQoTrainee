@@ -13,18 +13,15 @@ namespace Service.BookingService.Realization
 {
     public class MyBookingsService:BookingBaseService,IMyBookingsService
     {
-        protected readonly IRepository<Order> _repository;
-        public MyBookingsService(IUnitOfWork unitOfWork, IRepository<Order> repository) : base(unitOfWork)
-        {
-            _repository = repository;
-        }
+        public MyBookingsService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        { }
 
         public IEnumerable<BookingOrderDTO> GetActiveBookings(BookingUserDTO user) {
-            return (IEnumerable <BookingOrderDTO>) _repository.ReadAll(x=> x.User.Id==user.Id &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked) );
+            return (IEnumerable <BookingOrderDTO>) UnitOfWork.OrderRepository.ReadAll(x=> x.User.Id==user.Id &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked) );
         }
 
         public IEnumerable<BookingOrderDTO> GetBookingsHistory(BookingUserDTO user, DateTime start, DateTime end) {
-            return (IEnumerable<BookingOrderDTO>)_repository.ReadAll(x =>
+            return (IEnumerable<BookingOrderDTO>)UnitOfWork.OrderRepository.ReadAll(x =>
             x.User.Id == user.Id
             && x.DateTime >= start
             && x.DateTime <= end
