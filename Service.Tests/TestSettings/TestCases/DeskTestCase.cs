@@ -48,7 +48,7 @@ namespace Service.Tests.TestSettings.TestCases
             }
         };
 
-        private static readonly IList<DeskStatusLookup> deskStatusLookups = new List<DeskStatusLookup>()
+        private static readonly IList<DeskStatusLookup> deskStatusLookups = new DeskStatusLookup[]
         {
             new DeskStatusLookup()
             {
@@ -102,9 +102,9 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                yield return new TestCaseData(Desks).Returns(deskStatusLookups.Count);
-                yield return new TestCaseData(new List<Desk>()).Returns(0);
-                yield return new TestCaseData(null).Returns(0);
+                yield return new TestCaseData(Desks, deskStatusLookups).Returns(deskStatusLookups.Count);
+                yield return new TestCaseData(new List<Desk>(), new List<DeskStatusLookup>()).Returns(0);
+                yield return new TestCaseData(null, null).Returns(0);
             }
         }
     }

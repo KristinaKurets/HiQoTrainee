@@ -16,6 +16,8 @@ namespace Service.Tests.TestSettings
 
         public IList<Desk> Desks { get; set; }
 
+        public IList<DeskStatusLookup> DeskStatusLookup { get; set; }
+
         public IList<BookingInfo> BookingInfo { get; set; }
 
         public IList<Room> Rooms { get; set; }
@@ -48,6 +50,9 @@ namespace Service.Tests.TestSettings
 
         public Mock<IRepository<WorkPlan>> WorkPlanRepositoryMock { get; set; }
 
+        public Mock<IRepository<Order>> OrderRepositoryMock { get; set; }
+
+        public Mock<IRepository<DeskStatusLookup>> DeskStatusLookupRepositoryMock { get; set; }
 
     }
 
@@ -121,6 +126,8 @@ namespace Service.Tests.TestSettings
                 UserPositionRepositoryMock = SetupRepository(x => x.UsersPosition, x => x.Id),
                 WorkingDaysCalendarRepositoryMock = SetupRepository(x => x.WorkingDaysCalendar, x => x.Id),
                 WorkPlanRepositoryMock = SetupRepository(x => x.WorkPlans, x => x.Id),
+                OrderRepositoryMock = SetupRepository(x => x.Orders, x => x.Id),
+                DeskStatusLookupRepositoryMock = SetupRepository(x => x.DeskStatusLookup, x => x.ID)
             };
 
         }

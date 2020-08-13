@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DB.Entity;
 using DB.EntityStatus;
+using DB.LookupTable;
 using NUnit.Framework;
 using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
@@ -14,12 +15,13 @@ namespace Service.Tests.AdminServiceTest
         private AllDesksService allDesksService;
         private RepositoryMockResult mockResult;
 
-        public void Setup(IList<Desk> desks)
+        public void Setup(IList<Desk> desks, IList<DeskStatusLookup> deskStatusLookups = null)
         {
 
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
             {
                 Desks = desks,
+                DeskStatusLookup = deskStatusLookups,
             };
 
             mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
@@ -86,10 +88,10 @@ namespace Service.Tests.AdminServiceTest
             return result.Count;
         }
 
-        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DeskDeleteCase))]
-        public int GetDeskStatus_Desk_ListDesks(IList<Desk> desks)
+        [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DeskGetDesksLookupCase))]
+        public int GetDeskStatus_Desk_ListDesks( List<Desk> desks, List<DeskStatusLookup> deskStatusLookup)
         {
-            Setup(desks);
+            Setup(desks, deskStatusLookup);
 
             var result = allDesksService.GetDesksStatuses();
             return result.Count;
