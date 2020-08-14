@@ -1,7 +1,6 @@
 ﻿using DB.Entity;
-using System;
 
-namespace Service.AdminService.DTO.Entities
+namespace DtoCommon.DTO.Entities
 {
     public class WorkPlanDto
     {

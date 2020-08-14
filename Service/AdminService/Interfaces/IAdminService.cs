@@ -1,41 +1,38 @@
-﻿using Service.AdminService.DTO;
-using Service.AdminService.DTO.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DB.Entity;
-using Service.AdminService.DTO.LookUps;
+using DB.LookupTable;
 
 namespace Service.AdminService.Interfaces
 {
     public interface IAdminService
     {
-        List<WorkingDaysCalendarDto> GetWorkingDayCalendars();
-        List<UserDto> GetUsers();
-        List<UserDto> OrderUsersBy<TKey>(Func<UserDto, TKey> key);
-        List<UserDto> FilterBy(Func<UserDto, bool> predicate, List<UserDto> users);
-        List<DeskDto> GetDesks();
-        List<DeskDto> UpdateDesks(DeskDto desk);
-        List<DeskDto> CreateDesk(DeskDto desk);
-        List<DeskDto> DeleteDesk(DeskDto desk);
-        List<DeskStatusLookUpDto> GetDesksStatuses();
-        List<BookingInfoDto> GetBookingInfo();
-        List<BookingInfoDto> CreateBookingInfo(BookingInfoDto booking);
-        List<BookingInfoDto> UpdateBookingInfo(BookingInfoDto booking);
-        List<BookingInfoDto> DeleteBookingInfo(BookingInfoDto booking);
-        List<UserDto> CreateUser(UserDto user);
-        List<UserDto> UpdateUser(UserDto user);
-        List<UserDto> DeleteUser(UserDto user);
-        List<UserPositionDto> GetPositions();
-        List<UserRoleLookUpDto> GetRoles();
-        List<WorkPlanDto> GetWorkPlans();
-        List<RoomDto> GetRooms();
-        List<DeskDto> GetDesks(RoomDto room);
-        BookingInfoDto GetBookingInfoAboutOneRoom(RoomDto room);
-        List<WorkPlanDto> UpdateWorkPlan(WorkPlanDto workPlanDto);
-        List<WorkPlanDto> DeleteWorkPlan(WorkPlanDto workPlanDto);
-        void UpdateWorkPlan(UserDto user, WorkPlanDto workPlan);
-        void UpdateDesk(UserDto user, DeskDto desk);
-        void SetDayOff(WorkingDaysCalendarDto calendar);
+        List<User> GetUsers();
+        List<User> CreateUser(User user);
+        List<User> UpdateUser(User user);
+        List<User> DeleteUser(User user);
+        List<User> OrderUsersBy<TKey>(Func<User, TKey> key);
+        List<User> FilterBy(Func<User, bool> predicate, List<User> users);
+        List<Desk> GetDesks();
+        List<Desk> UpdateDesks(Desk desk);
+        List<Desk> CreateDesk(Desk desk);
+        List<Desk> DeleteDesk(Desk desk);
+        List<Desk> GetDesks(Room room);
+        List<DeskStatusLookup> GetDesksStatuses();
+        List<BookingInfo> GetBookingInfo();
+        List<BookingInfo> CreateBookingInfo(BookingInfo booking);
+        List<BookingInfo> UpdateBookingInfo(BookingInfo booking);
+        List<BookingInfo> DeleteBookingInfo(BookingInfo booking);
+        BookingInfo GetBookingInfoAboutOneRoom(Room room);
+        List<UserPosition> GetPositions();
+        List<UserRoleLookup> GetRoles();
+        List<Room> GetRooms();
+        List<WorkPlan> GetWorkPlans();
+        List<WorkPlan> UpdateWorkPlan(WorkPlan workPlanDto);
+        List<WorkPlan> DeleteWorkPlan(WorkPlan workPlanDto);
+        void UpdateWorkPlan(User user, WorkPlan workPlan);
+        void UpdateDesk(User user, Desk desk);
+        List<WorkingDaysCalendar> GetWorkingDayCalendars();
+        List<WorkingDaysCalendar> SetDayOff(WorkingDaysCalendar calendar);
     }
 }

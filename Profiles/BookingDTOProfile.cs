@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using DB.Entity;
-using Service.AdminService.DTO.Entities;
-using Service.AdminService.DTO.EntitiesStatuses;
+using DtoCommon.DTO.EntitiesStatuses;
 using Service.BookingService.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Profiles
 {

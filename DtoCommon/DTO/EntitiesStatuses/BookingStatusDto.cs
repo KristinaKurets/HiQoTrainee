@@ -1,4 +1,4 @@
-﻿namespace Service.AdminService.DTO.EntitiesStatuses
+﻿namespace DtoCommon.DTO.EntitiesStatuses
 {
     public enum BookingStatusDto : short
     {

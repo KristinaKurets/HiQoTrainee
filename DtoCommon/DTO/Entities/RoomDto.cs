@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using DB.Entity;
+﻿using DB.Entity;
 
-namespace Service.AdminService.DTO.Entities
+namespace DtoCommon.DTO.Entities
 {
     public class RoomDto
     {

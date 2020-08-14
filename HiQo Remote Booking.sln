@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalApiCheck", "PortalApi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles", "Profiles\Profiles.csproj", "{C8465A25-54DE-45F7-A208-AB5117EE497A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DtoCommon", "DtoCommon\DtoCommon.csproj", "{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{C8465A25-54DE-45F7-A208-AB5117EE497A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8465A25-54DE-45F7-A208-AB5117EE497A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8465A25-54DE-45F7-A208-AB5117EE497A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using System;
 using DB.Entity;
 
-namespace Service.AdminService.DTO.Entities
+namespace DtoCommon.DTO.Entities
 {
     public class WorkingDaysCalendarDto
     {

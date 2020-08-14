@@ -7,15 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Service.BookingService.Interfaces;
-using Service.BookingService.Realization;
 using Profiles;
-using Repository.UnitOfWork;
-using Service.AdminService.Interfaces;
-using Service.AdminService.Services;
-using Microsoft.Extensions.Logging;
-using HiQo_Remote_Booking.LoggerProvider;
-using Microsoft.AspNetCore.Http;
 using HiQo_Remote_Booking.Filters;
 using HiQo_Remote_Booking.Middleware;
 

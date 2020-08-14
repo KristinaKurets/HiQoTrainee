@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using DB.Entity;
+﻿using DB.Entity;
 using DB.EntityStatus;
-using Service.AdminService.DTO.EntitiesStatuses;
+using DtoCommon.DTO.EntitiesStatuses;
 
-namespace Service.AdminService.DTO.Entities
+namespace DtoCommon.DTO.Entities
 {
     public class DeskDto
     {

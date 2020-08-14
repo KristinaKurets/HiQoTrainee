@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using DB.Entity;
 using DB.EntityStatus;
 using DB.LookupTable;
-using Service.AdminService.DTO.Entities;
 
-namespace Service.AdminService.DTO.LookUps
+namespace DtoCommon.DTO.LookUps
 {
     public class BookingStatusLookUpDto
     {
