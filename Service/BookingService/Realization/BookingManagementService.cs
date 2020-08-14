@@ -1,4 +1,5 @@
-﻿using DB.Entity;
+﻿using AutoMapper;
+using DB.Entity;
 using DB.EntityStatus;
 using Repository.UnitOfWork;
 using Service.BookingService.Base;
@@ -15,6 +16,7 @@ namespace Service.BookingService.Realization
         public BookingManagementService(IUnitOfWork unitOfWork) 
             : base(unitOfWork)
         { }
+
 
         protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
         {
@@ -77,10 +79,10 @@ namespace Service.BookingService.Realization
         {
             var order = UnitOfWork.OrderRepository.Read(orderID);
             if (order != null && order.User.Id == user.Id) {
-
                 order.Status = BookingStatus.Cancelled;
                 UnitOfWork.OrderRepository.Update(order);
                 UnitOfWork.Save();
+
                 return true;
             }
             return false;

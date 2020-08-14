@@ -19,22 +19,5 @@ namespace Service.BookingService.DTO
         public BookingOrderDTO Order { get; set; }
         public BookingUserDTO User { get; set; }
 
-
-        public static implicit operator BookingDeskDTO(Desk desk)
-        {
-            return new BookingDeskDTO
-            {
-                Id = desk.Id,
-                Title = desk.Title,
-                MacBook = desk.MacBook,
-                Camera = desk.Camera,
-                Headset = desk.Headset,
-                Room = desk.Room,
-                Status = desk.Status,
-                Order = null,
-                // это правильно, но сломается так-как в бд сущность неправильна
-                User = desk.User
-            };
-        }
     }
 }

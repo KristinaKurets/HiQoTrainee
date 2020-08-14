@@ -9,11 +9,8 @@ namespace Common.Extension
         public static class EnumExtension
         {
             public static string GetDescription<T>(this T enumValue)
-                where T : struct, IConvertible
+                where T : Enum, IConvertible
             {
-                if (!typeof(T).IsEnum)
-                    return null;
-
                 var description = enumValue.ToString();
                 var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
 

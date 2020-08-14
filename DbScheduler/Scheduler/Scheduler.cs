@@ -29,8 +29,8 @@ namespace DbScheduler
         {
             this.userProvider = userProvider;
             this.unitOfWork = unitOfWork;
-            usersRepository = new UniqueUserRepository(unitOfWork.GetRepository<User>());
-            usersPositionsRepository = unitOfWork.GetRepository<UserPosition>();
+            usersRepository = new UniqueUserRepository(unitOfWork.UserRepository);
+            usersPositionsRepository = unitOfWork.UserPositionRepository;
         }
 
         public async void Stop()
