@@ -30,7 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="C:\Users\carmi\.nuget\packages\nlog.config\4.7.3\contentFiles\any\any\NLog.config">
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

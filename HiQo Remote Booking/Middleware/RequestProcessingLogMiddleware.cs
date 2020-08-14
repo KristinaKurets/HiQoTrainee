@@ -22,7 +22,7 @@ namespace HiQo_Remote_Booking.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
              await _next.Invoke(context);
-             _logger.LogInformation("Method:{0} Path:{1} Status code: {2}",context.Request.Method,context.Request.Path,context.Response.StatusCode);
+             _logger.LogInformation(context.Request.Method+DataBaseLogger.SPLITTER+context.Request.Path+DataBaseLogger.SPLITTER+context.Response.StatusCode);
          
         }
     }

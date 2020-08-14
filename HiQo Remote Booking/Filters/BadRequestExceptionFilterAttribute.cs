@@ -19,7 +19,7 @@ namespace HiQo_Remote_Booking.Filters
         {   
                 string actionName = context.ActionDescriptor.DisplayName;           
                 string exceptionMessage = context.Exception.Message;
-                _logger.LogError("In method {0} Exception: {1} ", actionName,exceptionMessage);
+                _logger.LogError(actionName+DataBaseLogger.SPLITTER+exceptionMessage);
                 context.ExceptionHandled = true; 
         }
     }

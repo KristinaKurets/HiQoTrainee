@@ -30,9 +30,21 @@ namespace HiQo_Remote_Booking.LoggerProvider
             var ms = messege.Split(SPLITTER);
             if (ms.Length == 2) {
                 NLog.LogEventInfo theEvent = new NLog.LogEventInfo(NLog.LogLevel.Error, "", "");
-                
+                theEvent.Properties["Method"] = ms[0];
+                theEvent.Properties["Exeption"] = ms[1];
+                _logger.Error(theEvent);
             }
-           
+       }
+
+        protected void LogProcessingInfo(string messege) {
+            var ms = messege.Split(SPLITTER);
+            if (ms.Length == 3) {
+                NLog.LogEventInfo theEvent = new NLog.LogEventInfo(NLog.LogLevel.Info, "", "");
+                theEvent.Properties["HTTPMethod"] = ms[0];
+                theEvent.Properties["Path"] = ms[1];
+                theEvent.Properties["StatusCode"] = ms[2];
+                _logger.Info(theEvent);
+            }
 
         }
 
@@ -44,14 +56,13 @@ namespace HiQo_Remote_Booking.LoggerProvider
                 lock (_lock)
                 {
                  
-                    var aleksey = formatter(state, exception);
                     switch (logLevel) {
                         case LogLevel.Information:
-                            _logger.Info(aleksey);
+                           LogProcessingInfo(formatter(state, exception));
                           
                             break;          
                         case LogLevel.Error:
-                            _logger.Error(aleksey);
+                            LogBadRequest(formatter(state, exception));
                             break;
                     }
                 }

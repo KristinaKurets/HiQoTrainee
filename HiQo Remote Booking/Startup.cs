@@ -53,10 +53,10 @@ namespace HiQo_Remote_Booking
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseRequestProcessingLog();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseRequestProcessingLog();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
