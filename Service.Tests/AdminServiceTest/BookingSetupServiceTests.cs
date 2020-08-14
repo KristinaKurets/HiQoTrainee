@@ -48,6 +48,7 @@ namespace Service.Tests.AdminServiceTest
             var result = bookingSetupService.Create(testBookingInfo);
             return result.Count;
         }
+
         [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingDeleteCase))]
         public int Delete_BookingInfo(IList<BookingInfo> bookingInfos)
         {
@@ -59,6 +60,7 @@ namespace Service.Tests.AdminServiceTest
             var result = bookingSetupService.Delete(testBookingInfo);
             return result.Count;
         }
+
         [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BoolingUpdateCase))]
         public int Update_BookingInfo(IList<BookingInfo> bookingInfos)
         {

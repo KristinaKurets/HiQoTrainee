@@ -1,44 +1,69 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DB.Entity;
+using DB.LookupTable;
 using Moq;
 using NUnit.Framework;
 using Repository.Interface;
 using Repository.UnitOfWork;
 using Service.AdminService.Realization;
+using Service.Tests.TestSettings;
+using Service.Tests.TestSettings.TestCases;
 
 namespace Service.Tests.AdminServiceTest
 {
     public class UserSetupServiceTests
     {
-        private IQueryable<User> GetTestUsers()
+        private UserSetupService userSetupService;
+        private RepositoryMockResult mockResult;
+
+        public void Setup(IList<User> users, IList<UserPosition> userPositions=null, IList<WorkPlan> workPlans=null, IList<Desk> desks=null)
         {
-            return new User[]
+
+            RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
             {
-                new User {Id = 1, FirstName = "James", LastName = "Brown", Email = "jamesBrown@gmail.com"},
-                new User {Id = 2, FirstName = "Eddie", LastName = "Murphy", Email = "eddieMurphy@gmail.com"},
-                new User {Id = 3, FirstName = "Freddie", LastName = "Merqury", Email = "freddieMercury@gmail.com"}
+                Users = users,
+                UsersPosition = userPositions,
+                WorkPlans = workPlans,
+                Desks = desks
+            };
 
-            }.AsQueryable();
-        }
-        private Mock<IUnitOfWork> unitOfWorkMock;
-
-        [SetUp]
-        public void SetUp()
-        {
-            var userSetupServiceMock = new Mock<IRepository<User>>();
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-
-            userSetupServiceMock.Setup(x => x.ReadAll()).Returns(GetTestUsers());
-            unitOfWorkMock.Setup(x => x.Save());
-            unitOfWorkMock.Setup(x => x.GetRepository<User>()).Returns(userSetupServiceMock.Object);
+            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            userSetupService = new UserSetupService(mockResult.UnitOfWorkMock.Object);
         }
 
-        [Test]
-        public void ReadAll_Test()
+       [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersReadAllCase))]
+        public int ReadAll_Users(IList<User> users)
         {
-            var userSetupService = new UserSetupService(unitOfWorkMock.Object);
+            Setup(users);
             var result = userSetupService.ReadAll();
-            Assert.AreEqual(result.Count(), userSetupService.ReadAll().Count());
+            return result.Count();
+        }
+
+        [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersUpdateCase))]
+        public string Update_Users(IList<User> users)
+        {
+            Setup(users);
+            var testUser = new User()
+            {
+                FirstName = "Nicola",
+                LastName = "Tesla"
+            };
+            var result = userSetupService.Update(testUser);
+            return result.First(i => i.Id == testUser.Id).Email;
+        }
+
+        [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersCreateCase))]
+        public int Create_User(IList<User> users, IList<UserPosition> userPositions, IList<WorkPlan> workPlans, IList<Desk> desks)
+        {
+            Setup(users, userPositions, workPlans, desks);
+            var testUser = new User()
+            {
+                FirstName = "Nicola",
+                LastName = "Tesla"
+            };
+            var result = userSetupService.Create(testUser);
+            return result.Count;
         }
     }
 }
