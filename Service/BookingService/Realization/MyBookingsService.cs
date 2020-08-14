@@ -1,4 +1,5 @@
-﻿using DB.Entity;
+﻿using AutoMapper;
+using DB.Entity;
 using DB.EntityStatus;
 using Repository.Interface;
 using Repository.UnitOfWork;
@@ -14,21 +15,26 @@ namespace Service.BookingService.Realization
     public class MyBookingsService:BookingBaseService,IMyBookingsService
     {
         protected readonly IRepository<Order> _repository;
-        public MyBookingsService(IUnitOfWork unitOfWork, IRepository<Order> repository) : base(unitOfWork)
+        protected readonly IUnitOfWork _unitOfWork;
+        protected readonly IMapper _mapper;
+        
+        public MyBookingsService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
+            _repository = _unitOfWork.GetRepository<Order>();
+            _mapper = mapper;
         }
 
         public IEnumerable<BookingOrderDTO> GetActiveBookings(BookingUserDTO user) {
-            return (IEnumerable <BookingOrderDTO>) _repository.ReadAll(x=> x.User.Id==user.Id &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked) );
+            return _mapper.Map<IEnumerable<BookingOrderDTO>> (_repository.ReadAll(x=> x.User.Id==user.Id &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked)));
         }
 
         public IEnumerable<BookingOrderDTO> GetBookingsHistory(BookingUserDTO user, DateTime start, DateTime end) {
-            return (IEnumerable<BookingOrderDTO>)_repository.ReadAll(x =>
+            return _mapper.Map<IEnumerable<BookingOrderDTO>>(_repository.ReadAll(x =>
             x.User.Id == user.Id
             && x.DateTime >= start
             && x.DateTime <= end
-            && (x.Status != BookingStatus.Waiting && x.Status != BookingStatus.Booked));
+            && (x.Status != BookingStatus.Waiting && x.Status != BookingStatus.Booked)));
         }
 
 

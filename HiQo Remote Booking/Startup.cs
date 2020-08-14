@@ -13,6 +13,11 @@ using Profiles;
 using Repository.UnitOfWork;
 using Service.AdminService.Interfaces;
 using Service.AdminService.Services;
+using Microsoft.Extensions.Logging;
+using HiQo_Remote_Booking.LoggerProvider;
+using Microsoft.AspNetCore.Http;
+using HiQo_Remote_Booking.Filters;
+using HiQo_Remote_Booking.Middleware;
 
 namespace HiQo_Remote_Booking
 {
@@ -32,9 +37,13 @@ namespace HiQo_Remote_Booking
             services.AddDbContext<DbContext ,HqrbContext>(options => 
                 options.UseSqlServer(connection));
             services.AddAutoMapper(typeof(DtoProfile));
+            services.AddAutoMapper(typeof(BookingDTOProfile));
             services.AddUnitOfWorkAndRepository();
             services.AddBusinessLogicLayer();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(BadRequestExceptionFilterAttribute));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,13 +53,10 @@ namespace HiQo_Remote_Booking
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseRequestProcessingLog();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

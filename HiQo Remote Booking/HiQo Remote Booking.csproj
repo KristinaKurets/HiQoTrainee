@@ -19,11 +19,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NLog" Version="4.7.3" />
+    <PackageReference Include="NLog.Config" Version="4.7.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DB\DB.csproj" />
-    <ProjectReference Include="..\Profiles\Profiles.csproj" />
+	  <ProjectReference Include="..\DB\DB.csproj" />
+	 <ProjectReference Include="..\Profiles\Profiles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="C:\Users\carmi\.nuget\packages\nlog.config\4.7.3\contentFiles\any\any\NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 

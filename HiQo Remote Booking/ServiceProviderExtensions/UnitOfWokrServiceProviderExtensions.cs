@@ -10,7 +10,7 @@ namespace HiQo_Remote_Booking.ServiceProviderExtensions
         public static void AddUnitOfWorkAndRepository(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            
         }
     }
 }

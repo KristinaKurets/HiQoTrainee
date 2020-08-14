@@ -15,17 +15,5 @@ namespace Service.BookingService.DTO
         public BookingUserDTO User { get; set; }
         public DateTime DateTime { get; set; }
 
-        public static implicit operator BookingOrderDTO(Order order)
-        {
-            return new BookingOrderDTO()
-            {
-                Id = order.Id,
-                Status = order.Status,
-                Desk = order.Desk,
-                DateTime = order.DateTime,
-                User = order.User
-
-            };
-        }
     }
 }

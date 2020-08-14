@@ -1,4 +1,5 @@
-﻿using DB.Entity;
+﻿using AutoMapper;
+using DB.Entity;
 using DB.EntityStatus;
 using Repository.Interface;
 using Repository.UnitOfWork;
@@ -14,6 +15,7 @@ namespace Service.BookingService.Realization
 {
     public class BookingManagementService:BookingBaseService,IBookingManagementService
     {
+        protected readonly IUnitOfWork _unitOfWork;
         protected readonly IRepository<Order> _orderRepository;
         protected readonly IRepository<User> _userRepository;
         protected readonly IRepository<Desk> _deskRepository;
@@ -21,18 +23,15 @@ namespace Service.BookingService.Realization
         protected readonly IRepository<WorkingDaysCalendar> _CalendarRepository;
 
         public BookingManagementService(
-            IUnitOfWork unitOfWork,
-            IRepository<Order> orderRepository,
-            IRepository<User> userRepository,
-            IRepository<Desk> deskRepository,
-            IRepository<BookingInfo> BookingSetingsRepository,
-            IRepository<WorkingDaysCalendar> CalendarRepository) : base(unitOfWork)
+            IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _orderRepository = orderRepository;
-            _deskRepository = deskRepository;
-            _userRepository = userRepository;
-            _BookingSetingsRepository = BookingSetingsRepository;
-            _CalendarRepository = CalendarRepository;
+            _unitOfWork = unitOfWork;
+            _orderRepository = _unitOfWork.GetRepository<Order>();
+            _deskRepository = _unitOfWork.GetRepository<Desk>();
+            _userRepository = _unitOfWork.GetRepository<User>();
+            _BookingSetingsRepository = _unitOfWork.GetRepository<BookingInfo>();
+            _CalendarRepository = _unitOfWork.GetRepository<WorkingDaysCalendar>();
+            
         }
 
         protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) {
@@ -67,7 +66,7 @@ namespace Service.BookingService.Realization
                 else if (user.WorkPlan.Priority == 2 && dayWaitOrders.Count() == 0)
                 {
                     CreateOrder(BookingStatus.Waiting, user, desc, time);
-                    UnitOfWork.Save();
+                    _unitOfWork.Save();
                     return true;
                 }
                 return false;
@@ -94,7 +93,7 @@ namespace Service.BookingService.Realization
 
                 order.Status = BookingStatus.Cancelled;
                 _orderRepository.Update(order);
-                UnitOfWork.Save();
+                _unitOfWork.Save();
                 return true;
             }
             return false;

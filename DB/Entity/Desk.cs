@@ -36,7 +36,8 @@ namespace DB.Entity
         [ForeignKey("status_id")]
         public DeskStatus Status { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        // Нужно настроить мапинг в бд для этого поля
+        public virtual User User { get; set; }
         
     }
 }
