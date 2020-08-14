@@ -7,12 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Service.BookingService.Interfaces;
-using Service.BookingService.Realization;
 using Profiles;
 using Repository.UnitOfWork;
-using Service.AdminService.Interfaces;
-using Service.AdminService.Services;
 
 namespace HiQo_Remote_Booking
 {
@@ -34,7 +30,7 @@ namespace HiQo_Remote_Booking
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(DtoProfile));
             services.AddBusinessLogicLayer();
-            services.AddControllersWithViews();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +51,7 @@ namespace HiQo_Remote_Booking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=AdminPanel}/{action=NewComers}/{id?}");
             });
         }
     }
