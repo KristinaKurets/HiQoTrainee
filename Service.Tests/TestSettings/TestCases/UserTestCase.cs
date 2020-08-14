@@ -11,6 +11,88 @@ namespace Service.Tests.TestSettings.TestCases
 {
     public class UserTestCase
     {
+        private static readonly IList<Desk> Desks = new List<Desk>
+        {
+            new Desk
+            {
+                Id=1,
+                Title= "Tom",
+                Orders = new List<Order>(),
+                RoomId = 1,
+                Status = DeskStatus.Fixed,
+            },
+            new Desk
+            {
+                Id=2,
+                Title="Alice",
+                Orders = new List<Order>(),
+                Room = new Room(),
+                Status = DeskStatus.Fixed,
+            },
+            new Desk
+            {
+                Id=3,
+                Title="Sam",
+                Orders = new List<Order>(),
+                Room = new Room(),
+                Status = DeskStatus.Fixed,
+            },
+        };
+
+        private static readonly IList<Room> Rooms = new List<Room>
+        {
+            new Room()
+            {
+                Id = 1,
+                BookingCalendars =  new List<WorkingDaysCalendar>(),
+                Desks = Desks,
+                Floor = 1,
+            }
+        };
+
+        private static readonly IList<WorkPlan> WorkPlansList = new List<WorkPlan>()
+        {
+            new WorkPlan()
+            {
+                Id = 1,
+                DeskGuaranteed = true,
+                MaxOfficeDay = 30,
+                MinOfficeDay = 12,
+                Plan = "plan",
+                PlanDescription = "desc",
+                Priority = 1
+            },
+            new WorkPlan()
+            {
+                Id = 2,
+                DeskGuaranteed = false,
+                MaxOfficeDay = 30,
+                MinOfficeDay = 12,
+                Plan = "plan",
+                PlanDescription = "desc",
+                Priority = 2
+            }
+        };
+
+        private static readonly IList<UserPosition> userPositions = new List<UserPosition>()
+        {
+            new UserPosition()
+            {
+                Id = 1,
+                Type = "Bla",
+
+            },
+            new UserPosition()
+            {
+                Id = 2,
+                Type = "La",
+            },
+            new UserPosition()
+            {
+                Id = 3,
+                Type = "Lala",
+            }
+        };
         private static readonly IList<User> TestUsers = new List<User>
         {
              new User 
@@ -56,95 +138,7 @@ namespace Service.Tests.TestSettings.TestCases
 
         };
 
-        private static readonly IList<Desk> Desks = new Desk[] 
-        {
-            new Desk
-            {
-                Id=1,
-                Title= "Tom",
-                Orders = new List<Order>(),
-                RoomId = 1,
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>{TestUsers[0]},
-            },
-            new Desk
-            {
-                Id=2,
-                Title="Alice",
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>{TestUsers[1]},
-            },
-            new Desk
-            {
-                Id=3,
-                Title="Sam",
-                Orders = new List<Order>(),
-                Room = new Room(),
-                Status = DeskStatus.Fixed,
-                Users =  new List<User>{TestUsers[2]},
-            },
-        };
-
-        private static readonly IList<Room> Rooms = new List<Room>
-        {
-            new Room()
-            {
-                Id = 1,
-                BookingCalendars =  new List<WorkingDaysCalendar>(),
-                Desks = Desks,
-                Floor = 1,
-            }
-        };
-
-        private static readonly IList<WorkPlan> WorkPlansList = new List<WorkPlan>()
-        {
-            new WorkPlan()
-            {
-                Id = 1,
-                DeskGuaranteed = true,
-                MaxOfficeDay = 30,
-                MinOfficeDay = 12,
-                Plan = "plan",
-                PlanDescription = "desc",
-                Priority = 1
-            },
-            new WorkPlan()
-            {
-                Id = 2,
-                DeskGuaranteed = false,
-                MaxOfficeDay = 30,
-                MinOfficeDay = 12,
-                Plan = "plan",
-                PlanDescription = "desc",
-                Priority = 2
-            }
-        };
-
-        private static readonly IList<UserPosition> userPositions = new List<UserPosition>()
-        {
-            new UserPosition()
-            {
-                Id = 1,
-                Type = "Bla",
-                Users = new List<User>(){TestUsers[2]},
-
-            },
-            new UserPosition()
-            {
-                Id = 2,
-                Type = "La",
-                Users = new List<User>(){TestUsers[1]},
-
-            },
-            new UserPosition()
-            {
-                Id = 3,
-                Type = "Lala",
-                Users = new List<User>(){TestUsers[0]},
-            }
-        };
+        
 
         public static IEnumerable<TestCaseData> UsersReadAllCase
         {

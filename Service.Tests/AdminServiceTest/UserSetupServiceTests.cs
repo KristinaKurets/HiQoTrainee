@@ -64,6 +64,7 @@ namespace Service.Tests.AdminServiceTest
                 LastName = "Tesla",
                 RoomId = 1,
                 DeskId = 1,
+                WorkPlanId = 1,
             };
             var result = userSetupService.Create(testUser);
             return result.Count;
