@@ -32,7 +32,7 @@ namespace HiQo_Remote_Booking
             services.AddAutoMapper(typeof(BookingDTOProfile));
             services.AddUnitOfWorkAndRepository();
             services.AddBusinessLogicLayer();
-            services.AddControllersWithViews(options =>
+            services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(BadRequestExceptionFilterAttribute));
             });
@@ -53,7 +53,7 @@ namespace HiQo_Remote_Booking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=MyBooking}/{action=ActualBooking}/{id?}");
             });
         }
     }
