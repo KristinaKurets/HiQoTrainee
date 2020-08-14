@@ -4,13 +4,14 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Service.Tests.TestSettings.TestCases
 {
     public class UserTestCase
     {
-        private static readonly IList<User> TestUsers = new User[]
+        private static readonly IList<User> TestUsers = new List<User>
         {
              new User 
              {
@@ -18,11 +19,13 @@ namespace Service.Tests.TestSettings.TestCases
                  FirstName = "James", 
                  LastName = "Brown", 
                  Email = "jamesBrown@gmail.com",
-                 Position = new UserPosition(),
+                 UserPositionId = 1,
                  Role = UserRole.User,
-                 WorkPlan = new WorkPlan(),
+                 WorkPlan = WorkPlansList[1],
                  Orders = new List<Order>(),
-                 Room = new Room()
+                 Room = Rooms[0],
+                 DeskId = 1,
+
              },
              new User 
              {
@@ -30,11 +33,12 @@ namespace Service.Tests.TestSettings.TestCases
                  FirstName = "Eddie", 
                  LastName = "Murphy", 
                  Email = "eddieMurphy@gmail.com",
-                 Position = new UserPosition(),
+                 UserPositionId = 2,
                  Role = UserRole.User,
-                 WorkPlan = new WorkPlan(),
+                 WorkPlan = WorkPlansList[0],
                  Orders = new List<Order>(),
-                 Room = new Room()
+                 Room = Rooms[0],
+                 DeskId = 2,
              },
              new User 
              {
@@ -42,14 +46,106 @@ namespace Service.Tests.TestSettings.TestCases
                  FirstName = "Freddie", 
                  LastName = "Merqury", 
                  Email = "freddieMercury@gmail.com",
-                 Position = new UserPosition(),
+                 UserPositionId = 2,
                  Role = UserRole.User,
-                 WorkPlan = new WorkPlan(),
+                 WorkPlan = WorkPlansList[1],
                  Orders = new List<Order>(),
-                 Room = new Room()
+                 Room = Rooms[0],
+                 DeskId = 3,
              }
 
         };
+
+        private static readonly IList<Desk> Desks = new Desk[] 
+        {
+            new Desk
+            {
+                Id=1,
+                Title= "Tom",
+                Orders = new List<Order>(),
+                RoomId = 1,
+                Status = DeskStatus.Fixed,
+                Users =  new List<User>{TestUsers[0]},
+            },
+            new Desk
+            {
+                Id=2,
+                Title="Alice",
+                Orders = new List<Order>(),
+                Room = new Room(),
+                Status = DeskStatus.Fixed,
+                Users =  new List<User>{TestUsers[1]},
+            },
+            new Desk
+            {
+                Id=3,
+                Title="Sam",
+                Orders = new List<Order>(),
+                Room = new Room(),
+                Status = DeskStatus.Fixed,
+                Users =  new List<User>{TestUsers[2]},
+            },
+        };
+
+        private static readonly IList<Room> Rooms = new List<Room>
+        {
+            new Room()
+            {
+                Id = 1,
+                BookingCalendars =  new List<WorkingDaysCalendar>(),
+                Desks = Desks,
+                Floor = 1,
+            }
+        };
+
+        private static readonly IList<WorkPlan> WorkPlansList = new List<WorkPlan>()
+        {
+            new WorkPlan()
+            {
+                Id = 1,
+                DeskGuaranteed = true,
+                MaxOfficeDay = 30,
+                MinOfficeDay = 12,
+                Plan = "plan",
+                PlanDescription = "desc",
+                Priority = 1
+            },
+            new WorkPlan()
+            {
+                Id = 2,
+                DeskGuaranteed = false,
+                MaxOfficeDay = 30,
+                MinOfficeDay = 12,
+                Plan = "plan",
+                PlanDescription = "desc",
+                Priority = 2
+            }
+        };
+
+        private static readonly IList<UserPosition> userPositions = new List<UserPosition>()
+        {
+            new UserPosition()
+            {
+                Id = 1,
+                Type = "Bla",
+                Users = new List<User>(){TestUsers[2]},
+
+            },
+            new UserPosition()
+            {
+                Id = 2,
+                Type = "La",
+                Users = new List<User>(){TestUsers[1]},
+
+            },
+            new UserPosition()
+            {
+                Id = 3,
+                Type = "Lala",
+                Users = new List<User>(){TestUsers[0]},
+            }
+        };
+
         public static IEnumerable<TestCaseData> UsersReadAllCase
         {
             get
@@ -74,9 +170,9 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                yield return new TestCaseData(TestUsers).Returns(TestUsers.Count + 1);
-                yield return new TestCaseData(new List<User>()).Returns(1);
-                yield return new TestCaseData(null).Returns(1);
+                yield return new TestCaseData(TestUsers, userPositions, WorkPlansList, Desks, Rooms).Returns(TestUsers.Count + 1);
+                yield return new TestCaseData(new List<User>(), new List<UserPosition>(), new List<WorkPlan>(), new List<Desk>(), new List<Room>()).Returns(1);
+                yield return new TestCaseData(null, null, null, null, null).Returns(1);
             }
         }
 

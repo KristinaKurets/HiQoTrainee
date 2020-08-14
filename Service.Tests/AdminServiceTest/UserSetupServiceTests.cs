@@ -17,7 +17,7 @@ namespace Service.Tests.AdminServiceTest
         private UserSetupService userSetupService;
         private RepositoryMockResult mockResult;
 
-        public void Setup(IList<User> users, IList<UserPosition> userPositions=null, IList<WorkPlan> workPlans=null, IList<Desk> desks=null)
+        public void Setup(IList<User> users, IList<UserPosition> userPositions=null, IList<WorkPlan> workPlans=null, IList<Desk> desks=null, IList<Room> rooms = null)
         {
 
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
@@ -25,7 +25,8 @@ namespace Service.Tests.AdminServiceTest
                 Users = users,
                 UsersPosition = userPositions,
                 WorkPlans = workPlans,
-                Desks = desks
+                Desks = desks,
+                Rooms = rooms,
             };
 
             mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
@@ -47,20 +48,22 @@ namespace Service.Tests.AdminServiceTest
             var testUser = new User()
             {
                 FirstName = "Nicola",
-                LastName = "Tesla"
+                LastName = "Tesla",
             };
             var result = userSetupService.Update(testUser);
             return result.First(i => i.Id == testUser.Id).Email;
         }
 
         [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersCreateCase))]
-        public int Create_User(IList<User> users, IList<UserPosition> userPositions, IList<WorkPlan> workPlans, IList<Desk> desks)
+        public int Create_User(IList<User> users, IList<UserPosition> userPositions, IList<WorkPlan> workPlans, IList<Desk> desks, IList<Room> rooms)
         {
-            Setup(users, userPositions, workPlans, desks);
+            Setup(users, userPositions, workPlans, desks, rooms);
             var testUser = new User()
             {
                 FirstName = "Nicola",
-                LastName = "Tesla"
+                LastName = "Tesla",
+                RoomId = 1,
+                DeskId = 1,
             };
             var result = userSetupService.Create(testUser);
             return result.Count;
