@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DB.LookupTable;
+using Service.AdminService.Changers;
 
 namespace Service.AdminService.Services
 {
@@ -16,11 +17,6 @@ namespace Service.AdminService.Services
         public AdminService(IUnitOfWork unitOfWork)
         {
             DataBase = unitOfWork;
-        }
-
-        private bool CheckNull<T>(IEnumerable<T> source)
-        {
-            return source != null;
         }
 
         private bool CheckNull<T>(T source)
@@ -40,9 +36,7 @@ namespace Service.AdminService.Services
         //добавлена проверка на null
         public List<User> FilterBy(Func<User, bool> predicate, List<User> users)
         {
-            if(CheckNull(users))
-                return users.Where(predicate).ToList();
-            return new List<User>();
+            return CheckNull(users) ? users.Where(predicate).ToList() : new List<User>();
             //добавить в логгер сообщение о null
         }
 
@@ -55,21 +49,20 @@ namespace Service.AdminService.Services
         {
             if (CheckNull(desk))
             {
-                //я хз, как тут правильно сделать
-                //Desk deskUp = DeskChanger.ChangeFromDto(DataBase.DeskRepository.Read(desk.Id), desk);
-                DataBase.DeskRepository.Update(desk);
-                DataBase.Save();
-                return GetDesks();
+                var updatedDesk = DataBase.DeskRepository.Read(desk.Id);
+                if (CheckNull(updatedDesk))
+                {
+                    DataBase.DeskRepository.Update(DeskChanger.ChangeFromDto(updatedDesk, desk));
+                    DataBase.Save();
+                    return GetDesks();
+                }
             }
             return null;
         }
 
         public List<Desk> CreateDesk(Desk desk)
         {
-            Desk result = desk;
-            //тут могут быть вопросы, там нет поля для id, чтобы не создавать двойную связь
-            result.User = DataBase.UserRepository.Read(u => desk.User != null && u.Id == desk.User.Id);
-            DataBase.DeskRepository.Create(result);
+            DataBase.DeskRepository.Create(desk);
             DataBase.Save();
             return GetDesks();
         }
@@ -100,10 +93,18 @@ namespace Service.AdminService.Services
         //проверить и дописать
         public List<BookingInfo> UpdateBookingInfo(BookingInfo booking)
         {
+            if (CheckNull(booking))
+            {
+                var updatedBooking = DataBase.BookingInfoRepository.Read(booking.Id);
+                if (CheckNull(updatedBooking))
+                {
+                    DataBase.BookingInfoRepository.Update(BookingInfoChanger.ChangeFromDto(updatedBooking, booking));
+                    DataBase.Save();
+                    return GetBookingInfo();
+                }
+            }
 
-            DataBase.BookingInfoRepository.Update(booking);
-            DataBase.Save();
-            return GetBookingInfo();
+            return null;
         }
 
         public List<BookingInfo> DeleteBookingInfo(BookingInfo booking)
@@ -124,9 +125,17 @@ namespace Service.AdminService.Services
         public List<User> UpdateUser(User user)
         {
             //User result = UserChanger.ChangeFromDto(DataBase.UserRepository.Read(user.Id), user);
-            DataBase.UserRepository.Update(user);
-            DataBase.Save();
-            return GetUsers();
+            if (CheckNull(user))
+            {
+                var updatedUser = DataBase.UserRepository.Read(user.Id);
+                if (CheckNull(updatedUser))
+                {
+                    DataBase.UserRepository.Update(UserChanger.ChangeFromDto(updatedUser, user));
+                    DataBase.Save();
+                    return GetUsers();
+                }
+            }
+            return null;
         }
 
         public List<User> DeleteUser(User user)
@@ -173,10 +182,18 @@ namespace Service.AdminService.Services
 
         public List<WorkPlan> UpdateWorkPlan(WorkPlan workPlan)
         {
-            //WorkPlan plan = WorkPlanChanger.ChangeFromDto(DataBase.WorkPlanRepository.Read(workPlanDto.Id), workPlanDto);
-            DataBase.WorkPlanRepository.Update(workPlan);
-            DataBase.Save();
-            return GetWorkPlans();
+            if (CheckNull(workPlan))
+            {
+                var updatedWorkPlan = DataBase.WorkPlanRepository.Read(workPlan.Id);
+                if (CheckNull(updatedWorkPlan))
+                {
+                    DataBase.WorkPlanRepository.Update(WorkPlanChanger.ChangeFromDto(updatedWorkPlan, workPlan));
+                    DataBase.Save();
+                    return GetWorkPlans();
+                }
+            }
+
+            return null;
         }
 
         public List<WorkPlan> DeleteWorkPlan(WorkPlan workPlanDto)
@@ -207,11 +224,19 @@ namespace Service.AdminService.Services
         //проверить и дописать
         public List<WorkingDaysCalendar> SetDayOff(WorkingDaysCalendar calendar)
         {
-            var cal = DataBase.CalendarRepository.Read(calendar.Id);
-            cal.IsOff = true;
-            DataBase.CalendarRepository.Update(cal);
-            DataBase.Save();
-            return GetWorkingDayCalendars();
+            if (CheckNull(calendar))
+            {
+                var cal = DataBase.CalendarRepository.Read(calendar.Id);
+                if (CheckNull(cal))
+                {
+                    cal.IsOff = true;
+                    DataBase.CalendarRepository.Update(cal);
+                    DataBase.Save();
+                    return GetWorkingDayCalendars();
+                }
+            }
+
+            return null;
         }
     }
 }

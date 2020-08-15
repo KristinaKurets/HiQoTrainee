@@ -9,7 +9,7 @@ namespace Service.Tests.TestSettings.TestCases
 {
     public class DeskTestCase
     {
-        private static readonly IList<Desk> Desks = new Desk[] {
+        private static readonly IList<Desk> Desks = new List<Desk> {
             new Desk
             {
                 Id=1,
@@ -70,7 +70,7 @@ namespace Service.Tests.TestSettings.TestCases
             }
         };
 
-        private static readonly IList<DeskStatusLookup> deskStatusLookups = new DeskStatusLookup[]
+        private static readonly IList<DeskStatusLookup> deskStatusLookups = new List<DeskStatusLookup>
         {
             new DeskStatusLookup()
             {
