@@ -20,11 +20,10 @@ namespace Service.BookingService.Realization
             _mapper = mapper;
         }
 
-      
-
-
         public IEnumerable<BookingOrderDTO> GetActiveBookings(BookingUserDTO user) {
-            return _mapper.Map<IEnumerable<BookingOrderDTO>> (UnitOfWork.OrderRepository.ReadAll(x=> x.User.Id==user.Id &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked) ));
+            return _mapper.Map<IEnumerable<BookingOrderDTO>> (UnitOfWork.OrderRepository.ReadAll(x=> x.User.Id == user.Id && 
+                                                                                                     (x.Status == BookingStatus.Waiting ||
+                                                                                                      x.Status == BookingStatus.Booked) ));
         }
 
         public IEnumerable<BookingOrderDTO> GetBookingsHistory(BookingUserDTO user, DateTime start, DateTime end) {

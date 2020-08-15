@@ -37,6 +37,7 @@ namespace Service.BookingService.Realization
                 UnitOfWork.OrderRepository.Update(order);
             }
         }
+
         protected bool CreateBooking(User user, Desk desc, DateTime time) 
         {
             var dayOrders = UnitOfWork.OrderRepository.ReadAll(x => x.DateTime == time && x.Desk.Id == desc.Id);
@@ -68,7 +69,8 @@ namespace Service.BookingService.Realization
         {
             User user = UnitOfWork.UserRepository.Read(userDTO.Id);
             Desk desk = UnitOfWork.DeskRepository.Read(descDTO.Id);
-            if (user != null && desk != null){
+            if (user != null && desk != null)
+            {
                // тут еще нужна проверка на рабочий день и правила букинга 
                 return CreateBooking(user, desk, time);
             }
@@ -78,7 +80,8 @@ namespace Service.BookingService.Realization
         public bool СancelBooking(BookingUserDTO user,long orderID)
         {
             var order = UnitOfWork.OrderRepository.Read(orderID);
-            if (order != null && order.User.Id == user.Id) {
+            if (order != null && order.User.Id == user.Id) 
+            {
                 order.Status = BookingStatus.Cancelled;
                 UnitOfWork.OrderRepository.Update(order);
                 UnitOfWork.Save();
