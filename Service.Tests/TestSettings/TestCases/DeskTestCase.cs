@@ -47,6 +47,28 @@ namespace Service.Tests.TestSettings.TestCases
                 User =  new User(),
             }
         };
+        private static List<User> users = new List<User>()
+        {
+            new User()
+            {
+                Id = 1,
+                Email = "dskjdjsk@gmail.com",
+                FirstName = "Di",
+                LastName = "Aristova",
+                UserPositionId = 2,
+                Role = UserRole.User,
+
+            },
+            new User()
+            {
+                Id = 2,
+                Email = "dskjdjsk12@gmail.com",
+                FirstName = "Dima",
+                LastName = "Aristov",
+                UserPositionId = 1,
+                Role = UserRole.User,
+            }
+        };
 
         private static readonly IList<DeskStatusLookup> deskStatusLookups = new DeskStatusLookup[]
         {
@@ -82,9 +104,9 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                yield return new TestCaseData(Desks).Returns(Desks.Count + 1);
-                yield return new TestCaseData(new List<Desk>()).Returns(1);
-                yield return new TestCaseData(null).Returns(1);
+                yield return new TestCaseData(Desks, users).Returns(Desks.Count + 1);
+                yield return new TestCaseData(new List<Desk>(), users).Returns(1);
+                yield return new TestCaseData(null, users).Returns(1);
             }
         }
 

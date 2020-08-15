@@ -14,13 +14,14 @@ namespace Service.Tests.AdminServiceTest
         private AdminService.Services.AdminService _adminService;
         private RepositoryMockResult _mockResult;
 
-        public void Setup(IList<Desk> desks, IList<DeskStatusLookup> deskStatusLookups = null)
+        public void Setup(IList<Desk> desks, IList<DeskStatusLookup> deskStatusLookups = null, IList<User> users=null)
         {
 
             RepositoryDescriptor repositoryDescriptor = new RepositoryDescriptor()
             {
                 Desks = desks,
                 DeskStatusLookup = deskStatusLookups,
+                Users = users,
             };
 
             _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
@@ -38,7 +39,7 @@ namespace Service.Tests.AdminServiceTest
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksUpdateCase))]
-        public string UpdateDesk_Desk_ListDesks(IList<Desk> desks)
+        public string UpdateDesk_Desk_ListDesks(IList<Desk> desks, IList<User> users)
         {
             Setup(desks);
             //var testDesk = new Desk
@@ -54,9 +55,9 @@ namespace Service.Tests.AdminServiceTest
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksCreateCase))]
-        public int CreateDesk_Desk_ListDesks(IList<Desk> desks)
+        public int CreateDesk_Desk_ListDesks(IList<Desk> desks, IList<User> users)
         {
-            Setup(desks);
+            Setup(desks, null, users);
             var testDesk = new Desk
             {
                 Title = "title",
