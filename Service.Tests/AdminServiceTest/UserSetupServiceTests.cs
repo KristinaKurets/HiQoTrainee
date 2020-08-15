@@ -42,11 +42,12 @@ namespace Service.Tests.AdminServiceTest
             Setup(users);
             var testUser = new User()
             {
+                Id = 1,
                 FirstName = "Nicola",
                 LastName = "Tesla",
             };
             var result = _adminService.UpdateUser(testUser);
-            return result.First(i => i.Id == testUser.Id).Email;
+            return result?.First(i => i.Id == testUser.Id).FirstName;
         }
 
         [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersCreateCase))]

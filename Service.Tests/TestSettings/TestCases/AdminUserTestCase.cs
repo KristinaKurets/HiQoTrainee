@@ -106,49 +106,49 @@ namespace Service.Tests.TestSettings.TestCases
             }
         }
 
-        public static IEnumerable<TestCaseData> UpdateWorkPlan
-        {
-            get
-            {
-                var workPlan = new WorkPlan()
-                {
-                    Id = 1,
-                    DeskGuaranteed = true,
-                    MaxOfficeDay = 10,
-                    MinOfficeDay = 1,
-                    PlanDescription = "desk",
-                    Plan = "plan",
-                };
+        //public static IEnumerable<TestCaseData> UpdateWorkPlan
+        //{
+        //    get
+        //    {
+        //        var workPlan = new WorkPlan()
+        //        {
+        //            Id = 1,
+        //            DeskGuaranteed = true,
+        //            MaxOfficeDay = 10,
+        //            MinOfficeDay = 1,
+        //            PlanDescription = "desk",
+        //            Plan = "plan",
+        //        };
 
-                yield return new TestCaseData(users, workPlan).Returns(workPlan.Plan);
-                yield return new TestCaseData(new List<User>(), workPlan).Returns(typeof(ArgumentOutOfRangeException));
-                yield return new TestCaseData(users, null).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null, workPlan).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null, null).Returns(typeof(NullReferenceException));
-            }
-        }
+        //        yield return new TestCaseData(users, workPlan).Returns(workPlan.Plan);
+        //        yield return new TestCaseData(new List<User>(), workPlan).Returns(typeof(ArgumentOutOfRangeException));
+        //        yield return new TestCaseData(users, null).Returns(typeof(NullReferenceException));
+        //        yield return new TestCaseData(null, workPlan).Returns(typeof(NullReferenceException));
+        //        yield return new TestCaseData(null, null).Returns(typeof(NullReferenceException));
+        //    }
+        //}
 
-        public static IEnumerable<TestCaseData> UpdateDesk
-        {
-            get
-            {
-                var desk = new Desk
-                {
-                    Id = 1,
-                    Title = "Tom",
-                    Orders = new List<Order>(),
-                    RoomId = 1,
-                    Status = DeskStatus.Fixed,
-                    User = new User(),
-                };
+        //public static IEnumerable<TestCaseData> UpdateDesk
+        //{
+        //    get
+        //    {
+        //        var desk = new Desk
+        //        {
+        //            Id = 1,
+        //            Title = "Tom",
+        //            Orders = new List<Order>(),
+        //            RoomId = 1,
+        //            Status = DeskStatus.Fixed,
+        //            User = new User(),
+        //        };
 
-                yield return new TestCaseData(users, desk).Returns(desk.Title);
-                yield return new TestCaseData(new List<User>(), desk).Returns(typeof(ArgumentOutOfRangeException));
-                yield return new TestCaseData(users, null).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null, desk).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null, null).Returns(typeof(NullReferenceException)); 
-            }
-        }
+        //        yield return new TestCaseData(users, desk).Returns(desk.Title);
+        //        yield return new TestCaseData(new List<User>(), desk).Returns(typeof(ArgumentOutOfRangeException));
+        //        yield return new TestCaseData(users, null).Returns(typeof(NullReferenceException));
+        //        yield return new TestCaseData(null, desk).Returns(typeof(NullReferenceException));
+        //        yield return new TestCaseData(null, null).Returns(typeof(NullReferenceException)); 
+        //    }
+        //}
 
         public static IEnumerable<TestCaseData> GetWorkingDayCalendars
         {
@@ -165,8 +165,7 @@ namespace Service.Tests.TestSettings.TestCases
             get
             {
                 yield return new TestCaseData(users, workingDays).Returns(workingDays[0].IsOff);
-                yield return new TestCaseData(users, new List<WorkingDaysCalendar>()).Returns(typeof(ArgumentOutOfRangeException));
-                yield return new TestCaseData(users, null).Returns(typeof(NullReferenceException));
+                yield return new TestCaseData(users, new List<WorkingDaysCalendar>()).Returns(null);
             }
         }
     }

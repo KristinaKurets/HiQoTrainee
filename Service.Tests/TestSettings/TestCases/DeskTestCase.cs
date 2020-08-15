@@ -95,8 +95,8 @@ namespace Service.Tests.TestSettings.TestCases
             get
             {
                 yield return new TestCaseData(Desks).Returns("title");
-                yield return new TestCaseData(new List<Desk>()).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null).Returns(typeof(NullReferenceException));
+                yield return new TestCaseData(new List<Desk>()).Returns(null);
+                yield return new TestCaseData(null).Returns(null);
             }
         }
 

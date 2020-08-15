@@ -44,7 +44,7 @@ namespace Service.Tests.AdminServiceTest
                 Priority = 1
             };
             var result = _adminService.UpdateWorkPlan(workPlan);
-            return result.Find(x => x.Id == workPlan.Id)?.Plan;
+            return result?.Find(x => x.Id == workPlan.Id)?.Plan;
         }
 
         [Test, TestCaseSource(typeof(WorkPlanCase), nameof(WorkPlanCase.Delete))]

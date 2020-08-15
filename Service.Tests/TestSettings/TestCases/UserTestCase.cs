@@ -154,9 +154,9 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                yield return new TestCaseData(TestUsers).Returns("example@gmail.com");
-                yield return new TestCaseData(new List<User>()).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null).Returns(typeof(NullReferenceException));
+                yield return new TestCaseData(TestUsers).Returns("Nicola");
+                yield return new TestCaseData(new List<User>()).Returns(null);
+                yield return new TestCaseData(null).Returns(null);
             }
         }
 

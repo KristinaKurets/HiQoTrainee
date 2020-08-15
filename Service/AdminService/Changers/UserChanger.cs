@@ -12,10 +12,10 @@ namespace Service.AdminService.Changers
             user.LastName = source.LastName;
             user.PlanChangeDate = source.PlanChangeDate;
             user.Role = (UserRole) source.Role;
-            user.RoomId = source.Room.Id;
-            user.WorkPlanId = source.WorkPlan.Id;
-            user.DeskId = source.Desk.Id;
-            user.UserPositionId = source.Position.Id;
+            user.RoomId = source.RoomId;
+            user.WorkPlanId = source.WorkPlanId;
+            user.DeskId = source.DeskId;
+            user.UserPositionId = source.UserPositionId;
             return user;
         }
     }

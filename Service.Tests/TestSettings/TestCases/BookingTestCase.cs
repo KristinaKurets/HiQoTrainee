@@ -9,7 +9,8 @@ namespace Service.Tests.TestSettings.TestCases
     {
         private static readonly Room room = new Room
         {
-            Id = 1
+            Id = 1,
+            BookingInfoId = 1
         };
             
         public static IList<Room> RoomList()
@@ -65,13 +66,13 @@ namespace Service.Tests.TestSettings.TestCases
             }
         }
 
-        public static IEnumerable<TestCaseData> BoolingUpdateCase
+        public static IEnumerable<TestCaseData> BookingUpdateCase
         {
             get
             {
                 yield return new TestCaseData(BookingInfos()).Returns(1);
-                yield return new TestCaseData(new List<BookingInfo>()).Returns(typeof(NullReferenceException));
-                yield return new TestCaseData(null).Returns(typeof(NullReferenceException));
+                yield return new TestCaseData(new List<BookingInfo>()).Returns(null);
+                yield return new TestCaseData(null).Returns(null);
             }
         }
     }

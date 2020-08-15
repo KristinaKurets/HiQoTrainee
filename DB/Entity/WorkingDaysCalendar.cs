@@ -9,7 +9,7 @@ namespace DB.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("day_id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
         
         [Column("date")]
         public DateTime Date { get; set; }

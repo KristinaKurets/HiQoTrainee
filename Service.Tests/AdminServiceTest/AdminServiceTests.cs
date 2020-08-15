@@ -44,7 +44,7 @@ namespace Service.Tests.AdminServiceTest
 
             var result = _adminService.OrderUsersBy(predicate);
 
-            return result.First()?.Id;
+            return result.FirstOrDefault()?.Id;
         }
 
         [Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.FilterBySomeKey))]
@@ -58,25 +58,25 @@ namespace Service.Tests.AdminServiceTest
 
         }
 
-        [Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.UpdateWorkPlan))]
-        public string UpdateWorkPlan(List<User> users,WorkPlan workPlan)
-        {
-            Setup(users);
+        //[Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.UpdateWorkPlan))]
+        //public string UpdateWorkPlan(List<User> users,WorkPlan workPlan)
+        //{
+        //    Setup(users);
            
-            _adminService.UpdateWorkPlan(users[0], workPlan);
+        //    _adminService.UpdateWorkPlan(users[0], workPlan);
 
-            return users[0].WorkPlan.Plan;
-        }
+        //    return users[0].WorkPlan.Plan;
+        //}
 
-        [Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.UpdateDesk))]
-        public string UpdateDesk(List<User> users, Desk desk)
-        {
-            Setup(users);
+        //[Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.UpdateDesk))]
+        //public string UpdateDesk(List<User> users, Desk desk)
+        //{
+        //    Setup(users);
 
-            _adminService.UpdateDesk(users[0], desk);
+        //    _adminService.UpdateDesk(users[0], desk);
 
-            return users[0].Desk.Title;
-        }
+        //    return users[0].Desk.Title;
+        //}
 
         [Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.GetWorkingDayCalendars))]
         public int GetWorkingDayCalendars(List<User> users, List<WorkingDaysCalendar> workingDays)
@@ -89,13 +89,12 @@ namespace Service.Tests.AdminServiceTest
         }
 
         [Test, TestCaseSource(typeof(AdminUserTestCase), nameof(AdminUserTestCase.SetDayOff))]
-        public bool SetDayOff(List<User> users, List<WorkingDaysCalendar> workingDays)
+        public bool? SetDayOff(List<User> users, List<WorkingDaysCalendar> workingDays)
         {
             Setup(users, workingDays);
+            var result=_adminService.SetDayOff(workingDays.Count > 0 ? workingDays[0] : null);
 
-            _adminService.SetDayOff(workingDays[0]);
-
-            return workingDays[0].IsOff;
+            return result?.FirstOrDefault(u=>u.Id==workingDays[0].Id)?.IsOff;
         }
     }
 }

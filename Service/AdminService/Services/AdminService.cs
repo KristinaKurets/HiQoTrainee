@@ -177,7 +177,7 @@ namespace Service.AdminService.Services
 
         public BookingInfo GetBookingInfoAboutOneRoom(Room room)
         {
-            return DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId);
+            return CheckNull(room) ? DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId) : null;
         }
 
         public List<WorkPlan> UpdateWorkPlan(WorkPlan workPlan)
@@ -229,8 +229,7 @@ namespace Service.AdminService.Services
                 var cal = DataBase.CalendarRepository.Read(calendar.Id);
                 if (CheckNull(cal))
                 {
-                    cal.IsOff = true;
-                    DataBase.CalendarRepository.Update(cal);
+                    DataBase.CalendarRepository.Update(WorkingDaysCalendarChanger.ChangeFromDto(cal, calendar));
                     DataBase.Save();
                     return GetWorkingDayCalendars();
                 }

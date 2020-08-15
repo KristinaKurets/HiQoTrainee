@@ -51,7 +51,7 @@ namespace Service.Tests.AdminServiceTest
             var result = _adminService.UpdateDesks(testDesk);
 
 
-            return result.First(i => i.Id == testDesk.Id).Title;
+            return result?.First(i => i.Id == testDesk.Id).Title;
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksCreateCase))]

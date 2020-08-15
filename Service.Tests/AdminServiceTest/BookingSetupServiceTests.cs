@@ -27,7 +27,7 @@ namespace Service.Tests.AdminServiceTest
         }
 
         [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingReadCase))]
-        public int Read_MockObject(IList<BookingInfo> bookingInfos)
+        public int GetBookingInfoAboutOneRoom_MockObject(IList<BookingInfo> bookingInfos)
         {
             Setup(bookingInfos);
             var result = _adminService.GetBookingInfoAboutOneRoom(bookingInfos[0].Rooms.First());
@@ -58,8 +58,8 @@ namespace Service.Tests.AdminServiceTest
             return result.Count;
         }
 
-        [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BoolingUpdateCase))]
-        public int Update_BookingInfo(IList<BookingInfo> bookingInfos)
+        [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingUpdateCase))]
+        public int? Update_BookingInfo(IList<BookingInfo> bookingInfos)
         {
             Setup(bookingInfos);
             var testBookingInfo = new BookingInfo()
@@ -68,7 +68,7 @@ namespace Service.Tests.AdminServiceTest
                 DaysCloseForBooking = 1
             };
             var result = _adminService.UpdateBookingInfo(testBookingInfo);
-            return result.First(i => i.Id == testBookingInfo.Id).DaysCloseForBooking;
+            return result?.First(i => i.Id == testBookingInfo.Id).DaysCloseForBooking;
         }
 
     }
