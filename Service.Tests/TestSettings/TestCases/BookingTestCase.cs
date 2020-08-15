@@ -26,8 +26,7 @@ namespace Service.Tests.TestSettings.TestCases
             var bookingInfo = new BookingInfo()
             {
                 Id = 1,
-                RoomId = room.Id,
-                Room = room,
+                Rooms = RoomList()
             };
             var bookingInfos = new List<BookingInfo>()
             {

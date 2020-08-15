@@ -4,7 +4,6 @@ using DB.Entity;
 using DB.EntityStatus;
 using DB.LookupTable;
 using NUnit.Framework;
-using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
 
@@ -12,8 +11,8 @@ namespace Service.Tests.AdminServiceTest
 {
     public class AllDesksServiceTests
     {
-        private AllDesksService allDesksService;
-        private RepositoryMockResult mockResult;
+        private AdminService.Services.AdminService _adminService;
+        private RepositoryMockResult _mockResult;
 
         public void Setup(IList<Desk> desks, IList<DeskStatusLookup> deskStatusLookups = null)
         {
@@ -24,34 +23,34 @@ namespace Service.Tests.AdminServiceTest
                 DeskStatusLookup = deskStatusLookups,
             };
 
-            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
 
-            allDesksService = new AllDesksService(mockResult.UnitOfWorkMock.Object);
+            _adminService = new AdminService.Services.AdminService(_mockResult.UnitOfWorkMock.Object);
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksReadAllCase))]
         public int ReadAll_ReturnDesks(IList<Desk> desks)
         {
             Setup(desks);
-            var result = allDesksService.ReadAll();
+            var result = _adminService.GetDesks();
 
-            return result.Count();
+            return result.Count;
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksUpdateCase))]
         public string UpdateDesk_Desk_ListDesks(IList<Desk> desks)
         {
             Setup(desks);
-            var testDesk = new Desk
-            {
-                Title = "title",
-                Id = 1,
-            };
+            //var testDesk = new Desk
+            //{
+            //    Title = "title",
+            //    Id = 1,
+            //};
 
-            var result = allDesksService.UpdateDesks(testDesk);
+            var result = _adminService.UpdateDesks(desks[1]);
 
 
-            return result.First(i => i.Id == testDesk.Id).Title;
+            return result.First(i => i.Id == desks[1].Id).Title;
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksCreateCase))]
@@ -64,7 +63,7 @@ namespace Service.Tests.AdminServiceTest
                 Id = 5,
             };
 
-            var result = allDesksService.CreateDesk(testDesk);
+            var result = _adminService.CreateDesk(testDesk);
 
 
             return result.Count;
@@ -82,9 +81,9 @@ namespace Service.Tests.AdminServiceTest
                 Orders = new List<Order>(),
                 RoomId = 1,
                 Status = DeskStatus.Fixed,
-                Users = new List<User>(),
+                User = new User(),
             };
-            var result = allDesksService.DeleteDesk(desk);
+            var result = _adminService.DeleteDesk(desk);
             return result.Count;
         }
 
@@ -93,7 +92,7 @@ namespace Service.Tests.AdminServiceTest
         {
             Setup(desks, deskStatusLookup);
 
-            var result = allDesksService.GetDesksStatuses();
+            var result = _adminService.GetDesksStatuses();
             return result.Count;
         }
     }

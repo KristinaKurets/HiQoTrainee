@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DB.Entity;
 using DB.EntityStatus;
 using NUnit.Framework;
-using Service.AdminService.DTO.Entities;
+
 
 namespace Service.Tests.TestSettings.TestCases
 {
@@ -34,25 +33,25 @@ namespace Service.Tests.TestSettings.TestCases
             }
         };
 
-        private static List<UserDto> usersDto = new List<UserDto>()
-        {
-            new UserDto()
-            {
-                Id = 1,
-                Email = "dskjdjsk@gmail.com",
-                FirstName = "Di",
-                LastName = "Aristova",
-                UserPositionId = 2,
-            },
-            new UserDto()
-            {
-                Id = 2,
-                Email = "dskjdjsk12@gmail.com",
-                FirstName = "Dima",
-                LastName = "Aristov",
-                UserPositionId = 1,
-            }
-        };
+        //private static List<UserDto> usersDto = new List<UserDto>()
+        //{
+        //    new UserDto()
+        //    {
+        //        Id = 1,
+        //        Email = "dskjdjsk@gmail.com",
+        //        FirstName = "Di",
+        //        LastName = "Aristova",
+        //        UserPositionId = 2,
+        //    },
+        //    new UserDto()
+        //    {
+        //        Id = 2,
+        //        Email = "dskjdjsk12@gmail.com",
+        //        FirstName = "Dima",
+        //        LastName = "Aristov",
+        //        UserPositionId = 1,
+        //    }
+        //};
 
         private static List<WorkingDaysCalendar> workingDays = new List<WorkingDaysCalendar>()
         {
@@ -85,8 +84,8 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                Func<UserDto, int> p1 = (x) => x.Id;
-                Func<UserDto, int> p2 = (x) => x.UserPositionId;
+                Func<User, int> p1 = (x) => x.Id;
+                Func<User, int> p2 = (x) => x.UserPositionId;
 
                 yield return new TestCaseData(users, p1 ).Returns(users[0].Id);
                 yield return new TestCaseData(users, p2 ).Returns(users[1].Id);
@@ -99,11 +98,11 @@ namespace Service.Tests.TestSettings.TestCases
         {
             get
             {
-                Func<UserDto, bool> p1 = (x) => x.Id == 1;
+                Func<User, bool> p1 = (x) => x.Id == 1;
                 Func<User, bool> pTest = (x) => x.Id == 1;
-                yield return new TestCaseData(p1, usersDto, users).Returns(usersDto.Where(p1).Count());
-                yield return new TestCaseData(p1, new List<UserDto>(), new List<User>()).Returns(0);
-                yield return new TestCaseData(p1, null, null).Returns(0);
+                yield return new TestCaseData(p1, users).Returns(users.Where(p1).Count());
+                yield return new TestCaseData(p1, new List<User>()).Returns(0);
+                yield return new TestCaseData(p1, null).Returns(0);
             }
         }
 
@@ -117,7 +116,7 @@ namespace Service.Tests.TestSettings.TestCases
                     DeskGuaranteed = true,
                     MaxOfficeDay = 10,
                     MinOfficeDay = 1,
-                    PlanDescription = "desc",
+                    PlanDescription = "desk",
                     Plan = "plan",
                 };
 
@@ -140,7 +139,7 @@ namespace Service.Tests.TestSettings.TestCases
                     Orders = new List<Order>(),
                     RoomId = 1,
                     Status = DeskStatus.Fixed,
-                    Users = new List<User>(),
+                    User = new User(),
                 };
 
                 yield return new TestCaseData(users, desk).Returns(desk.Title);

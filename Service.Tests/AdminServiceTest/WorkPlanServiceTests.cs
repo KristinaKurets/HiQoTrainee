@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DB.Entity;
 using NUnit.Framework;
-using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
 
@@ -9,25 +8,24 @@ namespace Service.Tests.AdminServiceTest
 {
     public class WorkPlanServiceTests
     {
-        private WorkPlanService workPlanService;
-
+        private AdminService.Services.AdminService _adminService;
+        private RepositoryMockResult _mockResult;
         public void SetUp(IList<WorkPlan> workPlans)
         {
             var repositoryDescriptor = new RepositoryDescriptor()
             {
-                WorkPlans = workPlans,
+                WorkPlans = workPlans
             };
 
-            var result = ServiceTestHelper.MockRepository(repositoryDescriptor);
-
-            workPlanService = new WorkPlanService(result.UnitOfWorkMock.Object);
+            _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            _adminService = new AdminService.Services.AdminService(_mockResult.UnitOfWorkMock.Object);
         }
 
         [Test, TestCaseSource(typeof(WorkPlanCase), nameof(WorkPlanCase.ReadAll))]
         public int ReadAllTest_TestCase(IList<WorkPlan> workPlans)
         {
             SetUp(workPlans);
-            var result = workPlanService.ReadAll();
+            var result = _adminService.GetWorkPlans();
             return result.Count;
         }
 
@@ -45,7 +43,7 @@ namespace Service.Tests.AdminServiceTest
                 PlanDescription = "desc",
                 Priority = 1
             };
-            var result = workPlanService.Update(workPlan);
+            var result = _adminService.UpdateWorkPlan(workPlan);
             return result.Find(x => x.Id == workPlan.Id)?.Plan;
         }
 
@@ -65,7 +63,7 @@ namespace Service.Tests.AdminServiceTest
                 Priority = 1
             };
             
-            var result = workPlanService.Delete(workPlan);
+            var result = _adminService.DeleteWorkPlan(workPlan);
 
             return result.Count;
         }

@@ -2,7 +2,6 @@
 using System.Linq;
 using DB.Entity;
 using NUnit.Framework;
-using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
 
@@ -10,8 +9,8 @@ namespace Service.Tests.AdminServiceTest
 {
     public class BookingSetupServiceTests
     {
-        private BookingSetupService bookingSetupService;
-        private RepositoryMockResult mockResult;
+        private AdminService.Services.AdminService _adminService;
+        private RepositoryMockResult _mockResult;
 
         public void Setup(IList<BookingInfo> bookingInfos, IList<Room> rooms = null)
         {
@@ -23,18 +22,16 @@ namespace Service.Tests.AdminServiceTest
 
             };
 
-            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
-
-            
-            bookingSetupService = new BookingSetupService(mockResult.UnitOfWorkMock.Object);
+            _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            _adminService = new AdminService.Services.AdminService(_mockResult.UnitOfWorkMock.Object);
         }
 
         [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingReadCase))]
         public int Read_MockObject(IList<BookingInfo> bookingInfos)
         {
             Setup(bookingInfos);
-            var result = bookingSetupService.Read(bookingInfos[0].Room);
-            return result.RoomId;
+            var result = _adminService.GetBookingInfoAboutOneRoom(bookingInfos[0].Rooms.First());
+            return result.Rooms.First().Id;
         }
 
         [Test, TestCaseSource(typeof(BookingTestCase), nameof(BookingTestCase.BookingCreateCase))]
@@ -45,7 +42,7 @@ namespace Service.Tests.AdminServiceTest
             {
                 Id = 1
             };
-            var result = bookingSetupService.Create(testBookingInfo);
+            var result = _adminService.CreateBookingInfo(testBookingInfo);
             return result.Count;
         }
 
@@ -57,7 +54,7 @@ namespace Service.Tests.AdminServiceTest
             {
                 Id = 1
             };
-            var result = bookingSetupService.Delete(testBookingInfo);
+            var result = _adminService.DeleteBookingInfo(testBookingInfo);
             return result.Count;
         }
 
@@ -70,7 +67,7 @@ namespace Service.Tests.AdminServiceTest
                 Id = 1,
                 DaysCloseForBooking = 1
             };
-            var result = bookingSetupService.Update(testBookingInfo);
+            var result = _adminService.UpdateBookingInfo(testBookingInfo);
             return result.First(i => i.Id == testBookingInfo.Id).DaysCloseForBooking;
         }
 

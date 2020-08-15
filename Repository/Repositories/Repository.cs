@@ -46,10 +46,6 @@ namespace Repository.Repositories
         {
             return set.Find(keyValue);
         }
-        public TSource Read(Func<TSource, bool> predicate)
-        {
-            return set.FirstOrDefault(predicate);
-        }
 
         public IQueryable<TSource> ReadAll(Func<TSource, bool> predicate)
         {

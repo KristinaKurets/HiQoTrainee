@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DB.Entity;
-using DB.LookupTable;
-using Moq;
 using NUnit.Framework;
-using Repository.Interface;
-using Repository.UnitOfWork;
-using Service.AdminService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
 
@@ -14,8 +9,8 @@ namespace Service.Tests.AdminServiceTest
 {
     public class UserSetupServiceTests
     {
-        private UserSetupService userSetupService;
-        private RepositoryMockResult mockResult;
+        private AdminService.Services.AdminService _adminService;
+        private RepositoryMockResult _mockResult;
 
         public void Setup(IList<User> users, IList<UserPosition> userPositions=null, IList<WorkPlan> workPlans=null, IList<Desk> desks=null, IList<Room> rooms = null)
         {
@@ -29,16 +24,16 @@ namespace Service.Tests.AdminServiceTest
                 Rooms = rooms,
             };
 
-            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
-            userSetupService = new UserSetupService(mockResult.UnitOfWorkMock.Object);
+            _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            _adminService = new AdminService.Services.AdminService(_mockResult.UnitOfWorkMock.Object);
         }
 
-       [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersReadAllCase))]
+        [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersReadAllCase))]
         public int ReadAll_Users(IList<User> users)
         {
             Setup(users);
-            var result = userSetupService.ReadAll();
-            return result.Count();
+            var result = _adminService.GetUsers();
+            return result.Count;
         }
 
         [Test, TestCaseSource(typeof(UserTestCase), nameof(UserTestCase.UsersUpdateCase))]
@@ -50,7 +45,7 @@ namespace Service.Tests.AdminServiceTest
                 FirstName = "Nicola",
                 LastName = "Tesla",
             };
-            var result = userSetupService.Update(testUser);
+            var result = _adminService.UpdateUser(testUser);
             return result.First(i => i.Id == testUser.Id).Email;
         }
 
@@ -66,7 +61,7 @@ namespace Service.Tests.AdminServiceTest
                 DeskId = 1,
                 WorkPlanId = 1,
             };
-            var result = userSetupService.Create(testUser);
+            var result = _adminService.CreateUser(testUser);
             return result.Count;
         }
     }

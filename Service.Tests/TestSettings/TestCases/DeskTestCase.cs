@@ -17,7 +17,7 @@ namespace Service.Tests.TestSettings.TestCases
                 Orders = new List<Order>(),
                 RoomId = 1,
                 Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
+                User =  new User(),
             },
             new Desk
             {
@@ -26,7 +26,7 @@ namespace Service.Tests.TestSettings.TestCases
                 Orders = new List<Order>(),
                 Room = new Room(),
                 Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
+                User =  new User(),
             },
             new Desk
             {
@@ -35,7 +35,7 @@ namespace Service.Tests.TestSettings.TestCases
                 Orders = new List<Order>(),
                 Room = new Room(),
                 Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
+                User =  new User(),
             },
             new Desk
             {
@@ -44,7 +44,7 @@ namespace Service.Tests.TestSettings.TestCases
                 Orders = new List<Order>(),
                 Room = new Room(),
                 Status = DeskStatus.Fixed,
-                Users =  new List<User>(),
+                User =  new User(),
             }
         };
 
