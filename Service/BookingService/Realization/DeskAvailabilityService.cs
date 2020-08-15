@@ -24,14 +24,17 @@ namespace Service.BookingService.Realization
             _mapper = mapper;
         }
 
-        protected IEnumerable<BookingDeskDTO> CountDesksStatus(IEnumerable<Desk> desks,DateTime time) {
+        protected IEnumerable<BookingDeskDTO> CountDesksStatus(IEnumerable<Desk> desks,DateTime time) 
+        {
             var statusCounter = new DeskStatusHelper(_mapper,time);
             return desks.Select(x=> statusCounter.Count(x));
         }
+
         public IEnumerable<BookingDeskDTO> GetDeskAvailability(DateTime dateTime)
         {
             return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(),dateTime);
         }
+
         public IEnumerable<BookingDeskDTO> GetDeskAvailability(DateTime dateTime, DeskStatus status)
         {
             return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(x=>x.Status==status),dateTime);
