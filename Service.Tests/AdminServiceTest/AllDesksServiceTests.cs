@@ -39,19 +39,19 @@ namespace Service.Tests.AdminServiceTest
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksUpdateCase))]
-        public string UpdateDesk_Desk_ListDesks(IList<Desk> desks, IList<User> users)
+        public string UpdateDesk_Desk_ListDesks(IList<Desk> desks)
         {
             Setup(desks);
-            //var testDesk = new Desk
-            //{
-            //    Title = "title",
-            //    Id = 1,
-            //};
+            var testDesk = new Desk
+            {
+                Title = "title",
+                Id = 1,
+            };
 
-            var result = _adminService.UpdateDesks(desks[1]);
+            var result = _adminService.UpdateDesks(testDesk);
 
 
-            return result.First(i => i.Id == desks[1].Id).Title;
+            return result.First(i => i.Id == testDesk.Id).Title;
         }
 
         [Test, TestCaseSource(typeof(DeskTestCase), nameof(DeskTestCase.DesksCreateCase))]
