@@ -116,7 +116,7 @@ namespace Service.Tests.TestSettings
                 return repositoryMock;
             }
 
-            return new RepositoryMockResult
+            var repository = new RepositoryMockResult
             {
                 UnitOfWorkMock = unitOfWorkMock,
                 DeskRepositoryMock = SetupRepository(x => x.Desks, x => x.Id),
@@ -129,6 +129,17 @@ namespace Service.Tests.TestSettings
                 OrderRepositoryMock = SetupRepository(x => x.Orders, x => x.Id),
                 DeskStatusLookupRepositoryMock = SetupRepository(x => x.DeskStatusLookup, x => x.ID)
             };
+
+            unitOfWorkMock.Setup(u => u.UserRepository).Returns(repository.UserRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.DeskRepository).Returns(repository.DeskRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.RoomRepository).Returns(repository.RoomRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.BookingInfoRepository).Returns(repository.BookingInfoRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.WorkPlanRepository).Returns(repository.WorkPlanRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.CalendarRepository).Returns(repository.WorkingDaysCalendarRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.OrderRepository).Returns(repository.OrderRepositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.DeskStatusRepository).Returns(repository.DeskStatusLookupRepositoryMock.Object);
+
+            return repository;
 
         }
 
