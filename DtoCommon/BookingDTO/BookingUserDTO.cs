@@ -1,9 +1,4 @@
-﻿using DB.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Service.BookingService.DTO
+﻿namespace DtoCommon.BookingDTO
 {
     public class BookingUserDTO
     {
