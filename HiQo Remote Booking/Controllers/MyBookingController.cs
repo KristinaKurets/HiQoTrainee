@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Service.BookingService.DTO;
 using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers
@@ -17,16 +16,15 @@ namespace HiQo_Remote_Booking.Controllers
             this.myBookingsService = myBookingsService;
         }
 
-        public IActionResult ActualBooking(BookingUserDTO user)
+        public IActionResult ActualBooking(int userID)
         {
-            var bookingList = myBookingsService.GetActiveBookings(user);
-            return View();
+           return Json( myBookingsService.GetActiveBookings(userID));
+            
         }
 
-        public IActionResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
+        public IActionResult ExpiredBooking(int userID, DateTime startTime, DateTime endTime)
         {
-            var bookingList = myBookingsService.GetBookingsHistory(user, startTime, endTime);
-            return View();
+           return Json(myBookingsService.GetBookingsHistory(userID, startTime, endTime));
         }
     }
 }

@@ -1,23 +1,20 @@
 ﻿using Common.Extension;
 using DB.EntityStatus;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Service.BookingService.DTO.Status
+namespace DtoCommon.BookingDTO.Status
 {
-    public class DeskStatusDTO
+    public class BookingStatusDTO
     {
         public short Id { get; set; }
         public string Description { get; set; }
 
-        public static implicit operator DeskStatusDTO(DeskStatus status)
+        public static implicit operator BookingStatusDTO(BookingStatus status)
         {
-            return new DeskStatusDTO
+            return new BookingStatusDTO
             {
                 Id = (short)status,
                 Description = status.GetDescription()
-                
+
             };
         }
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DB.Entity;
 using DtoCommon.DTO.EntitiesStatuses;
-using Service.BookingService.DTO;
+using DtoCommon.BookingDTO;
 
 namespace Profiles
 {
