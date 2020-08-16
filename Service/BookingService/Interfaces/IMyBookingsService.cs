@@ -1,14 +1,14 @@
-﻿using Service.BookingService.DTO;
+﻿using DB.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace Service.BookingService.Interfaces
 {
     public interface IMyBookingsService
     {
 
-        public IEnumerable<BookingOrderDTO> GetActiveBookings(BookingUserDTO user);
-        public IEnumerable<BookingOrderDTO> GetBookingsHistory(BookingUserDTO user,DateTime start, DateTime end);
+        public IEnumerable<Order> GetActiveBookings(int userID);
+        public IEnumerable<Order> GetBookingsHistory(int userID,DateTime start, DateTime end);
     }
 }

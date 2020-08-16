@@ -1,8 +1,5 @@
-﻿using DB.Entity;
-using Service.BookingService.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+
 
 namespace Service.BookingService.Interfaces
 {
@@ -10,7 +7,7 @@ namespace Service.BookingService.Interfaces
     {
 
        
-        public bool CreateBooking(BookingUserDTO user, BookingDeskDTO desc, DateTime time);
-        public bool СancelBooking(BookingUserDTO user, long orderID);
+        public bool CreateBooking(int userID, int descID, DateTime time);
+        public bool СancelBooking(int userID, long orderID);
     }
 }

@@ -1,10 +1,8 @@
-﻿using DB.Entity;
-using Service.BookingService.DTO.Status;
+﻿using DtoCommon.BookingDTO.Status;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Service.BookingService.DTO
+
+namespace DtoCommon.BookingDTO
 {
     public class BookingOrderDTO
     {
