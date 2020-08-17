@@ -34,11 +34,8 @@ namespace Service.Tests.BookingServiceTest
         public int GetDeskAvailability(IList<Order> orders)
         {
             Setup(orders);
-            var user = new User()
-            {
-                Id = 1
-            };
-            var result = _myBookingsService.GetActiveBookings(user.Id);
+            var userId = 1;
+            var result = _myBookingsService.GetActiveBookings(userId);
 
             return result.Count();
         }
@@ -50,12 +47,9 @@ namespace Service.Tests.BookingServiceTest
             
             var start = DateTime.Today.AddDays(-30);
             var end = DateTime.Today;
-            var user = new User()
-            {
-                Id = 1
-            };
+            var userId = 1;
 
-            var result = _myBookingsService.GetBookingsHistory(user.Id, start, end);
+            var result = _myBookingsService.GetBookingsHistory(userId, start, end);
 
             return result.Count();
         }

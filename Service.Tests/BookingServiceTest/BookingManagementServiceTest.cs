@@ -47,7 +47,7 @@ namespace Service.Tests.BookingServiceTest
         {
             Setup(users, desks, rooms, orders);
 
-            var result = _bookingManagementService.СancelBooking(users == null ? 0 : 1, 1);
+            var result = _bookingManagementService.CancelBooking(users == null ? 0 : 1, 1);
             return result;
         }
     }
