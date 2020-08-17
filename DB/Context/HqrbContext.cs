@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using DB.EntityStatus;
+using RequestLogger.Entities;
 
 namespace DB.Context
 {
@@ -22,6 +23,8 @@ namespace DB.Context
         public DbSet<UserRoleLookup> UserRoleLookups { get; set; }
         public DbSet<DeskStatusLookup> DeskStatusLookups { get; set; }
         public DbSet<WorkingDaysCalendar> Calendar { get; set; }
+        public DbSet<BadRequestEntity> BadRequestsLog { get; set; }
+        public DbSet<RequestProcessingEntity> RequestProcessingLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
