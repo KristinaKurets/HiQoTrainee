@@ -31,7 +31,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         }
 
         [HttpGet]
-        public IActionResult GetDeskAvailability(DateTime date, DeskStatus deskStatus)
+        public IActionResult GetDeskAvailabilityDeskStatus(DateTime date, DeskStatus deskStatus)
         {
             return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date, deskStatus)));
         }

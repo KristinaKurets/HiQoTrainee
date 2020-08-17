@@ -9,8 +9,13 @@ namespace HiQo_Remote_Booking.IEndpointsRouteBuilderExtensions
         {
             endpoint.MapControllerRoute(
                 name: "getDesksAvailability",
-                pattern: "/desks/available/{date}/{deskStatus?}",
+                pattern: "/desks/available/{date}",
                 defaults: new {controller = "DeskAvailability", action = "GetDeskAvailability"});
+
+            endpoint.MapControllerRoute(
+                name: "getDesksAvailability",
+                pattern: "/desks/available/{date}/{deskStatus}",
+                defaults: new { controller = "DeskAvailability", action = "GetDeskAvailabilityDeskStatus" });
         }
     }
 }
