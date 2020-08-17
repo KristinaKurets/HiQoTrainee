@@ -13,13 +13,15 @@ namespace HiQo_Remote_Booking.Controllers
         {
             _myBookingsService = myBookingsService;
         }
+
         [HttpPost]
-        public JsonResult ActualBooking(BookingUserDTO user)
+        public IActionResult ActualBooking(BookingUserDTO user)
         {
             return Json(_myBookingsService.GetActiveBookings(user.Id));
         }
+
         [HttpPost]
-        public JsonResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
+        public IActionResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
         {
             return Json(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime));
         }

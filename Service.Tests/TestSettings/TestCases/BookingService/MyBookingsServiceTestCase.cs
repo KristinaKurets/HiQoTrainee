@@ -3,6 +3,7 @@ using DB.EntityStatus;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Tests.TestSettings.TestCases.BookingService
@@ -105,7 +106,7 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
         {
             get
             {
-                yield return new TestCaseData(Orders).Returns(Orders.Count);
+                yield return new TestCaseData(Orders).Returns(Orders.Where(x => x.Status == BookingStatus.Waiting || x.Status == BookingStatus.Booked).ToList().Count);
                 yield return new TestCaseData(new List<Order>()).Returns(0);
                 yield return new TestCaseData(null).Returns(0);
             }

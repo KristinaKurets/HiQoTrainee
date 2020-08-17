@@ -10,7 +10,7 @@ using Service.Tests.TestSettings.TestCases.BookingService;
 
 namespace Service.Tests.BookingServiceTest
 {
-    class MyBookingManagementTest
+    class BookingManagementTest
     {
         private RepositoryMockResult _mockResult;
         private BookingManagementService _bookingManagementService;
