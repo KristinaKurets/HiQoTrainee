@@ -41,6 +41,7 @@ namespace Service.Tests.BookingServiceTest
 
             return result.Count();
         }
+
         [Test, TestCaseSource(typeof(DeskAvailabilityTestCase), nameof(DeskAvailabilityTestCase.GetDeskAvailabilityByStatus))]
         public int GetDeskAvailabilityByStatus(IList<Desk> desks)
         {
