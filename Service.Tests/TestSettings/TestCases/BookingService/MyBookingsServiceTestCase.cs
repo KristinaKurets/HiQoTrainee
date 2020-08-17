@@ -115,7 +115,7 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
         {
             get
             {
-                yield return new TestCaseData(Orders, Users).Returns(Orders.Count);
+                yield return new TestCaseData(Orders, Users).Returns(Orders.Where(x=>x.Status != BookingStatus.Waiting && x.Status != BookingStatus.Booked).ToList().Count);
                 yield return new TestCaseData(new List<Order>(), new List<User>()).Returns(0);
                 yield return new TestCaseData(null, null).Returns(0);
             }
