@@ -1,6 +1,6 @@
 ﻿using System;
+using DtoCommon.BookingDTO;
 using Microsoft.AspNetCore.Mvc;
-using Service.BookingService.DTO;
 using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers
@@ -16,12 +16,12 @@ namespace HiQo_Remote_Booking.Controllers
         [HttpPost]
         public JsonResult ActualBooking(BookingUserDTO user)
         {
-            return Json(_myBookingsService.GetActiveBookings(user));
+            return Json(_myBookingsService.GetActiveBookings(user.Id));
         }
         [HttpPost]
         public JsonResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
         {
-            return Json(_myBookingsService.GetBookingsHistory(user, startTime, endTime));
+            return Json(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime));
         }
     }
 }
