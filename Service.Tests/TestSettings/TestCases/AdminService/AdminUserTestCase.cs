@@ -33,26 +33,6 @@ namespace Service.Tests.TestSettings.TestCases
             }
         };
 
-        //private static List<UserDto> usersDto = new List<UserDto>()
-        //{
-        //    new UserDto()
-        //    {
-        //        Id = 1,
-        //        Email = "dskjdjsk@gmail.com",
-        //        FirstName = "Di",
-        //        LastName = "Aristova",
-        //        UserPositionId = 2,
-        //    },
-        //    new UserDto()
-        //    {
-        //        Id = 2,
-        //        Email = "dskjdjsk12@gmail.com",
-        //        FirstName = "Dima",
-        //        LastName = "Aristov",
-        //        UserPositionId = 1,
-        //    }
-        //};
-
         private static List<WorkingDaysCalendar> workingDays = new List<WorkingDaysCalendar>()
         {
             new WorkingDaysCalendar()

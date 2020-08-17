@@ -79,7 +79,7 @@ namespace Service.Tests.TestSettings
                 repositoryMock.Setup(x => x.Read(It.IsAny<object[]>())).
                     Returns<object[]>(p =>
                     {
-                        var id = (int) p[0];
+                        var id = (long) p[0];
                         return items.FirstOrDefault(x => idGetter(x) == id);
                     });
                 repositoryMock.Setup(x => x.Read(It.IsAny<Func<T, bool>>())).
