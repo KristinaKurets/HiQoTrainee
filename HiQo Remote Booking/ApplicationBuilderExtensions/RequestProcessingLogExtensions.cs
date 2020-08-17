@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HiQo_Remote_Booking.Middleware;
+using Microsoft.AspNetCore.Builder;
 
-namespace HiQo_Remote_Booking.Middleware
+
+namespace HiQo_Remote_Booking.ApplicationBuilderExtensions
 {
     public static class RequestProcessingLogExtensions
     {

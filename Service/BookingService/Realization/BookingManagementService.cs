@@ -38,7 +38,7 @@ namespace Service.BookingService.Realization
         protected bool CreateBooking(User user, Desk desc, DateTime time) 
         {
             var dayOrders = UnitOfWork.OrderRepository.ReadAll(x => x.DateTime == time && x.Desk.Id == desc.Id);
-            if (dayOrders.Where(x => x.Status == BookingStatus.Booked).Any())
+            if (!dayOrders.Any(x => x.Status == BookingStatus.Booked))
             {
                 var dayWaitOrders = dayOrders.Where(x => x.Status == BookingStatus.Waiting);
                 if (user.WorkPlan.Priority == 1)
@@ -48,7 +48,7 @@ namespace Service.BookingService.Realization
                     UnitOfWork.Save();
                     return true;
                 }
-                else if (user.WorkPlan.Priority == 2 && dayWaitOrders.Count() == 0)
+                else if (user.WorkPlan.Priority == 2 && !dayWaitOrders.Any())
                 {
                     CreateOrder(BookingStatus.Waiting, user, desc, time);
                     UnitOfWork.Save();

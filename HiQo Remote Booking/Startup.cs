@@ -9,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Profiles;
 using HiQo_Remote_Booking.Filters;
-using HiQo_Remote_Booking.Middleware;
+using HiQo_Remote_Booking.ApplicationBuilderExtensions;
+using Microsoft.Extensions.Logging;
+using HiQo_Remote_Booking.LoggerFactoryExtensions;
 
 namespace HiQo_Remote_Booking
 {

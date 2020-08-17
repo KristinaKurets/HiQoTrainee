@@ -24,6 +24,7 @@ namespace HiQo_Remote_Booking.Controllers
         {
             var a = 0;
             var b = 7;
+            
             var d = b / a;
             return View();
         }
