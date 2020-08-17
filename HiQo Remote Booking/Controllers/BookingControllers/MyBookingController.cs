@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using DtoCommon.BookingDTO;
 using Microsoft.AspNetCore.Mvc;
 using Service.BookingService.Interfaces;
@@ -8,22 +9,24 @@ namespace HiQo_Remote_Booking.Controllers
     public class MyBookingController : Controller
     {
         private readonly IMyBookingsService _myBookingsService;
+        private readonly IMapper _mapper;
 
-        public MyBookingController(IMyBookingsService myBookingsService)
+        public MyBookingController(IMyBookingsService myBookingsService, IMapper mapper)
         {
             _myBookingsService = myBookingsService;
+            _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ActualBooking(BookingUserDTO user)
         {
-            return Json(_myBookingsService.GetActiveBookings(user.Id));
+            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetActiveBookings(user.Id)));
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
         {
-            return Json(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime));
+            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime)));
         }
     }
 }
