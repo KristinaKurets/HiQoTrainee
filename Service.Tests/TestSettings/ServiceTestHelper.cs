@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using DB.Entity;
+using DB.EntityStatus;
 using DB.LookupTable;
 using Moq;
 using Repository.Interface;
@@ -17,6 +18,7 @@ namespace Service.Tests.TestSettings
         public IList<Desk> Desks { get; set; }
 
         public IList<DeskStatusLookup> DeskStatusLookup { get; set; }
+        public IList<DeskStatus> DeskStatuses { get; set; }
 
         public IList<BookingInfo> BookingInfo { get; set; }
 
