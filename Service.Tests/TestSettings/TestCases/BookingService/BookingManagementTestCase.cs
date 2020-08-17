@@ -61,7 +61,14 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                  Orders = new List<Order>(),
                  Room = Rooms[0],
                  DeskId = 1,
-
+                 WorkPlan = new WorkPlan()
+                 {
+                     DeskGuaranteed = true, 
+                     Id = 1,
+                     Plan = "Office",
+                     PlanDescription = "Mostly work from office",
+                     Priority = 1
+                 }
              },
              new User
              {
@@ -74,6 +81,14 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                  Orders = new List<Order>(),
                  Room = Rooms[0],
                  DeskId = 2,
+                 WorkPlan = new WorkPlan()
+                 {
+                     DeskGuaranteed = true,
+                     Id = 1,
+                     Plan = "Office",
+                     PlanDescription = "Mostly work from office",
+                     Priority = 1
+                 }
              },
              new User
              {
@@ -86,6 +101,14 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                  Orders = new List<Order>(),
                  Room = Rooms[0],
                  DeskId = 3,
+                 WorkPlan = new WorkPlan()
+                 {
+                     DeskGuaranteed = true,
+                     Id = 1,
+                     Plan = "Office",
+                     PlanDescription = "Mostly work from office",
+                     Priority = 1
+                 }
              }
 
         };

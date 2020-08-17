@@ -12,8 +12,8 @@ namespace Service.Tests.BookingServiceTest
 {
     class MyBookingManagementTest
     {
-        private RepositoryMockResult mockResult;
-        private BookingManagementService bookingManagementService;
+        private RepositoryMockResult _mockResult;
+        private BookingManagementService _bookingManagementService;
 
         public void Setup(IList<User> users = null,  IList<Desk> desks = null, IList<Room> rooms = null,IList<Order> orders = null)
         {
@@ -25,9 +25,9 @@ namespace Service.Tests.BookingServiceTest
                 Orders = orders
             };
 
-            mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
+            _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
 
-            bookingManagementService = new BookingManagementService(mockResult.UnitOfWorkMock.Object);
+            _bookingManagementService = new BookingManagementService(_mockResult.UnitOfWorkMock.Object);
         }
 
         [Test, TestCaseSource(typeof(BookingManagementTestCase), nameof(BookingManagementTestCase.CreteTestCase))]
@@ -36,7 +36,7 @@ namespace Service.Tests.BookingServiceTest
         {
             Setup(users, desks, rooms, orders);
 
-            var result = bookingManagementService.CreateBooking(2, 2, DateTime.Today);
+            var result = _bookingManagementService.CreateBooking(2, 2, DateTime.Today);
 
             return result;
         }
@@ -47,7 +47,7 @@ namespace Service.Tests.BookingServiceTest
         {
             Setup(users, desks, rooms, orders);
 
-            var result = bookingManagementService.СancelBooking(users == null ? 0 : 1, 1);
+            var result = _bookingManagementService.СancelBooking(users == null ? 0 : 1, 1);
             return result;
         }
     }
