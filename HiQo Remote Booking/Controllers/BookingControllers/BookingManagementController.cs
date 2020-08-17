@@ -17,13 +17,13 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
             this.bookingManagementService = bookingManagementService;
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult CreateBooking(int userId, int deskId, DateTime time)
         {
             return Json(bookingManagementService.CreateBooking(userId, deskId, time));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult CancelBooking(int userId, int orderId)
         {
             return Json(bookingManagementService.CancelBooking(userId, orderId));

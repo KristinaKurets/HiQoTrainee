@@ -20,13 +20,13 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
             this.deskAvailabilityService = deskAvailabilityService;
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetDeskAvailability(DateTime date)
         {
             return Json(deskAvailabilityService.GetDeskAvailability(date));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetDeskAvailability(DateTime date, DeskStatus deskStatus)
         {
             return Json(deskAvailabilityService.GetDeskAvailability(date, deskStatus));
