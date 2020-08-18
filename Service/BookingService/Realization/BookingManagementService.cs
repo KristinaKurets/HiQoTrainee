@@ -72,8 +72,8 @@ namespace Service.BookingService.Realization
             }
             return false;
         }
-        
-        public bool СancelBooking(int userID,long orderID)
+
+        public bool CancelBooking(int userID,long orderID)
         {
             var order = UnitOfWork.OrderRepository.Read(orderID);
             if (order != null && order.User.Id == userID) {
