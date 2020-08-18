@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Profiles;
 using HiQo_Remote_Booking.Filters;
 using HiQo_Remote_Booking.ApplicationBuilderExtensions;
+using HiQo_Remote_Booking.IEndpointsRouteBuilderExtensions;
 using Microsoft.Extensions.Logging;
 using HiQo_Remote_Booking.LoggerFactoryExtensions;
 
@@ -53,9 +54,9 @@ namespace HiQo_Remote_Booking
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=MyBooking}/{action=ActualBooking}/{id?}");
+                endpoints.ConfigureBookingEndpoints();
+                endpoints.ConfigureDesksAvailabilityEndpoints();
+                endpoints.ConfigureAdminPanelEndpoints();
             });
         }
     }
