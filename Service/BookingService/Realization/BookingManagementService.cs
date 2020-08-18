@@ -41,27 +41,20 @@ namespace Service.BookingService.Realization
             if (!dayOrders.Any(x => x.Status == BookingStatus.Booked))
             {
                 var dayWaitOrders = dayOrders.Where(x => x.Status == BookingStatus.Waiting);
-                if (user.WorkPlan != null)
+                if (user.WorkPlan.Priority == 1)
                 {
-                    if (user.WorkPlan.Priority == 1)
-                    {
-                        RejectOrders(dayWaitOrders);
-                        CreateOrder(BookingStatus.Booked, user, desc, time);
-                        UnitOfWork.Save();
-                        return true;
-                    }
-                    else if (user.WorkPlan.Priority == 2 && dayWaitOrders.Count() == 0)
-                    {
-                        CreateOrder(BookingStatus.Waiting, user, desc, time);
-                        UnitOfWork.Save();
-                        return true;
-                    }
-                    return false;
+                    RejectOrders(dayWaitOrders);
+                    CreateOrder(BookingStatus.Booked, user, desc, time);
+                    UnitOfWork.Save();
+                    return true;
                 }
-                else
+                else if (user.WorkPlan.Priority == 2 && !dayWaitOrders.Any())
                 {
-                    return false;
+                    CreateOrder(BookingStatus.Waiting, user, desc, time);
+                    UnitOfWork.Save();
+                    return true;
                 }
+                return false;
             }
             else
             {
@@ -80,7 +73,7 @@ namespace Service.BookingService.Realization
             return false;
         }
         
-        public bool CancelBooking(int userID,long orderID)
+        public bool СancelBooking(int userID,long orderID)
         {
             var order = UnitOfWork.OrderRepository.Read(orderID);
             if (order != null && order.User.Id == userID) {

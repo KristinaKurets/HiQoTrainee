@@ -24,20 +24,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NLog" Version="4.7.3" />
-    <PackageReference Include="NLog.Config" Version="4.7.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\DB\DB.csproj" />
 	 <ProjectReference Include="..\Profiles\Profiles.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+	 <ProjectReference Include="..\RequestLogger\RequestLogger.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\RequestLogger\RequestLogger.csproj" />
   </ItemGroup>
 
 </Project>

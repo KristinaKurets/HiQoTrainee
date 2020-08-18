@@ -1,11 +1,10 @@
-﻿using HiQo_Remote_Booking.LoggerProvider;
-using Microsoft.AspNetCore.Http;
+﻿using HiQo_Remote_Booking.LoggerFactoryExtensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using RequestLogger.Entities;
+using RequestLogger.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace HiQo_Remote_Booking.Filters
 {
@@ -13,13 +12,15 @@ namespace HiQo_Remote_Booking.Filters
     {
         private readonly ILogger _logger;
         public BadRequestExceptionFilterAttribute(ILoggerFactory loggerFactory) {
-            _logger = loggerFactory.AddDataBaseLogger().CreateLogger("BadRequestLog");
+            _logger = loggerFactory.AddRequestLogger().CreateLogger<RequestLogger.Logger.RequestLogger>();
         }
         public void OnException(ExceptionContext context)
         {   
-                string actionName = context.ActionDescriptor.DisplayName;           
-                string exceptionMessage = context.Exception.Message;
-                _logger.LogError(actionName+DataBaseLogger.SPLITTER+exceptionMessage);
+            _logger.Log(new BadRequestEntity()
+            {
+                Method = context.ActionDescriptor.DisplayName,
+                Exeption = context.Exception.Message
+            }); 
                
         }
     }
