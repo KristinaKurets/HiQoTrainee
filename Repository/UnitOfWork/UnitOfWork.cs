@@ -10,7 +10,7 @@ namespace Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //private Dictionary<string, object> repositories;
+        private Dictionary<string, object> repositories;
         private readonly DbContext db;
 
 
@@ -80,17 +80,17 @@ namespace Repository.UnitOfWork
             GC.SuppressFinalize(this);
         }
 
-        //public IRepository<TSource> GetRepository<TSource>() where TSource : class
-        //{
-        //    repositories ??= new Dictionary<string, object>();
-        //    var type = typeof(TSource).Name;
+        public IRepository<TSource> GetRepository<TSource>() where TSource : class
+        {
+            repositories ??= new Dictionary<string, object>();
+            var type = typeof(TSource).Name;
 
-        //    if (repositories.ContainsKey(type)) return (IRepository<TSource>) repositories[type];
-        //    var repositoryType = typeof(Repository<>);
-        //    var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TSource)), db);
-        //    repositories.Add(type, repositoryInstance);
-        //    return (IRepository<TSource>)repositories[type];
-        //}
+            if (repositories.ContainsKey(type)) return (IRepository<TSource>)repositories[type];
+            var repositoryType = typeof(Repository<>);
+            var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TSource)), db);
+            repositories.Add(type, repositoryInstance);
+            return (IRepository<TSource>)repositories[type];
+        }
 
         public void Save()
         {

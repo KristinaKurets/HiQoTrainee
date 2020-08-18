@@ -7,7 +7,8 @@ namespace Repository.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<User> UserRepository { get; }
+        IRepository<TSource> GetRepository<TSource>() where TSource : class;
+        IRepository<User> UserRepository { get;}
         IRepository<WorkingDaysCalendar> CalendarRepository { get; }
         IRepository<Desk> DeskRepository { get; }
         IRepository<BookingInfo> BookingInfoRepository { get; }

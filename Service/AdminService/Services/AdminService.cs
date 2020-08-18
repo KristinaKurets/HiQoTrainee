@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DB.LookupTable;
+using Service.AdminService.Changers;
 
 namespace Service.AdminService.Services
 {
@@ -18,6 +19,11 @@ namespace Service.AdminService.Services
             DataBase = unitOfWork;
         }
 
+        private bool CheckNull<T>(T source)
+        {
+            return source != null;
+        }
+
         public List<User> GetUsers()
         {
             return DataBase.UserRepository.ReadAll().ToList();
@@ -27,32 +33,36 @@ namespace Service.AdminService.Services
         {
             return GetUsers().OrderBy(key).ToList();
         }
-
+        //добавлена проверка на null
         public List<User> FilterBy(Func<User, bool> predicate, List<User> users)
         {
-            return users.Where(predicate).ToList();
+            return CheckNull(users) ? users.Where(predicate).ToList() : new List<User>();
+            //добавить в логгер сообщение о null
         }
 
         public List<Desk> GetDesks()
         {
             return DataBase.DeskRepository.ReadAll().ToList();
         }
-
+        //дописать
         public List<Desk> UpdateDesks(Desk desk)
         {
-            //я хз, как тут правильно сделать
-            //Desk deskUp = DeskChanger.ChangeFromDto(DataBase.DeskRepository.Read(desk.Id), desk);
-            DataBase.DeskRepository.Update(desk);
-            DataBase.Save();
-            return GetDesks();
+            if (CheckNull(desk))
+            {
+                var updatedDesk = DataBase.DeskRepository.Read(desk.Id);
+                if (CheckNull(updatedDesk))
+                {
+                    DataBase.DeskRepository.Update(DeskChanger.ChangeFromDto(updatedDesk, desk));
+                    DataBase.Save();
+                    return GetDesks();
+                }
+            }
+            return null;
         }
 
         public List<Desk> CreateDesk(Desk desk)
         {
-            Desk result = (Desk)desk;
-            //тут могут быть вопросы, там нет поля для id, чтобы не создавать двойную связь
-            result.User = DataBase.UserRepository.Read(u => u.Id == desk.User.Id);
-            DataBase.DeskRepository.Create(result);
+            DataBase.DeskRepository.Create(desk);
             DataBase.Save();
             return GetDesks();
         }
@@ -80,13 +90,21 @@ namespace Service.AdminService.Services
             DataBase.Save();
             return GetBookingInfo();
         }
-
+        //проверить и дописать
         public List<BookingInfo> UpdateBookingInfo(BookingInfo booking)
         {
-            //BookingInfo info = BookingInfoChanger.ChangeFromDto(DataBase.BookingInfoRepository.Read(booking.Id), booking);
-            DataBase.BookingInfoRepository.Update(booking);
-            DataBase.Save();
-            return GetBookingInfo();
+            if (CheckNull(booking))
+            {
+                var updatedBooking = DataBase.BookingInfoRepository.Read(booking.Id);
+                if (CheckNull(updatedBooking))
+                {
+                    DataBase.BookingInfoRepository.Update(BookingInfoChanger.ChangeFromDto(updatedBooking, booking));
+                    DataBase.Save();
+                    return GetBookingInfo();
+                }
+            }
+
+            return null;
         }
 
         public List<BookingInfo> DeleteBookingInfo(BookingInfo booking)
@@ -103,13 +121,21 @@ namespace Service.AdminService.Services
             DataBase.Save();
             return GetUsers();
         }
-
+        //проверить и дописать
         public List<User> UpdateUser(User user)
         {
             //User result = UserChanger.ChangeFromDto(DataBase.UserRepository.Read(user.Id), user);
-            DataBase.UserRepository.Update(user);
-            DataBase.Save();
-            return GetUsers();
+            if (CheckNull(user))
+            {
+                var updatedUser = DataBase.UserRepository.Read(user.Id);
+                if (CheckNull(updatedUser))
+                {
+                    DataBase.UserRepository.Update(UserChanger.ChangeFromDto(updatedUser, user));
+                    DataBase.Save();
+                    return GetUsers();
+                }
+            }
+            return null;
         }
 
         public List<User> DeleteUser(User user)
@@ -151,15 +177,23 @@ namespace Service.AdminService.Services
 
         public BookingInfo GetBookingInfoAboutOneRoom(Room room)
         {
-            return DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId);
+            return CheckNull(room) ? DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId) : null;
         }
 
         public List<WorkPlan> UpdateWorkPlan(WorkPlan workPlan)
         {
-            //WorkPlan plan = WorkPlanChanger.ChangeFromDto(DataBase.WorkPlanRepository.Read(workPlanDto.Id), workPlanDto);
-            DataBase.WorkPlanRepository.Update(workPlan);
-            DataBase.Save();
-            return GetWorkPlans();
+            if (CheckNull(workPlan))
+            {
+                var updatedWorkPlan = DataBase.WorkPlanRepository.Read(workPlan.Id);
+                if (CheckNull(updatedWorkPlan))
+                {
+                    DataBase.WorkPlanRepository.Update(WorkPlanChanger.ChangeFromDto(updatedWorkPlan, workPlan));
+                    DataBase.Save();
+                    return GetWorkPlans();
+                }
+            }
+
+            return null;
         }
 
         public List<WorkPlan> DeleteWorkPlan(WorkPlan workPlanDto)
@@ -168,14 +202,14 @@ namespace Service.AdminService.Services
             DataBase.Save();
             return GetWorkPlans();
         }
-
+        //проверить и дописать
         public void UpdateWorkPlan(User user, WorkPlan workPlan)
         {
             var repUser = DataBase.UserRepository.Read(user.Id);
             repUser.WorkPlan = (WorkPlan)workPlan;
             DataBase.UserRepository.Update(repUser);
         }
-
+        //проверить и дописать
         public void UpdateDesk(User user, Desk desk)
         {
             var repUser = DataBase.UserRepository.Read(user.Id);
@@ -187,14 +221,21 @@ namespace Service.AdminService.Services
         {
             return DataBase.CalendarRepository.ReadAll().ToList();
         }
-
+        //проверить и дописать
         public List<WorkingDaysCalendar> SetDayOff(WorkingDaysCalendar calendar)
         {
-            var cal = DataBase.CalendarRepository.Read(calendar.Id);
-            cal.IsOff = true;
-            DataBase.CalendarRepository.Update(cal);
-            DataBase.Save();
-            return GetWorkingDayCalendars();
+            if (CheckNull(calendar))
+            {
+                var cal = DataBase.CalendarRepository.Read(calendar.Id);
+                if (CheckNull(cal))
+                {
+                    DataBase.CalendarRepository.Update(WorkingDaysCalendarChanger.ChangeFromDto(cal, calendar));
+                    DataBase.Save();
+                    return GetWorkingDayCalendars();
+                }
+            }
+
+            return null;
         }
     }
 }
