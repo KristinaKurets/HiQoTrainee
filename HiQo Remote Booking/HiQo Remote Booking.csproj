@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\diana\OneDrive\Документы\HQRB\HiQo Remote Booking\HiQo Remote Booking.xml</DocumentationFile>
+    <DocumentationFile>D:\HiQo Remote Booking.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
