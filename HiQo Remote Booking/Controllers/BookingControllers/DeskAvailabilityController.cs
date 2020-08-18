@@ -11,7 +11,9 @@ using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers.BookingControllers
 {
-    
+    /// <summary>
+    /// Class-controller for getting information about availability of desks.
+    /// </summary>
     [Controller]
     public class DeskAvailabilityController : Controller
     {
@@ -23,13 +25,22 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
             _deskAvailabilityService = deskAvailabilityService;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Gets all available desks.
+        /// </summary>
+        /// <param name="date">Sampling date.</param>
+        /// <returns>List of all available desks. </returns>
         [HttpGet]
         public IActionResult GetDeskAvailability(DateTime date)
         {
             return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date)));
         }
-
+        /// <summary>
+        /// Gets all available desks by status.
+        /// </summary>
+        /// <param name="date">Sampling date.</param>
+        /// <param name="deskStatus">Sampling status.</param>
+        /// <returns>List of all available desks by needed status.</returns>
         [HttpGet]
         public IActionResult GetDeskAvailabilityDeskStatus(DateTime date, DeskStatus deskStatus)
         {
