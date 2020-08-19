@@ -2,6 +2,7 @@
 using System;
 using DB.Entity;
 using DB.LookupTable;
+using RequestLogger.Entities;
 
 namespace Repository.UnitOfWork
 {
@@ -17,6 +18,8 @@ namespace Repository.UnitOfWork
         IRepository<Room> RoomRepository { get; }
         IRepository<DeskStatusLookup> DeskStatusRepository { get; }
         IRepository<Order> OrderRepository { get; }
+        IRepository<BadRequestEntity> BadRequestRepository { get; }
+        IRepository<RequestProcessingEntity> RequestProccessingRepository { get; }
         void Save();
     }
 }

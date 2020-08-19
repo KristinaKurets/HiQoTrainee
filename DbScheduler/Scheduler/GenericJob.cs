@@ -4,7 +4,7 @@ using Quartz;
 
 namespace DbScheduler.Job
 {
-    public class GenericJob: IJob
+    public class GenericJob : IJob
     {
         public Action Action { get; set; }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using DB.Entity;
 using DB.LookupTable;
+using RequestLogger.Entities;
 
 namespace Repository.UnitOfWork
 {
@@ -54,6 +55,15 @@ namespace Repository.UnitOfWork
 
         private IRepository<Order> _orderRepository;
         public IRepository<Order> OrderRepository => _orderRepository ??= new Repository<Order>(db);
+
+        private IRepository<BadRequestEntity> _badRequestEntities;
+        public IRepository<BadRequestEntity> BadRequestRepository => 
+            _badRequestEntities ??= new Repository<BadRequestEntity>(db);
+
+        private IRepository<RequestProcessingEntity> _requestProccessingEnities;
+        public IRepository<RequestProcessingEntity> RequestProccessingRepository
+            => _requestProccessingEnities ??= new Repository<RequestProcessingEntity>(db);
+
 
         public UnitOfWork(DbContext dbContext)
         {

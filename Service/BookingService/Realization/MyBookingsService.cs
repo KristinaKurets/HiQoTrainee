@@ -15,10 +15,12 @@ namespace Service.BookingService.Realization
         
         public MyBookingsService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+
         }
 
         public IEnumerable<Order> GetActiveBookings(int userID) {
-            return UnitOfWork.OrderRepository.ReadAll(x=> x.User.Id==userID &&(x.Status==BookingStatus.Waiting || x.Status==BookingStatus.Booked) ).AsNoTracking().ToList();
+            return UnitOfWork.OrderRepository.ReadAll(x => x.User.Id == userID
+            && (x.Status == BookingStatus.Waiting || x.Status == BookingStatus.Booked)).AsNoTracking().ToList();
         }
 
         public IEnumerable<Order> GetBookingsHistory(int userID, DateTime start, DateTime end) {
