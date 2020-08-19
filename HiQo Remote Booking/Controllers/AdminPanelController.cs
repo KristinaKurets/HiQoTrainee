@@ -11,7 +11,8 @@ namespace HiQo_Remote_Booking.Controllers
 {
 
     /// <summary>Class controller which contains admin function.</summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class AdminPanelController : Controller
     {
         private readonly IAdminService _adminService;
@@ -29,6 +30,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <summary>  Get only newcomers.</summary>
         /// <returns>List of newcomers </returns>
         [HttpGet]
+        [Route("newComers")]
         public JsonResult NewComers()
         {
             return Json(_mapper.Map<List<UserDto>>(_adminService.FilterBy(u => u.Room == null, _adminService.GetUsers())));

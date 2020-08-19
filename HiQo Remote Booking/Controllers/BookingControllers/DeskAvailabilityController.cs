@@ -14,7 +14,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// <summary>
     /// Class-controller for getting information about availability of desks.
     /// </summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class DeskAvailabilityController : Controller
     {
         private readonly IDeskAvailabilityService _deskAvailabilityService;

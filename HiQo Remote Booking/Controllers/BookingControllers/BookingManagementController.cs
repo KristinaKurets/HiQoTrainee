@@ -11,7 +11,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// <summary>
     /// Class-controller for booking actions.
     /// </summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class BookingManagementController : Controller
     {
         private readonly IBookingManagementService _bookingManagementService;
