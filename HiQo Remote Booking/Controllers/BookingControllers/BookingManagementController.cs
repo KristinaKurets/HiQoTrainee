@@ -29,6 +29,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="time">Time for booking.</param>
         /// <returns>A bool containing the information about creating of booking.</returns>
         [HttpGet]
+        [Route("createBooking")]
         public IActionResult CreateBooking(int userId, int deskId, DateTime time)
         {
             return Json(_bookingManagementService.CreateBooking(userId, deskId, time));
@@ -40,6 +41,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="orderId">The unique Order ID.</param>
         /// <returns>A bool containing the information about cancelling of booking</returns>
         [HttpGet]
+        [Route("cancelBooking")]
         public IActionResult CancelBooking(int userId, int orderId)
         {
             return Json(_bookingManagementService.CancelBooking(userId, orderId));
