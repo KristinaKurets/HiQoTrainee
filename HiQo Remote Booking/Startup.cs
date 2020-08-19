@@ -49,8 +49,8 @@ namespace HiQo_Remote_Booking
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ToDo API",
-                    Description = "A simple example ASP.NET Core Web API"
+                    Title = "Documentation for API HiQo Remote Booking",
+                    Description = "All requirements see here: https://wiki.hiqo-solutions.us:8444/display/HQRB/Requirements"
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
