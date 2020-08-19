@@ -17,7 +17,14 @@ using HiQo_Remote_Booking.ApplicationBuilderExtensions;
 using HiQo_Remote_Booking.IEndpointsRouteBuilderExtensions;
 using Microsoft.Extensions.Logging;
 using HiQo_Remote_Booking.LoggerFactoryExtensions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace HiQo_Remote_Booking
 {
@@ -43,6 +50,7 @@ namespace HiQo_Remote_Booking
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(BadRequestExceptionFilterAttribute));
+                options.EnableEndpointRouting = false;
             });
 
             services.AddSwaggerGen(c => {
@@ -58,8 +66,32 @@ namespace HiQo_Remote_Booking
                 c.IncludeXmlComments(xmlPath, true);
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
-           
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+
+            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
+            {
+                options.Authority = options.Authority + "/v2.0/";
+                options.TokenValidationParameters.ValidateIssuer = false;
+            });
+
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,11 +110,10 @@ namespace HiQo_Remote_Booking
             // Enable middleware to serve generated Swagger as a JSON endpoint.
          
             app.UseRouting();
+
+            app.UseCookiePolicy();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseMvc();
             
             app.UseSwagger(c =>
             {
