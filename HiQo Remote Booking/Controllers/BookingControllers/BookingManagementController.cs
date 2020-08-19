@@ -28,7 +28,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="deskId">The unique Desk ID.</param>
         /// <param name="time">Time for booking.</param>
         /// <returns>A bool containing the information about creating of booking.</returns>
-        [HttpGet]
+        [HttpPost]
         [Route("createBooking")]
         public IActionResult CreateBooking(int userId, int deskId, DateTime time)
         {
@@ -40,7 +40,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="userId">The unique User ID.</param>
         /// <param name="orderId">The unique Order ID.</param>
         /// <returns>A bool containing the information about cancelling of booking</returns>
-        [HttpGet]
+        [HttpPost]
         [Route("cancelBooking")]
         public IActionResult CancelBooking(int userId, int orderId)
         {

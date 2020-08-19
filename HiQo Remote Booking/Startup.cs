@@ -81,9 +81,6 @@ namespace HiQo_Remote_Booking
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.ConfigureBookingEndpoints();
-                //endpoints.ConfigureDesksAvailabilityEndpoints();
-                //endpoints.ConfigureAdminPanelEndpoints();
                 endpoints.MapControllers();
             });
             
