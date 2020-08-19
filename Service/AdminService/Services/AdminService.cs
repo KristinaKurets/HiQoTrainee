@@ -18,6 +18,12 @@ namespace Service.AdminService.Services
             DataBase = unitOfWork;
         }
 
+        public List<User> GetNewcomers()
+        {
+            bool IsNewcomer(User user) => user.WorkPlan == null;
+            return DataBase.UserRepository.ReadAll(IsNewcomer).ToList();
+        }
+
         public List<User> GetUsers()
         {
             return DataBase.UserRepository.ReadAll().ToList();

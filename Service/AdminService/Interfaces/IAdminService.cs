@@ -7,6 +7,7 @@ namespace Service.AdminService.Interfaces
 {
     public interface IAdminService
     {
+        List<User> GetNewcomers();
         List<User> GetUsers();
         List<User> CreateUser(User user);
         List<User> UpdateUser(User user);
