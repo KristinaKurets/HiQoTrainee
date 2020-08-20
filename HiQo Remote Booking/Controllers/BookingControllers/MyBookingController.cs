@@ -9,6 +9,8 @@ namespace HiQo_Remote_Booking.Controllers
     /// <summary>
     /// Class-controller for getting information about actual and expired bookings.
     /// </summary>
+    [ApiController]
+    [Route("[controller]")]
     public class MyBookingController : Controller
     {
         private readonly IMyBookingsService _myBookingsService;
@@ -24,7 +26,8 @@ namespace HiQo_Remote_Booking.Controllers
         /// </summary>
         /// <param name="user">Short infotmation about user, who made the booking</param>
         /// <returns>List of actual bookings of a specific user.</returns>
-        [HttpPost]
+        [HttpGet]
+        [Route("/booking/actual")]
         public IActionResult ActualBooking(BookingUserDTO user)
         {
             return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetActiveBookings(user.Id)));
@@ -36,7 +39,8 @@ namespace HiQo_Remote_Booking.Controllers
         /// <param name="startTime">Start date of sampling period.</param>
         /// <param name="endTime">End date of sampling period.</param>
         /// <returns>List of expired bookings of a specific user.</returns>
-        [HttpPost]
+        [HttpGet]
+        [Route("/booking/expired")]
         public IActionResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
         {
             return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime)));

@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using DB.Context;
 using HiQo_Remote_Booking.ServiceProviderExtensions;
@@ -13,6 +17,7 @@ using HiQo_Remote_Booking.ApplicationBuilderExtensions;
 using HiQo_Remote_Booking.IEndpointsRouteBuilderExtensions;
 using Microsoft.Extensions.Logging;
 using HiQo_Remote_Booking.LoggerFactoryExtensions;
+using Microsoft.OpenApi.Models;
 
 namespace HiQo_Remote_Booking
 {
@@ -39,6 +44,22 @@ namespace HiQo_Remote_Booking
             {
                 options.Filters.Add(typeof(BadRequestExceptionFilterAttribute));
             });
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Documentation for API HiQo Remote Booking",
+                    Description = "All requirements see here: https://wiki.hiqo-solutions.us:8444/display/HQRB/Requirements"
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath, true);
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            });
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,16 +69,34 @@ namespace HiQo_Remote_Booking
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRequestProcessingLog();
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+         
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.ConfigureBookingEndpoints();
-                endpoints.ConfigureDesksAvailabilityEndpoints();
-                endpoints.ConfigureAdminPanelEndpoints();
+                endpoints.MapControllers();
             });
+            
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
         }
     }
 }

@@ -12,7 +12,6 @@ namespace DB.Context
    
     public class HqrbContext : DbContext
     {
-
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Room> Rooms { get; set; }

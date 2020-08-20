@@ -11,7 +11,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// <summary>
     /// Class-controller for booking actions.
     /// </summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class BookingManagementController : Controller
     {
         private readonly IBookingManagementService _bookingManagementService;
@@ -27,7 +28,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="deskId">The unique Desk ID.</param>
         /// <param name="time">Time for booking.</param>
         /// <returns>A bool containing the information about creating of booking.</returns>
-        [HttpGet]
+        [HttpPost]
+        [Route("/booking/management/create/{userId}/{deskId}/{time}")]
         public IActionResult CreateBooking(int userId, int deskId, DateTime time)
         {
             return Json(_bookingManagementService.CreateBooking(userId, deskId, time));
@@ -38,7 +40,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="userId">The unique User ID.</param>
         /// <param name="orderId">The unique Order ID.</param>
         /// <returns>A bool containing the information about cancelling of booking</returns>
-        [HttpGet]
+        [HttpPost]
+        [Route("/booking/management/delete/{userId}/{deskId}")]
         public IActionResult CancelBooking(int userId, int orderId)
         {
             return Json(_bookingManagementService.CancelBooking(userId, orderId));

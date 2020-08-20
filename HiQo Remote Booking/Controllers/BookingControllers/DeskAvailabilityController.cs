@@ -7,6 +7,7 @@ using DB.EntityStatus;
 using DtoCommon.BookingDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers.BookingControllers
@@ -14,7 +15,8 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// <summary>
     /// Class-controller for getting information about availability of desks.
     /// </summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class DeskAvailabilityController : Controller
     {
         private readonly IDeskAvailabilityService _deskAvailabilityService;
@@ -31,6 +33,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="date">Sampling date.</param>
         /// <returns>List of all available desks. </returns>
         [HttpGet]
+        [Route("/desks/available/{date}")]
         public IActionResult GetDeskAvailability(DateTime date)
         {
             return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date)));
@@ -42,6 +45,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         /// <param name="deskStatus">Sampling status.</param>
         /// <returns>List of all available desks by needed status.</returns>
         [HttpGet]
+        [Route("desks/available/{date}/{deskStatus}")]
         public IActionResult GetDeskAvailabilityDeskStatus(DateTime date, DeskStatus deskStatus)
         {
             return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date, deskStatus)));
