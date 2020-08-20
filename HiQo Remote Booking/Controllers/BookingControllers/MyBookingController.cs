@@ -40,7 +40,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <param name="endTime">End date of sampling period.</param>
         /// <returns>List of expired bookings of a specific userId.</returns>
         [HttpGet]
-        [Route("/booking/expired/{userId}")]
+        [Route("/booking/expired/{userId}/{startTime}/{endTime}")]
         public IActionResult ExpiredBooking(int userId, DateTime startTime, DateTime endTime)
         {
             return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(userId, startTime, endTime)));

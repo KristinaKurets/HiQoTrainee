@@ -27,6 +27,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
             _deskAvailabilityService = deskAvailabilityService;
             _mapper = mapper;
         }
+
         /// <summary>
         /// Gets all available desks.
         /// </summary>
@@ -38,6 +39,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         {
             return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date)));
         }
+
         /// <summary>
         /// Gets all available desks by status.
         /// </summary>
