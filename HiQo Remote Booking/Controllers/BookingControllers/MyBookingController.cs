@@ -22,28 +22,28 @@ namespace HiQo_Remote_Booking.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Gets information about actual bookings of a specific user.
+        /// Gets information about actual bookings of a specific userId.
         /// </summary>
-        /// <param name="user">Short infotmation about user, who made the booking</param>
-        /// <returns>List of actual bookings of a specific user.</returns>
+        /// <param name="userId">Who made the booking</param>
+        /// <returns>List of actual bookings of a specific userId.</returns>
         [HttpGet]
-        [Route("/booking/actual")]
-        public IActionResult ActualBooking(BookingUserDTO user)
+        [Route("/booking/actual/{userId}")]
+        public IActionResult ActualBooking(int userId)
         {
-            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetActiveBookings(user.Id)));
+            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetActiveBookings(userId)));
         }
         /// <summary>
-        /// Gets information about expired bookings of a specific user.
+        /// Gets information about expired bookings of a specific userId.
         /// </summary>
-        /// <param name="user">Short infotmation about user, who made the booking</param>
+        /// <param name="userId">Who made the booking</param>
         /// <param name="startTime">Start date of sampling period.</param>
         /// <param name="endTime">End date of sampling period.</param>
-        /// <returns>List of expired bookings of a specific user.</returns>
+        /// <returns>List of expired bookings of a specific userId.</returns>
         [HttpGet]
-        [Route("/booking/expired")]
-        public IActionResult ExpiredBooking(BookingUserDTO user, DateTime startTime, DateTime endTime)
+        [Route("/booking/expired/{userId}")]
+        public IActionResult ExpiredBooking(int userId, DateTime startTime, DateTime endTime)
         {
-            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(user.Id, startTime, endTime)));
+            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(userId, startTime, endTime)));
         }
     }
 }
