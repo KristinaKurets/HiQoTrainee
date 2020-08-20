@@ -11,7 +11,8 @@ namespace HiQo_Remote_Booking.Controllers
     /// <summary>
     /// Controller for configuring user notifications
     /// </summary>
-    [Controller]
+    [ApiController]
+    [Route("[controller]")]
     public class UserNotificatoinsController : Controller
     {
         private readonly IUserNotificationsService _userNotificationsService;
@@ -25,7 +26,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <param name="userID">The unique User ID.</param>
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
-        [HttpGet]
+        [HttpPost]
         public IActionResult SetCalendarSyncNotificatios(int userID, bool flag)
         {
             return Json(_userNotificationsService.CalendarSyncNotification(userID,flag));
@@ -37,7 +38,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
         
-        [HttpGet]
+        [HttpPost]
         public IActionResult SetCancellationNotification(int userID, bool flag)
         {
             return Json(_userNotificationsService.CancellationNotification(userID, flag));
@@ -49,7 +50,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
         
-        [HttpGet]
+        [HttpPost]
         public IActionResult SetConfirmationNotification(int userID, bool flag)
         {
             return Json(_userNotificationsService.ConfirmationNotification(userID, flag));

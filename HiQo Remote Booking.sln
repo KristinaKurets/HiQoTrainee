@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DtoCommon", "DtoCommon\DtoC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLogger", "RequestLogger\RequestLogger.csproj", "{872377AA-D0C8-401A-B992-9B48F2BC5E44}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Tests", "Service.Tests\Service.Tests.csproj", "{58E8D04F-3E70-42C8-92B2-41686F40EBEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{872377AA-D0C8-401A-B992-9B48F2BC5E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{872377AA-D0C8-401A-B992-9B48F2BC5E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{872377AA-D0C8-401A-B992-9B48F2BC5E44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58E8D04F-3E70-42C8-92B2-41686F40EBEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E8D04F-3E70-42C8-92B2-41686F40EBEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E8D04F-3E70-42C8-92B2-41686F40EBEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E8D04F-3E70-42C8-92B2-41686F40EBEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
