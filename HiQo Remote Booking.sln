@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Profiles", "Profiles\Profil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DtoCommon", "DtoCommon\DtoCommon.csproj", "{E75582D2-2A1C-4AD4-812C-14BCD8B22D8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestLogger", "RequestLogger\RequestLogger.csproj", "{872377AA-D0C8-401A-B992-9B48F2BC5E44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLogger", "RequestLogger\RequestLogger.csproj", "{872377AA-D0C8-401A-B992-9B48F2BC5E44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

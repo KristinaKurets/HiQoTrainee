@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DB.Entity;
+using Microsoft.AspNetCore.Mvc;
 using Service.UserNotificationsService.Interface;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace HiQo_Remote_Booking.Controllers
     public class UserNotificatoinsController : Controller
     {
         private readonly IUserNotificationsService _userNotificationsService;
+        public UserNotificatoinsController(IUserNotificationsService userNotificationsService)
+        {
+            _userNotificationsService = userNotificationsService;
+        }
         /// <summary>
         /// Сonfiguring calendar sync notifications.
         /// </summary>
