@@ -12,7 +12,7 @@ namespace Service.UserNotificationsService.Realization
         protected readonly IUnitOfWork UnitOfWork;
         public UserNotificationsService(IUnitOfWork unitOfWork)
         {
-            unitOfWork = UnitOfWork;
+            UnitOfWork = unitOfWork;
         }
         
         public bool CalendarSyncNotification(int userID, bool flag)
