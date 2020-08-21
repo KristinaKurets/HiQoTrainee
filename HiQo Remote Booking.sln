@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLogger", "RequestLog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Tests", "Service.Tests\Service.Tests.csproj", "{58E8D04F-3E70-42C8-92B2-41686F40EBEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{605BA1F8-97CB-4E8B-A20A-39382794317B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{605BA1F8-97CB-4E8B-A20A-39382794317B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HiQoKerioConnectCalendarApiClient", "HiQoKerioConnectCalendarApiClient\HiQoKerioConnectCalendarApiClient.csproj", "{461D25E6-DC96-4659-A745-2FA9A815E64B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{605BA1F8-97CB-4E8B-A20A-39382794317B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{605BA1F8-97CB-4E8B-A20A-39382794317B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{605BA1F8-97CB-4E8B-A20A-39382794317B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{461D25E6-DC96-4659-A745-2FA9A815E64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{461D25E6-DC96-4659-A745-2FA9A815E64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{461D25E6-DC96-4659-A745-2FA9A815E64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{461D25E6-DC96-4659-A745-2FA9A815E64B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
