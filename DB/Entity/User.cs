@@ -53,9 +53,14 @@ namespace DB.Entity
 
         [Column("date_of_change_plan")]
         public DateTime? PlanChangeDate { get; set; }
+
+        [Column("booking-cancellation-notification")]
         public bool BookingCancellationNotification { get; set; }
+        [Column("booking-confirmation-notification")]
         public bool BookingConfirmationNotification { get; set; }
+        [Column("calendar-sync-notification")]
         public bool СalendarSyncNotification { get; set; }
+
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
