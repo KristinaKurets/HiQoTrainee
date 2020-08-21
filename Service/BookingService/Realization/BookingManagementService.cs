@@ -16,15 +16,16 @@ namespace Service.BookingService.Realization
         { }
 
 
-        protected void CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
+        protected Order CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
         {
-            UnitOfWork.OrderRepository.Create(new Order()
+           return UnitOfWork.OrderRepository.Create(new Order()
             {
                 Status = status,
                 Desk = desc,
                 User = user,
                 DateTime = time
             });
+            
         }
 
         protected void RejectOrders(IQueryable<Order> orders) 
