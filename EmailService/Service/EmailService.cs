@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EmailService.Service
 {
@@ -22,7 +23,7 @@ namespace EmailService.Service
            _client.Send(mailMessage);
         }
 
-        public void SendСonfirmation(string to, CalendarEventEntity eventInfo) {
+        public async void SendСonfirmation(string to, CalendarEventEntity eventInfo) {
             MailMessage message = new MailMessage();
             message.To.Add(to);
             // Тоже нужно под нормальную почту настраивать и выносить константы
@@ -33,7 +34,7 @@ namespace EmailService.Service
             MemoryStream EventICS = new MemoryStream(Encoding.UTF8.GetBytes(eventInfo.ToICS()));
             Attachment attachment = new Attachment(EventICS, "event.ics", "text/calendar");
             message.Attachments.Add(attachment);
-            Send(message);
+            await Task.Run(()=>Send(message));
         } 
     }
 }
