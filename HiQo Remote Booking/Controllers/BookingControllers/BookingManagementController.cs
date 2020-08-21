@@ -21,6 +21,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         {
             _bookingManagementService = bookingManagementService;
         }
+
         /// <summary>
         /// Creating of booking.
         /// </summary>
@@ -34,6 +35,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         {
             return Json(_bookingManagementService.CreateBooking(userId, deskId, time));
         }
+
         /// <summary>
         /// Cancelling of booking.
         /// </summary>
