@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using DtoCommon.BookingDTO;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("/booking/actual/{userId}")]
         public IActionResult ActualBooking(int userId)
         {
-            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetActiveBookings(userId)));
+            return Json(_mapper.Map<List<BookingOrderDTO>>(_myBookingsService.GetActiveBookings(userId)));
         }
         /// <summary>
         /// Gets information about expired bookings of a specific userId.
@@ -43,7 +44,7 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("/booking/expired/{userId}/{startTime}/{endTime}")]
         public IActionResult ExpiredBooking(int userId, DateTime startTime, DateTime endTime)
         {
-            return Json(_mapper.Map<BookingOrderDTO>(_myBookingsService.GetBookingsHistory(userId, startTime, endTime)));
+            return Json(_mapper.Map<List<BookingOrderDTO>>(_myBookingsService.GetBookingsHistory(userId, startTime, endTime)));
         }
     }
 }

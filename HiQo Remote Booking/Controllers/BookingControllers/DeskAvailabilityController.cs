@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using DB.EntityStatus;
 using DtoCommon.BookingDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Service.BookingService.Interfaces;
 
 namespace HiQo_Remote_Booking.Controllers.BookingControllers
@@ -37,7 +33,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         [Route("/desks/available/{date}")]
         public IActionResult GetDeskAvailability(DateTime date)
         {
-            return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date)));
+            return Json(_mapper.Map<List<BookingDeskDTO>>(_deskAvailabilityService.GetDeskAvailability(date)));
         }
 
         /// <summary>
@@ -50,7 +46,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
         [Route("desks/available/{date}/{deskStatus}")]
         public IActionResult GetDeskAvailabilityDeskStatus(DateTime date, DeskStatus deskStatus)
         {
-            return Json(_mapper.Map<BookingDeskDTO>(_deskAvailabilityService.GetDeskAvailability(date, deskStatus)));
+            return Json(_mapper.Map<List<BookingDeskDTO>>(_deskAvailabilityService.GetDeskAvailability(date, deskStatus)));
         }
     }
 }
