@@ -20,13 +20,13 @@ namespace Service.NotificationService.Realization
             EmailService = emailService;
         }
 
-        protected void SendEmailСonfirmation(Order order,User user) {
+        protected void SendEmailСonfirmation(Order order, User user) {
             var Event = new CalendarEventEntity()
             {
-                Summary = "",
-                Start = new DateTime(),
-                End = new DateTime(),
-                Location = ""
+                Summary = $"Booking the desk {order.Desk.Title}.",
+                Start = order.DateTime.Date.AddHours(+10),
+                End = order.DateTime.Date.AddHours(+18),
+                Location = $"Desk located on the {order.Desk.Room.Floor} floor in the {order.Desk.RoomId} room."
             };
             EmailService.SendСonfirmation(user.Email, Event);
         }

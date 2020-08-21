@@ -18,6 +18,9 @@ namespace Service.BookingService.Realization
             _orderNotificationService = orderNotification;
         }
 
+        public BookingManagementService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+        }
 
         protected Order CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
         {
