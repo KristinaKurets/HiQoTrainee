@@ -6,7 +6,7 @@ namespace EmailService.Entities
 {
    public  class CalendarEventEntity
     {
-        public string Description { get; set; }
+        public string Summary { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Location { get; set; }
@@ -30,7 +30,7 @@ namespace EmailService.Entities
                 ICS.AppendLine("LOCATION:" + Location);
                 ICS.AppendLine("SEQUENCE:0");
                 ICS.AppendLine("STATUS:CONFIRMED");
-                ICS.AppendLine("SUMMARY:" + Description);
+                ICS.AppendLine("SUMMARY:" + Summary);
                 /*
                  * Нужно деделать 
                 ICS.AppendLine("ORGANIZER:" + "");

@@ -1,4 +1,5 @@
 ﻿using EmailService.Entities;
+using EmailService.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EmailService.Service
 {
-    public class EmailService
+    public class EmailService:IEmailService
     {
         protected SmtpClient _client;
         public EmailService() {

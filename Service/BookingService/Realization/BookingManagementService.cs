@@ -3,6 +3,7 @@ using DB.EntityStatus;
 using Repository.UnitOfWork;
 using Service.BookingService.Base;
 using Service.BookingService.Interfaces;
+using Service.NotificationService.Interfaces;
 using System;
 using System.Linq;
 
@@ -10,10 +11,12 @@ namespace Service.BookingService.Realization
 {
     public class BookingManagementService:BookingBaseService,IBookingManagementService
     {
-
-        public BookingManagementService(IUnitOfWork unitOfWork) 
+        protected IOrderNotification _orderNotificationService;
+        public BookingManagementService(IUnitOfWork unitOfWork,IOrderNotification orderNotification) 
             : base(unitOfWork)
-        { }
+        {
+            _orderNotificationService = orderNotification;
+        }
 
 
         protected Order CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
@@ -45,8 +48,9 @@ namespace Service.BookingService.Realization
                 if (user.WorkPlan.Priority == 1)
                 {
                     RejectOrders(dayWaitOrders);
-                    CreateOrder(BookingStatus.Booked, user, desc, time);
+                    var order = CreateOrder(BookingStatus.Booked, user, desc, time);
                     UnitOfWork.Save();
+                    _orderNotificationService.BookingConfirmed(order);
                     return true;
                 }
                 else if (user.WorkPlan.Priority == 2 && !dayWaitOrders.Any())
