@@ -4,6 +4,7 @@ using DB.Entity;
 using DB.LookupTable;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.AdminService.Interfaces;
 
@@ -12,6 +13,7 @@ namespace HiQo_Remote_Booking.Controllers
 
     /// <summary>Class controller which contains admin function.</summary>
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class AdminPanelController : Controller
     {
