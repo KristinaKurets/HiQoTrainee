@@ -13,7 +13,6 @@ namespace HiQo_Remote_Booking.Controllers
 
     /// <summary>Class controller which contains admin function.</summary>
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class AdminPanelController : Controller
     {
