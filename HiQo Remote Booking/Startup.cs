@@ -46,6 +46,7 @@ namespace HiQo_Remote_Booking
             services.AddAutoMapper(typeof(DtoProfile));
             services.AddAutoMapper(typeof(BookingDTOProfile));
             services.AddUnitOfWorkAndRepository();
+            services.AddNotificationService();
             services.AddBusinessLogicLayer();
             services.AddControllers(options =>
             {
