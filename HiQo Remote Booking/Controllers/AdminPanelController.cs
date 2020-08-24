@@ -2,6 +2,7 @@
 using AutoMapper;
 using DB.Entity;
 using DB.LookupTable;
+using DtoCommon.CreateDto;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
 using Microsoft.AspNetCore.Authorization;
@@ -340,7 +341,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of exist offices. </returns>
         [HttpPost]
         [Route("rooms/new")]
-        public JsonResult CreateRoom(RoomDto room)
+        public JsonResult CreateRoom(CreateRoomDto room)
         {
             return Json(_mapper.Map<List<RoomDto>>(_adminService.CreateRoom(_mapper.Map<Room>(room))));
         }

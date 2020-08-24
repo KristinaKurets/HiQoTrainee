@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DB.Entity;
 using DB.LookupTable;
+using DtoCommon.CreateDto;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
 
@@ -34,6 +35,7 @@ namespace Profiles
                 .ForPath(dst => dst.RoomId, src => src.MapFrom(s => s.Room.Id))
                 .ForPath(dst => dst.DeskId, src => src.MapFrom(s => s.Desk.Id))
                 .ForPath(dst => dst.WorkPlanId, src => src.MapFrom(s => s.WorkPlan.Id));
+            CreateMap<CreateRoomDto, Room>();
         }
     }
 }

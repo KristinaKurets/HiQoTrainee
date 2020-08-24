@@ -1,9 +1,11 @@
-﻿using DB.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DB.Entity;
 
 namespace DtoCommon.DTO.Entities
 {
     public class RoomDto
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Title { get; set; }
         public short MaxEmployees { get; set; }
