@@ -341,9 +341,9 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of exist offices. </returns>
         [HttpPost]
         [Route("rooms/new")]
-        public JsonResult CreateRoom(CreateRoomDto room)
+        public JsonResult CreateRoom(RoomDto room)
         {
-            return Json(_mapper.Map<List<RoomDto>>(_adminService.CreateRoom(_mapper.Map<Room>(room))));
+            return Json(_mapper.Map<List<RoomDto>>(_adminService.CreateRoom((Room)room)));
         }
 
     }

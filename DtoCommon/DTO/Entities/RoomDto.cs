@@ -32,7 +32,6 @@ namespace DtoCommon.DTO.Entities
                 Floor = room.Floor,
                 MaxEmployees = room.MaxEmployees,
                 Title = room.Title
-
             };
         }
     }
