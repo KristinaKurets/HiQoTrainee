@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using HiQoKerioConnectCalendarApiClient.Configuration;
 
 
 namespace HiQoKerioConnectCalendarApiClient.Entities.Extensions
@@ -7,9 +7,9 @@ namespace HiQoKerioConnectCalendarApiClient.Entities.Extensions
     {
         public static ApplicationInfo FillFromConfiguration(this ApplicationInfo info)
         {
-            info.Name = ConfigurationManager.AppSettings["APP_NAME"];
-            info.Version = ConfigurationManager.AppSettings["APP_VERSION"];
-            info.Vendor = ConfigurationManager.AppSettings["APP_VENDOR"];
+            info.Name = BaseConfiguration.APP_NAME;
+            info.Version = BaseConfiguration.APP_VERSION;
+            info.Vendor = BaseConfiguration.APP_VENDOR;
             return info;
         }
     }

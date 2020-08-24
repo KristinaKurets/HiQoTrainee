@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DtoCommon\DtoCommon.csproj" />
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
+    <ProjectReference Include="..\HiQoKerioConnectCalendarApiClient\HiQoKerioConnectCalendarApiClient.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 

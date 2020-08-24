@@ -12,15 +12,14 @@ namespace Service.BookingService.Realization
     public class BookingManagementService:BookingBaseService,IBookingManagementService
     {
         protected IOrderNotification _orderNotificationService;
+        
+        
         public BookingManagementService(IUnitOfWork unitOfWork,IOrderNotification orderNotification) 
             : base(unitOfWork)
         {
             _orderNotificationService = orderNotification;
         }
 
-        public BookingManagementService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-        }
 
         protected Order CreateOrder(BookingStatus status,User user, Desk desc, DateTime time) 
         {

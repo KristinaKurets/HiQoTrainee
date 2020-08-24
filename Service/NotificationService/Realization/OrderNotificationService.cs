@@ -1,23 +1,21 @@
 ﻿using DB.Entity;
 using EmailService.Entities;
 using EmailService.Interfaces;
-using Repository.UnitOfWork;
+using HiQoKerioConnectCalendarApiClient.Entities.Extensions;
+using HiQoKerioConnectCalendarApiClient.Interfaces;
 using Service.NotificationService.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
+
 
 namespace Service.NotificationService.Realization
 {
     public class OrderNotificationService:IOrderNotification
     {
-        private IUnitOfWork DataBase;
-        private IEmailService EmailService;
+        private readonly IEmailService EmailService;
+        private readonly ICalendrAPIClient CalendrAPIClient;
 
-        public OrderNotificationService(IUnitOfWork unitOfWork, IEmailService emailService) {
-            DataBase = unitOfWork;
+        public OrderNotificationService( IEmailService emailService, ICalendrAPIClient calendrAPIClient) {   
             EmailService = emailService;
+            CalendrAPIClient = calendrAPIClient;
         }
 
         protected void SendEmailСonfirmation(Order order, User user) {
@@ -30,11 +28,18 @@ namespace Service.NotificationService.Realization
             };
             EmailService.SendСonfirmation(user.Email, Event);
         }
+
+        protected void SendOrderToCalendar(Order order) {
+            CalendrAPIClient.CreateEvent(new HiQoKerioConnectCalendarApiClient.Entities.Event().Initialize(order));
+        }
         public void BookingConfirmed(Order order)
         {
-            User user = DataBase.UserRepository.Read(order.UserId);
+            User user = order.User;
             if (user.BookingConfirmationNotification) {
                 SendEmailСonfirmation(order, user);
+            }
+            if (user.СalendarSyncNotification) {
+                SendOrderToCalendar(order);
             }
         }
     }

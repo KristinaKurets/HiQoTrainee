@@ -1,6 +1,5 @@
 ﻿using HiQoKerioConnectCalendarApiClient.Entities;
 using RestSharp;
-using System.Configuration;
 using HiQoKerioConnectCalendarApiClient.Entities.Extensions;
 using Newtonsoft.Json;
 using HiQoKerioConnectCalendarApiClient.ResponseEntities.Login;
@@ -8,20 +7,23 @@ using HiQoKerioConnectCalendarApiClient.RequestEntities.Login;
 using HiQoKerioConnectCalendarApiClient.RequestEntities.CreateEvent;
 using HiQoKerioConnectCalendarApiClient.ResponseEntities.CreateEvent;
 using HiQoKerioConnectCalendarApiClient.Interfaces;
+using HiQoKerioConnectCalendarApiClient.Configuration;
 
 namespace HiQoKerioConnectCalendarApiClient.Client
 {
     public class HiQoCalendarApiClient:ICalendrAPIClient
     {
-        private readonly static string BASE_URL = ConfigurationManager.AppSettings["BASE_API_URL"];
-        private readonly static string LOGIN_METHOD = ConfigurationManager.AppSettings["LOGIN_METHOD"];
-        private readonly static string CREATE_EVENT_METHOD = ConfigurationManager.AppSettings["CREATE_EVENT_METHOD"];
+        private static string BASE_URL = BaseConfiguration.BASE_API_URL;
+        private static string LOGIN_METHOD = BaseConfiguration.LOGIN_METHOD;
+        private static string CREATE_EVENT_METHOD = BaseConfiguration.CREATE_EVENT_METHOD;
         
         private readonly RestClient _client;
         private bool Auth;
         
         
         public HiQoCalendarApiClient() {
+ 
+        
             _client = new RestClient(BASE_URL)
             {
                 CookieContainer = new System.Net.CookieContainer()
@@ -31,7 +33,7 @@ namespace HiQoKerioConnectCalendarApiClient.Client
         
         protected bool Authenticate()
         {
-            var loginToken = Login(ConfigurationManager.AppSettings["AUTH_USERNAME"],ConfigurationManager.AppSettings["BASE_API_URL"]);
+            var loginToken = Login(BaseConfiguration.AUTH_USERNAME,BaseConfiguration.AUTH_PASSWORD);
             if (loginToken != null) {
                 _client.AddDefaultHeader("X-Token", loginToken);
                 return true;

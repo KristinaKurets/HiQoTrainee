@@ -1,5 +1,5 @@
 ﻿using DB.Entity;
-using System.Configuration;
+using HiQoKerioConnectCalendarApiClient.Configuration;
 
 
 namespace HiQoKerioConnectCalendarApiClient.Entities.Extensions
@@ -18,8 +18,8 @@ namespace HiQoKerioConnectCalendarApiClient.Entities.Extensions
 
         public static Attendee InitializeOrganizer(this Attendee attendee) {
 
-            attendee.DisplayName = ConfigurationManager.AppSettings["ORG_DISPLAY_NAME"];
-            attendee.Email = ConfigurationManager.AppSettings["ORG_EMAIL"]; 
+            attendee.DisplayName = BaseConfiguration.ORG_DISPLAY_NAME;
+            attendee.Email = BaseConfiguration.ORG_EMAIL; 
             attendee.Role = "RoleOrganizer";
             attendee.IsNotified = false;
             attendee.PartStatus = "PartAccepted";

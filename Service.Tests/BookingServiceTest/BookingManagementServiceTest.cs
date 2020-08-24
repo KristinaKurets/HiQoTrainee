@@ -4,6 +4,7 @@ using System.Text;
 using DB.Entity;
 using NUnit.Framework;
 using Service.BookingService.Realization;
+using Service.NotificationService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
 using Service.Tests.TestSettings.TestCases.BookingService;
@@ -27,7 +28,8 @@ namespace Service.Tests.BookingServiceTest
 
             _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
 
-            _bookingManagementService = new BookingManagementService(_mockResult.UnitOfWorkMock.Object);
+            _bookingManagementService = new BookingManagementService(_mockResult.UnitOfWorkMock.Object,
+                new OrderNotificationService(new EmailService.Service.EmailService(),new HiQoKerioConnectCalendarApiClient.Client.HiQoCalendarApiClient()));
         }
 
         [Test, TestCaseSource(typeof(BookingManagementTestCase), nameof(BookingManagementTestCase.CreteTestCase))]

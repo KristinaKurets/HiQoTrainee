@@ -1,12 +1,12 @@
 ﻿using DB.Entity;
+using HiQoKerioConnectCalendarApiClient.Configuration;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace HiQoKerioConnectCalendarApiClient.Entities.Extensions
 {
     public static class EventExtension
     {
-        private static string _folderID= ConfigurationManager.AppSettings["FOLDER_ID"];
+        private static string _folderID= BaseConfiguration.FOLDER_ID;
         public static Event Initialize(this Event calendarEvent,Order order) {
             calendarEvent.FolderID = _folderID;
             calendarEvent.IsAllDay = false;
