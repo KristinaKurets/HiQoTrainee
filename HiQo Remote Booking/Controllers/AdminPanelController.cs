@@ -2,7 +2,6 @@
 using AutoMapper;
 using DB.Entity;
 using DB.LookupTable;
-using DtoCommon.CreateDto;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
 using Microsoft.AspNetCore.Authorization;
