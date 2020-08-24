@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using DtoCommon.BookingDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.BookingService.Interfaces;
 
@@ -11,6 +12,7 @@ namespace HiQo_Remote_Booking.Controllers
     /// Class-controller for getting information about actual and expired bookings.
     /// </summary>
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class MyBookingController : Controller
     {

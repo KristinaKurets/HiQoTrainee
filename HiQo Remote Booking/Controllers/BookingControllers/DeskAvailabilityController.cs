@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using DB.EntityStatus;
 using DtoCommon.BookingDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.BookingService.Interfaces;
 
@@ -12,6 +13,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// Class-controller for getting information about availability of desks.
     /// </summary>
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class DeskAvailabilityController : Controller
     {

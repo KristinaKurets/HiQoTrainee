@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.BookingService.Interfaces;
 
@@ -8,6 +9,7 @@ namespace HiQo_Remote_Booking.Controllers.BookingControllers
     /// Class-controller for booking actions.
     /// </summary>
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class BookingManagementController : Controller
     {
