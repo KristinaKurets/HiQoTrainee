@@ -1,10 +1,6 @@
-﻿using DB.Entity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.UserNotificationsService.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HiQo_Remote_Booking.Controllers
 {
@@ -12,11 +8,12 @@ namespace HiQo_Remote_Booking.Controllers
     /// Controller for configuring user notifications
     /// </summary>
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
-    public class UserNotificatoinsController : Controller
+    public class UserNotificationsController : Controller
     {
         private readonly IUserNotificationsService _userNotificationsService;
-        public UserNotificatoinsController(IUserNotificationsService userNotificationsService)
+        public UserNotificationsController(IUserNotificationsService userNotificationsService)
         {
             _userNotificationsService = userNotificationsService;
         }
@@ -29,7 +26,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>A bool containing the information about flag of notifications.</returns>
         [HttpPost]
         [Route("user/settings/notifications/calendarSync/{userID}/{flag}")]
-        public IActionResult SetCalendarSyncNotificatios(int userID, bool flag)
+        public IActionResult SetCalendarSyncNotifications(int userID, bool flag)
         {
             return Json(_userNotificationsService.CalendarSyncNotification(userID,flag));
         }
