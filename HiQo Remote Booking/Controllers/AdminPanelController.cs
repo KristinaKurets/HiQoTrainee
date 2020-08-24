@@ -13,6 +13,7 @@ namespace HiQo_Remote_Booking.Controllers
 
     /// <summary>Class controller which contains admin function.</summary>
     [ApiController]
+    [AllowAnonymous]
     [Route("[controller]")]
     public class AdminPanelController : Controller
     {
@@ -328,7 +329,20 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("rooms/all")]
         public JsonResult GetRooms()
         {
-            return Json(_mapper.Map<RoomDto>(_adminService.GetRooms()));
+            return Json(_mapper.Map<List<RoomDto>>(_adminService.GetRooms()));
+        }
+
+        /// <summary>Creates the office.</summary>
+        /// <param name="room">
+        /// <para>The user.</para>
+        /// <remarks>It's view for entity <see cref="Room"/></remarks>
+        /// </param>
+        /// <returns>List of exist offices. </returns>
+        [HttpPost]
+        [Route("rooms/new")]
+        public JsonResult CreateRoom(RoomDto room)
+        {
+            return Json(_mapper.Map<List<RoomDto>>(_adminService.CreateRoom(_mapper.Map<Room>(room))));
         }
 
     }
