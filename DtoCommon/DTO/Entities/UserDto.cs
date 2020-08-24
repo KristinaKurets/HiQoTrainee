@@ -41,13 +41,13 @@ namespace DtoCommon.DTO.Entities
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                DeskId = user.Desk.Id,
+                DeskId = user.Desk?.Id,
                 Email = user.Email,
                 PlanChangeDate = user.PlanChangeDate,
                 UserPositionId = user.Position.Id,
                 Role = (UserRole) user.Role,
-                RoomId = user.Room.Id,
-                WorkPlanId = user.WorkPlan.Id
+                RoomId = user.Room?.Id,
+                WorkPlanId = user.WorkPlan?.Id
             };
         }
     }

@@ -57,7 +57,7 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("users/new")]
         public JsonResult CreateUser(UserDto user)
         {
-            return Json(_mapper.Map<List<UserDto>>(_adminService.CreateUser(_mapper.Map<User>(user))));
+            return Json(_mapper.Map<List<UserDto>>(_adminService.CreateUser((User)user)));
         }
 
         /// <summary>Deletes the user.</summary>
@@ -126,7 +126,7 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("desk/new")]
         public JsonResult CreateDesk(DeskDto desk)
         {
-            return Json(_mapper.Map<List<DeskDto>>(_adminService.CreateDesk(_mapper.Map<Desk>(desk))));
+            return Json(_mapper.Map<List<DeskDto>>(_adminService.CreateDesk((Desk)desk)));
         }
 
         /// <summary>Delete the desk.</summary>
@@ -198,7 +198,7 @@ namespace HiQo_Remote_Booking.Controllers
         public JsonResult CreateBookingInfo(BookingInfoDto bookingInfo)
         {
             return Json(
-                _mapper.Map<List<BookingInfo>>(_adminService.CreateBookingInfo(_mapper.Map<BookingInfo>(bookingInfo))));
+                _mapper.Map<List<BookingInfo>>(_adminService.CreateBookingInfo((BookingInfo)bookingInfo)));
         }
 
         /// <summary>Updates the booking information.</summary>
@@ -329,7 +329,20 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("rooms/all")]
         public JsonResult GetRooms()
         {
-            return Json(_mapper.Map<RoomDto>(_adminService.GetRooms()));
+            return Json(_mapper.Map<List<RoomDto>>(_adminService.GetRooms()));
+        }
+
+        /// <summary>Creates the office.</summary>
+        /// <param name="room">
+        /// <para>The user.</para>
+        /// <remarks>It's view for entity <see cref="Room"/></remarks>
+        /// </param>
+        /// <returns>List of exist offices. </returns>
+        [HttpPost]
+        [Route("rooms/new")]
+        public JsonResult CreateRoom(RoomDto room)
+        {
+            return Json(_mapper.Map<List<RoomDto>>(_adminService.CreateRoom((Room)room)));
         }
 
     }

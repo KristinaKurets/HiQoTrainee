@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DB.Entity;
+﻿using DB.Entity;
 using Repository.UnitOfWork;
 using Service.AdminService.Interfaces;
 using System;
@@ -32,6 +31,13 @@ namespace Service.AdminService.Services
         public List<User> GetUsers()
         {
             return DataBase.UserRepository.ReadAll().ToList();
+        }
+
+        public List<Room> CreateRoom(Room room)
+        {
+            DataBase.RoomRepository.Create(room);
+            DataBase.Save();
+            return GetRooms();
         }
 
         public List<User> OrderUsersBy<TKey>(Func<User, TKey> key)

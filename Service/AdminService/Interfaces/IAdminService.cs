@@ -35,5 +35,6 @@ namespace Service.AdminService.Interfaces
         void UpdateDesk(User user, Desk desk);
         List<WorkingDaysCalendar> GetWorkingDayCalendars();
         List<WorkingDaysCalendar> SetDayOff(WorkingDaysCalendar calendar);
+        List<Room> CreateRoom(Room room);
     }
 }
