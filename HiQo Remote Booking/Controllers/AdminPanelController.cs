@@ -4,6 +4,7 @@ using DB.Entity;
 using DB.LookupTable;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
+using DtoCommon.DtoForCreating;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.AdminService.Interfaces;
@@ -55,7 +56,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of exist user . </returns>
         [HttpPost]
         [Route("users/new")]
-        public JsonResult CreateUser(UserDto user)
+        public JsonResult CreateUser(UserCreatingDto user)
         {
             return Json(_mapper.Map<List<UserDto>>(_adminService.CreateUser((User)user)));
         }
@@ -124,7 +125,7 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of desks.</returns>
         [HttpPost]
         [Route("desk/new")]
-        public JsonResult CreateDesk(DeskDto desk)
+        public JsonResult CreateDesk(DeskCreatingDto desk)
         {
             return Json(_mapper.Map<List<DeskDto>>(_adminService.CreateDesk((Desk)desk)));
         }
