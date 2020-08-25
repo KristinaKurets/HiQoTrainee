@@ -25,6 +25,7 @@ namespace Service.BookingService.Helpers
                     resultDesk.Status = DeskStatus.Booked;
                    
                 }
+                resultDesk.User = null;
             }
             return resultDesk;
         }

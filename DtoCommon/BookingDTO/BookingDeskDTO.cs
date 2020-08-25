@@ -12,8 +12,6 @@ namespace DtoCommon.BookingDTO
         public bool Headset { get; set; }
         public BookingRoomDTO Room { get; set; }
         public DeskStatusDTO Status { get; set; }
-
-        public BookingOrderDTO Order { get; set; }
         public BookingUserDTO User { get; set; }
 
     }

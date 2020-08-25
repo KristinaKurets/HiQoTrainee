@@ -26,11 +26,15 @@ namespace Service.BookingService.Realization
         }
         public IEnumerable<Desk> GetDeskAvailability(DateTime dateTime)
         {
-            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll().AsNoTracking(),dateTime);
+            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll()
+                .Include(x=>x.Room).Include(x => x.Orders).Include(x=>x.User)
+                .AsNoTracking(),dateTime);
         }
         public IEnumerable<Desk> GetDeskAvailability(DateTime dateTime, DeskStatus status)
         {
-            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(x=>x.Status==status).AsNoTracking(), dateTime);
+            return CountDesksStatus(UnitOfWork.DeskRepository.ReadAll(x=>x.Status==status)
+                .Include(x => x.Room).Include(x=>x.Orders).Include(x=>x.User)
+                .AsNoTracking(), dateTime);
         }
     }
 }
