@@ -20,7 +20,7 @@ namespace Service.BookingService.Realization
 
         public IEnumerable<Order> GetActiveBookings(int userID) {
             return UnitOfWork.OrderRepository.ReadAll(x => x.User.Id == userID
-            && (x.Status == BookingStatus.Waiting || x.Status == BookingStatus.Booked)).AsNoTracking().ToList();
+            && (x.Status == BookingStatus.Waiting || x.Status == BookingStatus.Booked)).ToList();
         }
 
         public IEnumerable<Order> GetBookingsHistory(int userID, DateTime start, DateTime end) {
@@ -28,7 +28,7 @@ namespace Service.BookingService.Realization
             x.User.Id == userID
             && x.DateTime >= start
             && x.DateTime <= end
-            && (x.Status != BookingStatus.Waiting && x.Status != BookingStatus.Booked)).AsNoTracking().ToList();
+            && (x.Status != BookingStatus.Waiting && x.Status != BookingStatus.Booked)).ToList();
         }
 
 
