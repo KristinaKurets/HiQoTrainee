@@ -15,7 +15,7 @@ namespace HiQo_Remote_Booking.Middleware
         public RequestProcessingLogMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             this._next = next;
-            this._logger = loggerFactory.AddRequestLogger().CreateLogger<RequestLogger.Logger.RequestLogger>(); 
+            this._logger = loggerFactory.CreateLogger<RequestLogger.Logger.RequestLogger>(); 
         }
 
         public async Task InvokeAsync(HttpContext context)

@@ -23,6 +23,7 @@ namespace Service.BookingService.Helpers
                 {
                     resultDesk.User = orders.ToList()[0].User;
                     resultDesk.Status = DeskStatus.Booked;
+                   
                 }
             }
             return resultDesk;
