@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using DB.Entity;
+using Moq;
 using NUnit.Framework;
 using Service.BookingService.Realization;
+using Service.NotificationService.Interfaces;
 using Service.NotificationService.Realization;
 using Service.Tests.TestSettings;
 using Service.Tests.TestSettings.TestCases;
@@ -16,29 +18,33 @@ namespace Service.Tests.BookingServiceTest
         private RepositoryMockResult _mockResult;
         private BookingManagementService _bookingManagementService;
 
-        public void Setup(IList<User> users = null,  IList<Desk> desks = null, IList<Room> rooms = null,IList<Order> orders = null)
+        public void Setup(IList<User> users = null,  IList<Desk> desks = null, IList<Room> rooms = null,IList<Order> orders = null, IList<BookingInfo> bookingInfos = null)
         {
             var repositoryDescriptor = new RepositoryDescriptor()
             {
                 Users = users,
                 Rooms = rooms,
                 Desks = desks,
-                Orders = orders
+                Orders = orders,
+                BookingInfo = bookingInfos,
             };
 
             _mockResult = ServiceTestHelper.MockRepository(repositoryDescriptor);
 
-            _bookingManagementService = new BookingManagementService(_mockResult.UnitOfWorkMock.Object,
-                new OrderNotificationService(new EmailService.Service.EmailService(),new HiQoKerioConnectCalendarApiClient.Client.HiQoCalendarApiClient()));
+            var orderNotificationMock = new Mock<IOrderNotification>();
+            orderNotificationMock.Setup(o => o.BookingConfirmed(It.IsAny<Order>()));
+            _bookingManagementService = new BookingManagementService(_mockResult.UnitOfWorkMock.Object, orderNotificationMock.Object);
+                
         }
 
         [Test, TestCaseSource(typeof(BookingManagementTestCase), nameof(BookingManagementTestCase.CreteTestCase))]
         public bool CreateBooking_CreteTestCase(IList<User> users, IList<Desk> desks,
-                                                IList<Room> rooms, IList<Order> orders)
+                                                IList<Room> rooms, IList<Order> orders,
+                                                IList<BookingInfo> bookingInfos)
         {
-            Setup(users, desks, rooms, orders);
+            Setup(users, desks, rooms, orders, bookingInfos);
 
-            var result = _bookingManagementService.CreateBooking(2, 2, DateTime.Today);
+            var result = _bookingManagementService.CreateBooking(2, 2, DateTime.Today.AddDays(1));
 
             return result;
         }

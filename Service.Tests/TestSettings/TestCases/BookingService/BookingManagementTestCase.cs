@@ -9,6 +9,25 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
 {
     class BookingManagementTestCase
     {
+        private static readonly IList<Room> Rooms = new List<Room>
+        {
+            new Room()
+            {
+                Id = 1,
+                BookingCalendars =  new List<WorkingDaysCalendar>()
+                {
+                    new WorkingDaysCalendar()
+                    {
+                        Id = 1,
+                        Date = DateTime.Today.AddDays(1),
+                        IsOff = false,
+                        RoomId = 1
+                    }
+                },
+                Floor = 1,
+            }
+        };
+
         private static readonly IList<Desk> Desks = new List<Desk>
         {
             new Desk
@@ -17,6 +36,7 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                 Title= "Tom",
                 Orders = new List<Order>(),
                 RoomId = 1,
+                Room = Rooms[0],
                 Status = DeskStatus.Fixed,
             },
             new Desk
@@ -24,7 +44,8 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                 Id=2,
                 Title="Alice",
                 Orders = new List<Order>(),
-                Room = new Room(),
+                RoomId = 1,
+                Room = Rooms[0],
                 Status = DeskStatus.Fixed,
             },
             new Desk
@@ -32,20 +53,10 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
                 Id=3,
                 Title="Sam",
                 Orders = new List<Order>(),
-                Room = new Room(),
+                RoomId = 1,
+                Room = Rooms[0],
                 Status = DeskStatus.Fixed,
             },
-        };
-
-        private static readonly IList<Room> Rooms = new List<Room>
-        {
-            new Room()
-            {
-                Id = 1,
-                BookingCalendars =  new List<WorkingDaysCalendar>(),
-                Desks = Desks,
-                Floor = 1,
-            }
         };
 
         private static readonly IList<User> Users = new List<User>
@@ -119,10 +130,22 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
             {
                 Id = 1,
                 DeskId = 1,
-                Status = BookingStatus.Waiting,
+                Status = BookingStatus.Booked,
                 DateTime = DateTime.Today.AddDays(-1),
                 UserId = 1,
                 User = Users[0],
+            }
+        };
+
+        private static readonly IList<BookingInfo> bookingInfos = new List<BookingInfo>
+        {
+            new BookingInfo()
+            {
+                Id = 1,
+                DaysCloseForBooking = 1,
+                DaysOpenForBooking = 5,
+                TimeCloseForBooking = new TimeSpan(22,00,0),
+                TimeOpenForBooking = new TimeSpan(10, 00, 0),
             }
         };
 
@@ -130,10 +153,10 @@ namespace Service.Tests.TestSettings.TestCases.BookingService
         {
             get
             {
-                yield return new TestCaseData(Users, Desks, Rooms, Orders).Returns(true);
-                yield return new TestCaseData(null, Desks, Rooms, Orders).Returns(false);
-                yield return new TestCaseData(Users, null, Rooms, Orders).Returns(false);
-                yield return new TestCaseData(Users, Desks, Rooms, new List<Order>()).Returns(true);
+                yield return new TestCaseData(Users, Desks, Rooms, Orders, bookingInfos).Returns(true);
+                yield return new TestCaseData(null, Desks, Rooms, Orders, bookingInfos).Returns(false);
+                yield return new TestCaseData(Users, null, Rooms, Orders, bookingInfos).Returns(false);
+                yield return new TestCaseData(Users, Desks, Rooms, new List<Order>(), bookingInfos).Returns(true);
             }
         }
 
