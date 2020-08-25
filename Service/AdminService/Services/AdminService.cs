@@ -178,12 +178,7 @@ namespace Service.AdminService.Services
 
         public List<Desk> GetDesks(Room room)
         {
-            return GetDesks(u => u.Room.Id == room.Id);
-        }
-
-        private List<Desk> GetDesks(Func<Desk, bool> predicate)
-        {
-            return DataBase.DeskRepository.ReadAll(predicate).ToList();
+            return DataBase.DeskRepository.ReadAll(u => u.RoomId == room.Id).ToList();
         }
 
         public BookingInfo GetBookingInfoAboutOneRoom(Room room)
