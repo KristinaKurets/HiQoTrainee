@@ -21,40 +21,40 @@ namespace HiQo_Remote_Booking.Controllers
         /// <summary>
         /// Сonfiguring calendar sync notifications.
         /// </summary>
-        /// <param name="userID">The unique User ID.</param>
+        /// <param name="userId">The unique User ID.</param>
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
         [HttpPost]
-        [Route("user/settings/notifications/calendarSync/{userID}/{flag}")]
-        public IActionResult SetCalendarSyncNotifications(int userID, bool flag)
+        [Route("user/settings/notifications/calendarSync")]
+        public IActionResult SetCalendarSyncNotifications(int userId, bool flag)
         {
-            return Json(_userNotificationsService.CalendarSyncNotification(userID,flag));
+            return Json(_userNotificationsService.CalendarSyncNotification(userId,flag));
         }
        
         /// <summary>
         /// Сonfiguring cancellation booking notifications.
         /// </summary>
-        /// <param name="userID">The unique User ID.<</param>
+        /// <param name="userId">The unique User ID.<</param>
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
         [HttpPost]
-        [Route("user/settings/notifications/cancellation/{userID}/{flag}")]
-        public IActionResult SetCancellationNotification(int userID, bool flag)
+        [Route("user/settings/notifications/cancellation")]
+        public IActionResult SetCancellationNotification(int userId, bool flag)
         {
-            return Json(_userNotificationsService.CancellationNotification(userID, flag));
+            return Json(_userNotificationsService.CancellationNotification(userId, flag));
         }
 
         /// <summary>
         /// Сonfiguring confirmation booking notifications.
         /// </summary>
-        /// <param name="userID">The unique User ID.</param>
+        /// <param name="userId">The unique User ID.</param>
         /// <param name="flag">On/off notifications.</param>
         /// <returns>A bool containing the information about flag of notifications.</returns>
        [HttpPost]
-       [Route("user/settings/notifications/confirmation/{userID}/{flag}")]
-        public IActionResult SetConfirmationNotification(int userID, bool flag)
+       [Route("user/settings/notifications/confirmation")]
+        public IActionResult SetConfirmationNotification(int userId, bool flag)
         {
-            return Json(_userNotificationsService.ConfirmationNotification(userID, flag));
+            return Json(_userNotificationsService.ConfirmationNotification(userId, flag));
         }
     }
 }

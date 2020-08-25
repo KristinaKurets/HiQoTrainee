@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using DB.Entity;
 
 namespace DtoCommon.DTO.Entities
