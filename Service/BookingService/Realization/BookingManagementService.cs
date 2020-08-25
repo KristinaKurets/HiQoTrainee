@@ -83,8 +83,8 @@ namespace Service.BookingService.Realization
         }
 
         protected bool WorkDayCheck(Desk desk,DateTime date) {
-            var workDays =  desk.Room.BookingCalendars.Where(x => x.Date.Month == date.Month && x.Date.Day == date.Day && x.Date.Year == date.Year).ToArray();
-            WorkingDaysCalendar currentDay= workDays.Length!=0 ? workDays[0]:null;
+            var workDays = desk.Room.BookingCalendars==null? null:desk.Room.BookingCalendars.Where(x => x.Date.Month == date.Month && x.Date.Day == date.Day && x.Date.Year == date.Year).ToArray();
+            WorkingDaysCalendar currentDay= (workDays!=null&&workDays.Length!=0) ? workDays[0]:null;
             BookingInfo bookingInfo;
             try
             {
