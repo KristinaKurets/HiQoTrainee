@@ -12,7 +12,7 @@ namespace HiQo_Remote_Booking.Filters
     {
         private readonly ILogger _logger;
         public BadRequestExceptionFilterAttribute(ILoggerFactory loggerFactory) {
-            _logger = loggerFactory.AddRequestLogger().CreateLogger<RequestLogger.Logger.RequestLogger>();
+            _logger = loggerFactory.CreateLogger<RequestLogger.Logger.RequestLogger>();
         }
         public void OnException(ExceptionContext context)
         {   

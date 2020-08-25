@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Logging;
+using HiQo_Remote_Booking.LoggerFactoryExtensions;
 
 namespace HiQo_Remote_Booking
 {
@@ -93,13 +95,13 @@ namespace HiQo_Remote_Booking
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env , ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            loggerFactory.AddRequestLogger();
             app.UseRequestProcessingLog();
             app.UseHttpsRedirection();
 

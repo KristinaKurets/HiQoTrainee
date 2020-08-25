@@ -74,12 +74,50 @@ namespace Service.BookingService.Realization
             User user = UnitOfWork.UserRepository.Read(userID);
             Desk desk = UnitOfWork.DeskRepository.Read(descID);
             if (user != null && desk != null){
-               // тут еще нужна проверка на рабочий день и правила букинга 
-                return CreateBooking(user, desk, time);
+                if (WorkDayCheck(desk, time))
+                {
+                    return CreateBooking(user, desk, time);
+                }
             }
             return false;
         }
 
+        protected bool WorkDayCheck(Desk desk,DateTime date) {
+            var workDays =  desk.Room.BookingCalendars.Where(x => x.Date.Month == date.Month && x.Date.Day == date.Day && x.Date.Year == date.Year).ToArray();
+            WorkingDaysCalendar currentDay= workDays.Length!=0 ? workDays[0]:null;
+            BookingInfo bookingInfo;
+            try
+            {
+                bookingInfo = UnitOfWork.BookingInfoRepository.ReadAll().ToArray()[0];
+            }
+            catch {
+                return false;
+            } 
+            
+            if ( currentDay==null || !currentDay.IsOff) {
+                DateTime now = DateTime.Now;
+                DateTime start = new DateTime(date.Year, 
+                    date.Month, 
+                    date.Day, 
+                    bookingInfo.TimeOpenForBooking.Hours, 
+                    bookingInfo.TimeOpenForBooking.Minutes, 
+                    0)
+                    .AddDays(-bookingInfo.DaysOpenForBooking);
+                    DateTime end = new DateTime(date.Year, 
+                    date.Month, 
+                    date.Day, 
+                    bookingInfo.TimeCloseForBooking.Hours, 
+                    bookingInfo.TimeCloseForBooking.Minutes, 
+                    0)
+                    .AddDays(-bookingInfo.DaysCloseForBooking);
+                if (now > start && now < end)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
         public bool CancelBooking(int userID,long orderID)
         {
             var order = UnitOfWork.OrderRepository.Read(orderID);
