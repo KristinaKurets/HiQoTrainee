@@ -94,12 +94,10 @@ namespace Service.AdminService.Services
         {
             return DataBase.BookingInfoRepository.ReadAll().ToList();
         }
-        public List<BookingInfo> CreateBookingInfo(BookingInfo booking)
+        public void CreateBookingInfo(BookingInfo booking)
         {
-            BookingInfo bookingInfo = (BookingInfo)booking;
-            DataBase.BookingInfoRepository.Create(bookingInfo);
+            DataBase.BookingInfoRepository.Create(booking);
             DataBase.Save();
-            return GetBookingInfo();
         }
         //проверить и дописать
         public List<BookingInfo> UpdateBookingInfo(BookingInfo booking)

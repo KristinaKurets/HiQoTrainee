@@ -10,7 +10,6 @@ namespace DtoCommon.DTO.Entities
         public TimeSpan TimeOpenForBooking { get; set; }
         public TimeSpan TimeCloseForBooking { get; set; }
         public int DaysOpenForBooking { get; set; }
-
         public int DaysCloseForBooking { get; set; }
 
         public static implicit operator BookingInfoDto(BookingInfo bookingInfo)

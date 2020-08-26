@@ -62,16 +62,16 @@ namespace HiQo_Remote_Booking.Controllers
         }
 
         /// <summary>Deletes the user.</summary>
-        /// <param name="user">
-        /// <para>The user.</para>
+        /// <param name="userId">
+        /// <para>The user identifier.</para>
         /// <remarks>It's view for entity <see cref="User"/></remarks>
         /// </param>
         /// <returns>List of exist user </returns>
         [HttpPost]
         [Route("users/remove")]
-        public JsonResult DeleteUser(UserDto user)
+        public JsonResult DeleteUser(int userId)
         {
-            return Json(_mapper.Map<List<UserDto>>(_adminService.DeleteUser(_mapper.Map<User>(user))));
+            return Json(_mapper.Map<List<UserDto>>(_adminService.DeleteUser(_mapper.Map<User>(userId))));
         }
 
         /// <summary>Updates the user.</summary>
@@ -101,18 +101,18 @@ namespace HiQo_Remote_Booking.Controllers
         }
 
         /// <summary>Gets the desks of one room.</summary>
-        /// <param name="room">
+        /// <param name="roomId">
         /// <para>
-        ///  The room.
+        ///  The room identifier.
         /// </para>
         /// <remarks>It's view for entity <see cref="Room"/></remarks>
         /// </param>
         /// <returns>List of desk in the room .</returns>
         [HttpPost]
         [Route("desk/all-of-one-room")]
-        public JsonResult GetDesksOfOneRoom(RoomDto room)
+        public JsonResult GetDesksOfOneRoom(int roomId)
         {
-            return Json(_mapper.Map<List<DeskDto>>(_adminService.GetDesks(_mapper.Map<Room>(room))));
+            return Json(_mapper.Map<List<DeskDto>>(_adminService.GetDesks(_mapper.Map<Room>(roomId))));
         }
 
         /// <summary>Creates the desk.</summary>
@@ -131,18 +131,18 @@ namespace HiQo_Remote_Booking.Controllers
         }
 
         /// <summary>Delete the desk.</summary>
-        /// <param name="desk">
+        /// <param name="deskId">
         /// <para>
-        ///  The desk.
+        ///  The desk identifier.
         /// </para>
         /// <remarks>It's view for entity <see cref="Desk"/></remarks>
         /// </param>
         /// <returns>List of desks.</returns>
         [HttpPost]
         [Route("desk/remove")]
-        public JsonResult DeleteDesk(DeskDto desk)
+        public JsonResult DeleteDesk(int deskId)
         {
-            return Json(_mapper.Map<List<DeskDto>>(_adminService.DeleteDesk(_mapper.Map<Desk>(desk))));
+            return Json(_mapper.Map<List<DeskDto>>(_adminService.DeleteDesk(_mapper.Map<Desk>(deskId))));
         }
 
         /// <summary>Updates the desk.</summary>
@@ -164,18 +164,18 @@ namespace HiQo_Remote_Booking.Controllers
 
 
         /// <summary>Delete the booking information.</summary>
-        /// <param name="bookingInfo">
+        /// <param name="bookingInfoId">
         /// <para>The booking information.</para>
         /// <remarks>It's view for entity <see cref="BookingInfo"/></remarks>
         /// </param>
         /// <returns>List of booking information.</returns>
         [HttpPost]
         [Route("booking-info/delete")]
-        public JsonResult DeleteBookingInfo(BookingInfoDto bookingInfo)
+        public JsonResult DeleteBookingInfo(int bookingInfoId)
         {
             return Json(
                 _mapper.Map<List<BookingInfoDto>>(
-                    _adminService.DeleteBookingInfo(_mapper.Map<BookingInfo>(bookingInfo))));
+                    _adminService.DeleteBookingInfo(_mapper.Map<BookingInfo>(bookingInfoId))));
         }
 
         /// <summary>Gets the booking information.</summary>
@@ -196,10 +196,10 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of booking information.</returns>
         [HttpPost]
         [Route("booking-info/new")]
-        public JsonResult CreateBookingInfo(BookingInfoDto bookingInfo)
+        public IActionResult CreateBookingInfo(BookingInfoCreatingDto bookingInfo)
         {
-            return Json(
-                _mapper.Map<List<BookingInfo>>(_adminService.CreateBookingInfo((BookingInfo)bookingInfo)));
+            _adminService.CreateBookingInfo((BookingInfo) bookingInfo);
+            return RedirectToAction("GetBookingInfo");
         }
 
         /// <summary>Updates the booking information.</summary>
@@ -210,23 +210,23 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of the booking information.</returns>
         [HttpPost]
         [Route("booking-info/update")]
-        public JsonResult UpdateBookingInfo(BookingInfoDto booking)
+        public JsonResult UpdateBookingInfo(BookingInfoCreatingDto booking)
         {
             return Json(
                 _mapper.Map<List<BookingInfoDto>>(_adminService.UpdateBookingInfo(_mapper.Map<BookingInfo>(booking))));
         }
 
         /// <summary>Gets the booking information about one room.</summary>
-        /// <param name="room">
-        /// <para>The room.</para>
+        /// <param name="roomId">
+        /// <para>The room identifier.</para>
         /// <remarks>It's view for entity <see cref="Room"/></remarks>
         /// </param>
         /// <returns>Booking information about the room.</returns>
         [HttpPost]
         [Route("booking-info/of-one-room")]
-        public JsonResult GetBookingInfoAboutOneRoom(RoomDto room)
+        public JsonResult GetBookingInfoAboutOneRoom(int roomId)
         {
-            return Json(_mapper.Map<BookingInfo>(_adminService.GetBookingInfoAboutOneRoom(_mapper.Map<Room>(room))));
+            return Json(_mapper.Map<BookingInfo>(_adminService.GetBookingInfoAboutOneRoom(_mapper.Map<Room>(roomId))));
         }
 
         #endregion
@@ -256,16 +256,16 @@ namespace HiQo_Remote_Booking.Controllers
         }
 
         /// <summary>Deletes the work plan.</summary>
-        /// <param name="workPlan">
-        /// <para>The work plan for removal.</para>
+        /// <param name="workPlanId">
+        /// <para>The work plan for removal identifier.</para>
         /// <remarks>It's view for entity <see cref="WorkPlan"/></remarks>
         /// </param>
         /// <returns>List of work plans.</returns>
         [HttpPost]
         [Route("work-plan/delete")]
-        public JsonResult DeleteWorkPlan(WorkPlanDto workPlan)
+        public JsonResult DeleteWorkPlan(int workPlanId)
         {
-            return Json(_mapper.Map<List<WorkPlanDto>>(_adminService.DeleteWorkPlan(_mapper.Map<WorkPlan>(workPlan))));
+            return Json(_mapper.Map<List<WorkPlanDto>>(_adminService.DeleteWorkPlan(_mapper.Map<WorkPlan>(workPlanId))));
         }
 
         #endregion
@@ -289,10 +289,10 @@ namespace HiQo_Remote_Booking.Controllers
         /// <returns>List of working days calendar.</returns>
         [HttpPost]
         [Route("working-days-calendar/set-day-off")]
-        public JsonResult SetDayOff(WorkingDaysCalendarDto workingDaysCalendar)
+        public JsonResult SetDayOff(WorkingDaysCalendarCreatingDto workingDaysCalendar)
         {
             return Json(_mapper.Map<List<WorkingDaysCalendarDto>>(
-                _adminService.SetDayOff(_mapper.Map<WorkingDaysCalendar>(workingDaysCalendar))));
+                _adminService.SetDayOff((WorkingDaysCalendar)workingDaysCalendar)));
         }
 
         #endregion

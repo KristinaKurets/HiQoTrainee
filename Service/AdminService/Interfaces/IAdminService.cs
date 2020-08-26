@@ -21,7 +21,7 @@ namespace Service.AdminService.Interfaces
         List<Desk> GetDesks(Room room);
         List<DeskStatusLookup> GetDesksStatuses();
         List<BookingInfo> GetBookingInfo();
-        List<BookingInfo> CreateBookingInfo(BookingInfo booking);
+        void CreateBookingInfo(BookingInfo booking);
         List<BookingInfo> UpdateBookingInfo(BookingInfo booking);
         List<BookingInfo> DeleteBookingInfo(BookingInfo booking);
         BookingInfo GetBookingInfoAboutOneRoom(Room room);

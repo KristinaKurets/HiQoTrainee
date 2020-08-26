@@ -3,6 +3,7 @@ using DB.Entity;
 using DB.LookupTable;
 using DtoCommon.DTO.Entities;
 using DtoCommon.DTO.LookUps;
+using DtoCommon.DtoForCreating;
 
 namespace Profiles
 {
@@ -35,6 +36,19 @@ namespace Profiles
                 .ForPath(dst => dst.RoomId, src => src.MapFrom(s => s.Room.Id))
                 .ForPath(dst => dst.DeskId, src => src.MapFrom(s => s.Desk.Id))
                 .ForPath(dst => dst.WorkPlanId, src => src.MapFrom(s => s.WorkPlan.Id));
+            CreateMap<int, User>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
+            CreateMap<int, Room>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
+            CreateMap<int, WorkPlan>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
+            CreateMap<int, BookingInfo>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
+            CreateMap<BookingInfoCreatingDto, BookingInfo>()
+                .ForMember(dst => dst.TimeOpenForBooking, 
+                    src => src.MapFrom(s => s.TimeOpenForBooking.TimeOfDay))
+                .ForMember(dst => dst.TimeCloseForBooking, 
+                    src => src.MapFrom(s => s.TimeCloseForBooking.TimeOfDay));
         }
     }
 }
