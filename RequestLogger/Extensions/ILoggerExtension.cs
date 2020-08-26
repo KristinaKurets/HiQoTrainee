@@ -20,7 +20,7 @@ namespace RequestLogger.Extensions
         public static void Log(this ILogger logger, BadRequestEntity request)
         {  if (logger.GetType() == typeof(Logger<Logger.RequestLogger>))
             {
-                logger.Log(LogLevel.Information, new EventId(), request, null, (x, y) => "");
+                logger.Log(LogLevel.Error, new EventId(), request, null, (x, y) => "");
             }
             else
             {
