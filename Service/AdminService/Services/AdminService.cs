@@ -94,10 +94,11 @@ namespace Service.AdminService.Services
         {
             return DataBase.BookingInfoRepository.ReadAll().ToList();
         }
-        public void CreateBookingInfo(BookingInfo booking)
+        public List<BookingInfo> CreateBookingInfo(BookingInfo booking)
         {
             DataBase.BookingInfoRepository.Create(booking);
             DataBase.Save();
+            return GetBookingInfo();
         }
         //проверить и дописать
         public List<BookingInfo> UpdateBookingInfo(BookingInfo booking)
@@ -181,7 +182,7 @@ namespace Service.AdminService.Services
 
         public BookingInfo GetBookingInfoAboutOneRoom(Room room)
         {
-            return CheckNull(room) ? DataBase.BookingInfoRepository.Read(u=>u.Id==room.BookingInfoId) : null;
+            return CheckNull(room) ? DataBase.RoomRepository.Read(u=>u.Id==room.Id).BookingInfo : null;
         }
 
         public List<WorkPlan> UpdateWorkPlan(WorkPlan workPlan)
@@ -230,15 +231,10 @@ namespace Service.AdminService.Services
         {
             if (CheckNull(calendar))
             {
-                var cal = DataBase.CalendarRepository.Read(calendar.Id);
-                if (CheckNull(cal))
-                {
-                    DataBase.CalendarRepository.Update(WorkingDaysCalendarChanger.ChangeFromDto(cal, calendar));
-                    DataBase.Save();
-                    return GetWorkingDayCalendars();
-                }
+                DataBase.CalendarRepository.Create(calendar);
+                DataBase.Save();
+                return GetWorkingDayCalendars();
             }
-
             return null;
         }
     }

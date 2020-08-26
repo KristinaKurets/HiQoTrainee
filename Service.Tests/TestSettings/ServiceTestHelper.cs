@@ -178,7 +178,7 @@ namespace Service.Tests.TestSettings
                 RoomRepositoryMock = SetupRepositoryWithIntId(x => x.Rooms, x => x.Id),
                 BookingInfoRepositoryMock = SetupRepositoryWithIntId(x => x.BookingInfo, x => x.Id),
                 UserPositionRepositoryMock = SetupRepositoryWithIntId(x => x.UsersPosition, x => x.Id),
-                WorkingDaysCalendarRepositoryMock = SetupRepositoryWithIntId(x => x.WorkingDaysCalendar, x => x.Id),
+                WorkingDaysCalendarRepositoryMock = SetupRepositoryWithLongId(x => x.WorkingDaysCalendar, x => x.Id),
                 WorkPlanRepositoryMock = SetupRepositoryWithIntId(x => x.WorkPlans, x => x.Id),
                 OrderRepositoryMock = SetupRepositoryWithLongId(x => x.Orders, x => x.Id),
                 DeskStatusLookupRepositoryMock = SetupRepositoryWithIntId(x => x.DeskStatusLookup, x => x.ID)

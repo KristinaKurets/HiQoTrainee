@@ -198,8 +198,8 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("booking-info/new")]
         public IActionResult CreateBookingInfo(BookingInfoCreatingDto bookingInfo)
         {
-            _adminService.CreateBookingInfo((BookingInfo) bookingInfo);
-            return RedirectToAction("GetBookingInfo");
+            return Json(_mapper.Map<List<BookingInfoDto>>(_adminService.CreateBookingInfo((BookingInfo) bookingInfo)));
+            //return RedirectToAction("GetBookingInfo");
         }
 
         /// <summary>Updates the booking information.</summary>
@@ -226,7 +226,7 @@ namespace HiQo_Remote_Booking.Controllers
         [Route("booking-info/of-one-room")]
         public JsonResult GetBookingInfoAboutOneRoom(int roomId)
         {
-            return Json(_mapper.Map<BookingInfo>(_adminService.GetBookingInfoAboutOneRoom(_mapper.Map<Room>(roomId))));
+            return Json(_mapper.Map<BookingInfoDto>(_adminService.GetBookingInfoAboutOneRoom(_mapper.Map<Room>(roomId))));
         }
 
         #endregion

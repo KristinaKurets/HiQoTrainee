@@ -42,6 +42,8 @@ namespace Profiles
                 .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
             CreateMap<int, WorkPlan>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
+            CreateMap<int, Desk>()
+                .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
             CreateMap<int, BookingInfo>()
                 .ForMember(dst => dst.Id, src => src.MapFrom(s => s));
             CreateMap<BookingInfoCreatingDto, BookingInfo>()
